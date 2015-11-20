@@ -6,16 +6,29 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 var _results = [];
+var _facets = [];
+var _count = 0;
+var _top = 15;
+var _skip = 0;
 
-function set(results) {
+function set(results, facets, count, skip) {
 	_results = results;
+	_facets = facets;
+	_count = count;
+	_skip = skip;
 	// foobar buzz
 }
 
 var SearchStore = assign({}, EventEmitter.prototype, {
 
 	getAll: function() {
-		return _results;
+		return {
+			results: _results,
+			facets: _facets,
+			count: _count,
+			top: _top,
+			skip: _skip
+		};
 	},
 
 	emitChange: function() {
@@ -34,8 +47,8 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
 	var text;
 	switch(action.actionType) {
-		case SearchConstants.SET_RESULTS:
-			set(action.results);
+		case SearchConstants.SET_ALL:
+			set(action.results, action.facets, action.count, action.skip);
 			SearchStore.emitChange();
 	}
 });

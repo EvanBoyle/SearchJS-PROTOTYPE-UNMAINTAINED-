@@ -1,12 +1,13 @@
-SearchResults = require("./SearchResults");
-React = require("react");
-SearchStore = require("../stores/SearchStore");
-SearchActions = require("../actions/SearchActions");
+var SearchResults = require("./SearchResults");
+var React = require("react");
+var SearchStore = require("../stores/SearchStore");
+var SearchActions = require("../actions/SearchActions");
 
 var SearchUI = React.createClass({
 	getInitialState: function() {
 		return({
-			results: []
+			results: [],
+            facets: []
 		});
 	},
 
@@ -19,17 +20,36 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.refs.searchText.value);
+    	SearchActions.search(this.refs.searchText.value, []);
+    },
+    
+    selectFacet: function(facetName) {
+        var newFacets = this.state.facets.map(function(facet) {
+            var isSelection = facet.value === facetName;
+            facet.selected = isSelection ? !facet.selected : facet.selected;
+            return facet;
+        });
+        
+        SearchActions.search(this.refs.searchText.value, newFacets);
+    },
+    
+    handleKeyDown: function(evt) {
+        if (evt.keyCode == 13 ) {
+            return this.search();
+        }
     },
 
     _onChange: function() {
-    	var searchResults = SearchStore.getAll();
+        var data = SearchStore.getAll();
+
     	this.setState({
-    		results: searchResults
+    		results: data.results,
+            facets: data.facets
     	});
     },
 
     render: function() {
+        var self = this;
     	return (
                 <div className="container">
                     <div className="row form-group">
@@ -44,6 +64,17 @@ var SearchUI = React.createClass({
                         </div>        
                     </div>
                     <div className="row">
+                        <div  className="col-md-2">
+                            {this.state.facets.map(function(facet, index){
+                                return (
+                                    <div key={index + 1} className="checkbox">
+                                        <label>
+                                            <input type="checkbox" onChange={self.selectFacet.bind(self, facet.value)} checked={facet.selected}/> {facet.value}({facet.count})
+                                        </label>
+                                    </div>
+                                    )
+                            })}
+                        </div>
                         <div className="col-md-10">
                             <SearchResults results={this.state.results}/>
                         </div>

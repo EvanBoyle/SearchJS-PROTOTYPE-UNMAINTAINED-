@@ -40,7 +40,7 @@ var SearchResult = React.createClass({
 
 
 	render: function(){
-		return(
+		return (
 			<div>
 					<div onClick={this.openModal} className="col-md-4">
 						<div style={this.dummyStyle}>
