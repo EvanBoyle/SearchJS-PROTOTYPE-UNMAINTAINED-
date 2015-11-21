@@ -32,13 +32,15 @@ var buildFilter = function(facets) {
 };
 
 var SearchActions = {
-	search: function(term, facets){
+	search: function(term, facets, skip, top){
 		var queryParams = {
 			'api-version': '2015-02-28',
 			'searchMode': 'all',
 			'$count': 'true',
 			'facet': 'campusType',
-			'search': encodeURIComponent(term)
+			'search': encodeURIComponent(term),
+			'$skip': skip,
+			'$top' : top
 		};
 		
 		if(facets && facets.length > 0){
@@ -67,7 +69,7 @@ var SearchActions = {
 					results: searchResults,
 					facets: searchFacets,
 					count: res.body['@odata.count'],
-					skip: 0
+					skip: skip,
 				});
 			});
 	},

@@ -8,7 +8,7 @@ var CHANGE_EVENT = 'change';
 var _results = [];
 var _facets = [];
 var _count = 0;
-var _top = 15;
+var _top = 12;
 var _skip = 0;
 
 function set(results, facets, count, skip) {

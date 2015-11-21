@@ -1,4 +1,5 @@
 var SearchResults = require("./SearchResults");
+var Pager = require("./Pager");
 var React = require("react");
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
@@ -7,12 +8,16 @@ var SearchUI = React.createClass({
 	getInitialState: function() {
 		return({
 			results: [],
-            facets: []
+            facets: [],
+            skip: 0,
+            top: 0,
+            count: 0
 		});
 	},
 
     componentDidMount: function() {
     	SearchStore.addChangeListener(this._onChange);
+        this._onChange();
     },
 
     componentWillUnmount: function() {
@@ -20,7 +25,7 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.refs.searchText.value, []);
+    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top);
     },
     
     selectFacet: function(facetName) {
@@ -30,7 +35,11 @@ var SearchUI = React.createClass({
             return facet;
         });
         
-        SearchActions.search(this.refs.searchText.value, newFacets);
+        SearchActions.search(this.refs.searchText.value, newFacets, this.state.skip, this.state.top);
+    },
+    
+    page: function(page) {
+        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top);
     },
     
     handleKeyDown: function(evt) {
@@ -44,12 +53,22 @@ var SearchUI = React.createClass({
 
     	this.setState({
     		results: data.results,
-            facets: data.facets
+            facets: data.facets,
+            skip: data.skip,
+            top: data.top,
+            count: data.count
     	});
     },
 
     render: function() {
         var self = this;
+        
+        // params for pager control
+        var maxPages = Math.ceil(this.state.count/this.state.top);
+		var currentPage = (this.state.skip + this.state.top)/this.state.top;
+		var startPage = currentPage - 2 > 0 ? currentPage - 2 : 1;
+		var lastPage = currentPage + 2 < maxPages ? currentPage + 2 : maxPages;
+        
     	return (
                 <div className="container">
                     <div className="row form-group">
@@ -78,6 +97,7 @@ var SearchUI = React.createClass({
                         <div className="col-md-10">
                             <SearchResults results={this.state.results}/>
                         </div>
+                        <Pager self={self} maxPages={maxPages} currentPage={currentPage} startPage={startPage} lastPage={lastPage} callback={this.page}/>
                     </div>
                 </div>
             )
