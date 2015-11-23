@@ -32,7 +32,7 @@ var buildFilter = function(facets) {
 };
 
 var SearchActions = {
-	search: function(term, facets, skip, top){
+	search: function(term, facets, skip, top, sortBy){
 		var queryParams = {
 			'api-version': '2015-02-28',
 			'searchMode': 'all',
@@ -42,6 +42,10 @@ var SearchActions = {
 			'$skip': skip,
 			'$top' : top
 		};
+		
+		if(sortBy) {
+			queryParams['$orderby'] = sortBy + " desc";
+		}
 		
 		if(facets && facets.length > 0){
 			var filter = buildFilter(facets);
@@ -70,6 +74,7 @@ var SearchActions = {
 					facets: searchFacets,
 					count: res.body['@odata.count'],
 					skip: skip,
+					sortBy: sortBy
 				});
 			});
 	},

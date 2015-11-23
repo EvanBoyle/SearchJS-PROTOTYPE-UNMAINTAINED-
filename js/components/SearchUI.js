@@ -1,5 +1,6 @@
 var SearchResults = require("./SearchResults");
 var Pager = require("./Pager");
+var Sorter = require("./Sorter");
 var React = require("react");
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
@@ -11,7 +12,9 @@ var SearchUI = React.createClass({
             facets: [],
             skip: 0,
             top: 0,
-            count: 0
+            count: 0,
+            options: [],
+            sortBy: ""
 		});
 	},
 
@@ -25,7 +28,7 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top);
+    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top, this.state.sortBy);
     },
     
     selectFacet: function(facetName) {
@@ -35,11 +38,11 @@ var SearchUI = React.createClass({
             return facet;
         });
         
-        SearchActions.search(this.refs.searchText.value, newFacets, this.state.skip, this.state.top);
+        SearchActions.search(this.refs.searchText.value, newFacets, this.state.skip, this.state.top, this.state.sortBy);
     },
     
     page: function(page) {
-        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top);
+        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy);
     },
     
     handleKeyDown: function(evt) {
@@ -59,6 +62,11 @@ var SearchUI = React.createClass({
             lastPage: startPage + 4 < maxPages ? startPage + 4 : maxPages
         };
     },
+    
+    sort: function(event) {
+        // search maintaining facets, reset to first page, event.target.value is the sort order
+        SearchActions.search(this.refs.searchText.value, this.state.facets, 0, this.state.top, event.target.value);
+    },
 
     _onChange: function() {
         var data = SearchStore.getAll();
@@ -68,7 +76,9 @@ var SearchUI = React.createClass({
             facets: data.facets,
             skip: data.skip,
             top: data.top,
-            count: data.count
+            count: data.count,
+            options: data.options,
+            sortBy: data.sortBy
     	});
     },
 
@@ -89,7 +99,11 @@ var SearchUI = React.createClass({
                                     <button className="btn btn-default" type="button" onClick={this.search}>Search</button>
                                 </span>
                             </div>
-                        </div>        
+                        </div>  
+                        <label for="sortBy" className="col-md-1 control-label">Sort by</label>
+                        <div className="col-md-2">
+                            <Sorter ref="sortBy" value={this.state.sortBy} options={this.state.options} onSelectionChange={this.sort}/>
+                        </div>      
                     </div>
                     <div className="row">
                         <div  className="col-md-2">

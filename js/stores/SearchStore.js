@@ -10,13 +10,32 @@ var _facets = [];
 var _count = 0;
 var _top = 12;
 var _skip = 0;
+var _options = [
+		{
+			text: "Relevance",
+			value: ""
+		},
+		{
+			text: "Endowment",
+			value: "endowmentAmount"
+		},
+		{
+			text: "Sports Teams",
+			value: "sportsTeamCount"
+		},
+		{
+			text: "Enrollment",
+			value: "studentsCount"
+		}
+	];
+var _sortBy = "";
 
-function set(results, facets, count, skip) {
+function set(results, facets, count, skip, sortBy) {
 	_results = results;
 	_facets = facets;
 	_count = count;
 	_skip = skip;
-	// foobar buzz
+	_sortBy = sortBy
 }
 
 var SearchStore = assign({}, EventEmitter.prototype, {
@@ -27,7 +46,8 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 			facets: _facets,
 			count: _count,
 			top: _top,
-			skip: _skip
+			skip: _skip,
+			options: _options
 		};
 	},
 
@@ -47,7 +67,7 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
 	switch(action.actionType) {
 		case SearchConstants.SET_ALL:
-			set(action.results, action.facets, action.count, action.skip);
+			set(action.results, action.facets, action.count, action.skip, action.sortBy);
 			SearchStore.emitChange();
 	}
 });
