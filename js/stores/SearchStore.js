@@ -45,7 +45,6 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 });
 
 AppDispatcher.register(function(action) {
-	var text;
 	switch(action.actionType) {
 		case SearchConstants.SET_ALL:
 			set(action.results, action.facets, action.count, action.skip);

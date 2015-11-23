@@ -47,6 +47,18 @@ var SearchUI = React.createClass({
             return this.search();
         }
     },
+    
+    getPagerData: function() {
+        var maxPages = Math.ceil(this.state.count/this.state.top);
+		var currentPage = (this.state.skip + this.state.top)/this.state.top;
+        var startPage = currentPage - 2 > 0 ? currentPage - 2 : 1;
+        return {
+            maxPages: maxPages,
+            currentPage: currentPage,
+            startPage: startPage,
+            lastPage: startPage + 4 < maxPages ? startPage + 4 : maxPages
+        };
+    },
 
     _onChange: function() {
         var data = SearchStore.getAll();
@@ -64,11 +76,8 @@ var SearchUI = React.createClass({
         var self = this;
         
         // params for pager control
-        var maxPages = Math.ceil(this.state.count/this.state.top);
-		var currentPage = (this.state.skip + this.state.top)/this.state.top;
-		var startPage = currentPage - 2 > 0 ? currentPage - 2 : 1;
-		var lastPage = currentPage + 2 < maxPages ? currentPage + 2 : maxPages;
-        
+        var pagerData = this.getPagerData();
+        var pagerLabel = this.state.count > 0 ? (this.state.skip + 1)+"-"+(this.state.skip+this.state.top) + " of " + this.state.count + " results" : "";
     	return (
                 <div className="container">
                     <div className="row form-group">
@@ -97,7 +106,8 @@ var SearchUI = React.createClass({
                         <div className="col-md-10">
                             <SearchResults results={this.state.results}/>
                         </div>
-                        <Pager self={self} maxPages={maxPages} currentPage={currentPage} startPage={startPage} lastPage={lastPage} callback={this.page}/>
+                        <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
+                        <div>{pagerLabel}</div>
                     </div>
                 </div>
             )
