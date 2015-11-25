@@ -1,5 +1,5 @@
 var React = require('react');
-var SearchResult = require('./SearchResult');
+var SearchResult = require('./SearchResult.jsx');
 
 var SearchResults = React.createClass({
 	render: function(){
