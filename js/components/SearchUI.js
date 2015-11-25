@@ -14,7 +14,8 @@ var SearchUI = React.createClass({
             top: 0,
             count: 0,
             options: [],
-            sortBy: ""
+            sortBy: "",
+            scoringProfile: "",
 		});
 	},
 
@@ -28,7 +29,7 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top, this.state.sortBy);
+    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top, this.state.sortBy, this.state.scoringProfile);
     },
     
     selectFacet: function(facetName) {
@@ -38,11 +39,11 @@ var SearchUI = React.createClass({
             return facet;
         });
         
-        SearchActions.search(this.refs.searchText.value, newFacets, this.state.skip, this.state.top, this.state.sortBy);
+        SearchActions.search(this.refs.searchText.value, newFacets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile);
     },
     
     page: function(page) {
-        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy);
+        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile);
     },
     
     handleKeyDown: function(evt) {
@@ -78,7 +79,8 @@ var SearchUI = React.createClass({
             top: data.top,
             count: data.count,
             options: data.options,
-            sortBy: data.sortBy
+            sortBy: data.sortBy,
+            scoringProfile: data.scoringProfile
     	});
     },
 

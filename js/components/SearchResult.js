@@ -40,6 +40,47 @@ var SearchResult = React.createClass({
 
 
 	render: function(){
+		var tableRows = [];
+		if(this.props.result.campusType){
+			tableRows.push(
+				<tr key={tableRows.length}>
+					<th className="row-header">Campus Type</th>
+					<td>{this.props.result.campusType}</td>
+				</tr>
+			);
+		}
+		if(this.props.result.studentsCount){
+			tableRows.push(
+				<tr key={tableRows.length}>
+					<th className="row-header">Students</th>
+					<td>{this.props.result.studentsCount}</td>
+				</tr>
+			);
+		}
+		if(this.props.result.facultyCount){
+			tableRows.push(
+				<tr key={tableRows.length}>
+					<th className="row-header">Faculty</th>
+					<td>{this.props.result.facultyCount}</td>
+				</tr>
+			);
+		}
+		if(this.props.result.endowmentAmount){
+			tableRows.push(
+				<tr key={tableRows.length}>
+					<th className="row-header">Endowment (USD)</th>
+					<td>{this.props.result.endowmentAmount}</td>
+				</tr>
+			);
+		}
+		if(this.props.result.sportsTeamsCount){
+			tableRows.push(
+				<tr key={tableRows.length}>
+					<th className="row-header">Sports Teams</th>
+					<td>{this.props.result.sportsTeamCount}</td>
+				</tr>
+			);
+		}
 		return (
 			<div>
 					<div onClick={this.openModal} className="col-md-4">
@@ -58,9 +99,16 @@ var SearchResult = React.createClass({
 				              <h4 className="modal-title">{this.props.result.title}</h4>
 				            </div>
 				            <div className="modal-body">
-				              <h4>Details</h4>
-				              <img style={this.imageStyle}className="img-rounded img-responsive" src={this.props.result.image_url}/>
-
+							  <div className="row">
+							  	<img style={this.imageStyle}className="img-rounded img-responsive" src={this.props.result.image_url}/>
+								<div className="table-responsive">
+									<table className="table table-striped">
+										<tbody>
+											{tableRows}
+										</tbody>
+									</table>
+								</div>
+							  </div>
 				            </div>
 				            <div className="modal-footer">
 				              <button type="button" className="btn btn-default" onClick={this.closeModal}>Close</button>
@@ -68,7 +116,6 @@ var SearchResult = React.createClass({
 				            </div>
 				          </div>
 					</Modal>
-				
 			</div>
 			)
 	}

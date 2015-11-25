@@ -32,16 +32,20 @@ var buildFilter = function(facets) {
 };
 
 var SearchActions = {
-	search: function(term, facets, skip, top, sortBy){
+	search: function(term, facets, skip, top, sortBy, scoringProfile){
 		var queryParams = {
 			'api-version': '2015-02-28',
-			'searchMode': 'all',
+			'searchMode': 'any',
 			'$count': 'true',
 			'facet': 'campusType',
-			'search': encodeURIComponent(term),
+			'search': term,
 			'$skip': skip,
 			'$top' : top
 		};
+		
+		if(scoringProfile) {
+			queryParams['scoringProfile'] = scoringProfile;
+		}
 		
 		if(sortBy) {
 			queryParams['$orderby'] = sortBy + " desc";

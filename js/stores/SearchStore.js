@@ -29,6 +29,7 @@ var _options = [
 		}
 	];
 var _sortBy = "";
+var _scoringProfile = "titleBoost";
 
 function set(results, facets, count, skip, sortBy) {
 	_results = results;
@@ -47,7 +48,9 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 			count: _count,
 			top: _top,
 			skip: _skip,
-			options: _options
+			options: _options,
+			sortBy: _sortBy,
+			scoringProfile: _scoringProfile
 		};
 	},
 
