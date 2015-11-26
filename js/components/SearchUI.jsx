@@ -1,6 +1,7 @@
 var SearchResults = require("./SearchResults.jsx");
 var Pager = require("./Pager.jsx");
 var Sorter = require("./Sorter.jsx");
+var Map = require("./Map.jsx");
 var React = require("react");
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
@@ -90,6 +91,7 @@ var SearchUI = React.createClass({
         // params for pager control
         var pagerData = this.getPagerData();
         var pagerLabel = this.state.count > 0 ? (this.state.skip + 1)+"-"+(this.state.skip+this.state.top) + " of " + this.state.count + " results" : "";
+        var mapElement = this.state.results.length > 0 ? <Map results={this.state.results}/> : <div></div>;
     	return (
                 <div className="container">
                     <div className="row form-group">
@@ -121,10 +123,12 @@ var SearchUI = React.createClass({
                         </div>
                         <div className="col-md-10">
                             <SearchResults results={this.state.results}/>
+                            {mapElement}
                         </div>
                         <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
                         <div>{pagerLabel}</div>
                     </div>
+                    
                 </div>
             )
     }

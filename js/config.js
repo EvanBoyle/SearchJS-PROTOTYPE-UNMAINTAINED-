@@ -1,11 +1,13 @@
 var config = {
 
-	queryKey: "xxxx",
+	queryKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
 
 	serviceURL: "https://xxxx.search.windows.net",
 
-	indexName: "wikiversity"
-
+	indexName: "wikiversity",
+	
+	bingAPIKey: ""
+		
 };
 
 module.exports = config;
