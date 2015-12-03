@@ -37,6 +37,8 @@ var Map = React.createClass({
 				locs.push(location);
 			}
 		});		
+		var geoLocationProvider = new Microsoft.Maps.GeoLocationProvider(map);  
+		geoLocationProvider.getCurrentPosition({ showAccuracyCirle: true, updateMapView: false }); 
 		var viewBox = Microsoft.Maps.LocationRect.fromLocations(locs);
 		map.setView({bounds: viewBox});
 	},
