@@ -18,11 +18,18 @@ var SearchUI = React.createClass({
             options: [],
             sortBy: "",
             scoringProfile: "",
-            view: SearchConstants.GRID_VIEW
+            view: SearchConstants.GRID_VIEW,
+            location: {
+                longitude: 0,
+                latitude: 0
+            }
 		});
 	},
 
     componentDidMount: function() {
+        navigator.geolocation.getCurrentPosition(function(location) {
+            SearchActions.setLocation(location.coords.latitude, location.coords.longitude)
+        }); 
     	SearchStore.addChangeListener(this._onChange);
         this._onChange();
     },
@@ -32,7 +39,7 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top, this.state.sortBy, this.state.scoringProfile);
+    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     selectFacet: function(facetName) {
@@ -42,11 +49,11 @@ var SearchUI = React.createClass({
             return facet;
         });
         
-        SearchActions.search(this.refs.searchText.value, newFacets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile);
+        SearchActions.search(this.refs.searchText.value, newFacets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     page: function(page) {
-        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile);
+        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     handleKeyDown: function(evt) {
@@ -69,7 +76,7 @@ var SearchUI = React.createClass({
     
     sort: function(event) {
         // search maintaining facets, reset to first page, event.target.value is the sort order
-        SearchActions.search(this.refs.searchText.value, this.state.facets, 0, this.state.top, event.target.value);
+        SearchActions.search(this.refs.searchText.value, this.state.facets, 0, this.state.top, event.target.value, this.state.scoringProfile, this.state.location);
     },
     
     setGridView: function() {
@@ -92,7 +99,8 @@ var SearchUI = React.createClass({
             options: data.options,
             sortBy: data.sortBy,
             scoringProfile: data.scoringProfile,
-            view: data.view
+            view: data.view,
+            location: data.location
     	});
     },
 

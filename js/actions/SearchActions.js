@@ -32,7 +32,7 @@ var buildFilter = function(facets) {
 };
 
 var SearchActions = {
-	search: function(term, facets, skip, top, sortBy, scoringProfile){
+	search: function(term, facets, skip, top, sortBy, scoringProfile, location){
 		var queryParams = {
 			'api-version': '2015-02-28',
 			'searchMode': 'any',
@@ -48,7 +48,12 @@ var SearchActions = {
 		}
 		
 		if(sortBy) {
-			queryParams['$orderby'] = sortBy + " desc";
+			if(sortBy === "location"){
+				queryParams['$orderby'] = 'geo.distance(location, geography\'POINT(' + location.longitude + ' ' + location.latitude + ')\')'
+			}
+			else {
+				queryParams['$orderby'] = sortBy + " desc";
+			}
 		}
 		
 		if(facets && facets.length > 0){
@@ -87,6 +92,14 @@ var SearchActions = {
 		AppDispatcher.dispatch({
 			actionType: SearchConstants.SET_VIEW,
 			view: viewType
+		});
+	},
+	
+	setLocation: function(latitude, longitude) {
+		AppDispatcher.dispatch({
+			actionType: SearchConstants.SET_LOCATION,
+			latitude: latitude,
+			longitude: longitude
 		});
 	}
 }

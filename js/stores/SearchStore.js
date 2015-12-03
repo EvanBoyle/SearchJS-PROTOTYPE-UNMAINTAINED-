@@ -26,11 +26,19 @@ var _options = [
 		{
 			text: "Enrollment",
 			value: "studentsCount"
+		},
+		{
+			text: "Nearby",
+			value: "location"
 		}
 	];
 var _sortBy = "";
 var _scoringProfile = "titleBoost";
 var _view = SearchConstants.GRID_VIEW;
+var _location = {
+	latitude: 0,
+	longitude: 0
+};
 
 function set(results, facets, count, skip, sortBy) {
 	_results = results;
@@ -42,6 +50,13 @@ function set(results, facets, count, skip, sortBy) {
 
 function setView(view) {
 	_view = view;
+}
+
+function setLocation(latitude, longitude) {
+	_location = {
+		latitude: latitude,
+		longitude: longitude	
+	};
 }
 
 var SearchStore = assign({}, EventEmitter.prototype, {
@@ -56,7 +71,8 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 			options: _options,
 			sortBy: _sortBy,
 			scoringProfile: _scoringProfile,
-			view: _view
+			view: _view,
+			location: _location
 		};
 	},
 
@@ -81,6 +97,10 @@ AppDispatcher.register(function(action) {
 			break;
 		case SearchConstants.SET_VIEW:
 			setView(action.view);
+			SearchStore.emitChange();
+			break;
+		case SearchConstants.SET_LOCATION:
+			setLocation(action.latitude, action.longitude);
 			SearchStore.emitChange();
 			break;
 	}

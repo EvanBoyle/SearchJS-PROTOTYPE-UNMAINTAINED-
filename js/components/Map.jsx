@@ -7,7 +7,7 @@ var Map = React.createClass({
 
 			var map = new Microsoft.Maps.Map(ReactDOM.findDOMNode(this), {credentials: config.bingAPIKey, width: 800, height: 800});
 			this.setState({map: map});
-			this.setMapView(map, this.props.results)
+			this.setMapView(map, this.props.results);
 
 	},
 	
@@ -36,7 +36,7 @@ var Map = React.createClass({
 				map.entities.push(pushpin);
 				locs.push(location);
 			}
-		});
+		});		
 		var viewBox = Microsoft.Maps.LocationRect.fromLocations(locs);
 		map.setView({bounds: viewBox});
 	},
