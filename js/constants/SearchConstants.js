@@ -5,5 +5,6 @@ module.exports = keyMirror({
 	SET_VIEW: null,
 	MAP_VIEW: null,
 	GRID_VIEW: null,
-	SET_LOCATION: null
+	SET_LOCATION: null,
+	SET_SUGGESTIONS: null
 });

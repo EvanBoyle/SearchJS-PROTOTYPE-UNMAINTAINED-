@@ -39,6 +39,8 @@ var _location = {
 	latitude: 0,
 	longitude: 0
 };
+var _suggestions = [];
+var _suggester = 'titleSuggester';
 
 function set(results, facets, count, skip, sortBy) {
 	_results = results;
@@ -46,6 +48,10 @@ function set(results, facets, count, skip, sortBy) {
 	_count = count;
 	_skip = skip;
 	_sortBy = sortBy
+}
+
+function setSuggestions(suggestions) {
+	_suggestions = suggestions;
 }
 
 function setView(view) {
@@ -72,7 +78,9 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 			sortBy: _sortBy,
 			scoringProfile: _scoringProfile,
 			view: _view,
-			location: _location
+			location: _location,
+			suggestions: _suggestions,
+			suggester: _suggester
 		};
 	},
 
@@ -103,6 +111,9 @@ AppDispatcher.register(function(action) {
 			setLocation(action.latitude, action.longitude);
 			SearchStore.emitChange();
 			break;
+		case SearchConstants.SET_SUGGESTIONS:
+			setSuggestions(action.suggestions);
+			SearchStore.emitChange();
 	}
 });
 

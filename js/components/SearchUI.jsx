@@ -22,7 +22,9 @@ var SearchUI = React.createClass({
             location: {
                 longitude: 0,
                 latitude: 0
-            }
+            },
+            suggestions: [],
+            suggester: ""
 		});
 	},
 
@@ -100,7 +102,9 @@ var SearchUI = React.createClass({
             sortBy: data.sortBy,
             scoringProfile: data.scoringProfile,
             view: data.view,
-            location: data.location
+            location: data.location,
+            suggestions: data.suggestions,
+            suggester: data.suggester
     	});
     },
 

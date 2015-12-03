@@ -76,7 +76,6 @@ var SearchActions = {
            	 			return facet;
         			});
 				
-				console.info(searchFacets);
 				AppDispatcher.dispatch({
 					actionType: SearchConstants.SET_ALL,
 					results: searchResults,
@@ -84,6 +83,28 @@ var SearchActions = {
 					count: res.body['@odata.count'],
 					skip: skip,
 					sortBy: sortBy
+				});
+			});
+	},
+	
+	suggest: function(term, suggester) {
+		var queryParams = {
+			'api-version': '2015-02-28',
+			'fuzzy': 'true',
+			'suggesterName': suggester,
+			'search': term,
+			'$top' : 10
+		};
+		
+		request
+			.get(urlPrefix + '/suggest')
+			.set('api-key', Config.queryKey)
+			.query(queryParams)
+			.end(function(err, res) {
+				// do some stuff, parse some suggestions.
+				AppDispatcher.dispatch({
+					actionType: SearchConstants.SET_SUGGESTIONS,
+					suggestions: []
 				});
 			});
 	},
