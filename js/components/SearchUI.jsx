@@ -5,6 +5,7 @@ var Map = require("./Map.jsx");
 var React = require("react");
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
+var SearchConstants = require("../constants/SearchConstants");
 
 var SearchUI = React.createClass({
 	getInitialState: function() {
@@ -17,6 +18,7 @@ var SearchUI = React.createClass({
             options: [],
             sortBy: "",
             scoringProfile: "",
+            view: SearchConstants.GRID_VIEW
 		});
 	},
 
@@ -69,6 +71,14 @@ var SearchUI = React.createClass({
         // search maintaining facets, reset to first page, event.target.value is the sort order
         SearchActions.search(this.refs.searchText.value, this.state.facets, 0, this.state.top, event.target.value);
     },
+    
+    setGridView: function() {
+        SearchActions.setView(SearchConstants.GRID_VIEW);
+    },
+    
+    setMapView: function() {
+        SearchActions.setView(SearchConstants.MAP_VIEW);
+    },
 
     _onChange: function() {
         var data = SearchStore.getAll();
@@ -81,17 +91,24 @@ var SearchUI = React.createClass({
             count: data.count,
             options: data.options,
             sortBy: data.sortBy,
-            scoringProfile: data.scoringProfile
+            scoringProfile: data.scoringProfile,
+            view: data.view
     	});
     },
 
     render: function() {
         var self = this;
         
+        var mapElement = this.state.results.length > 0 ? <Map results={this.state.results}/> : <div></div>;
+        var resultsView = this.state.view === SearchConstants.GRID_VIEW ? <SearchResults results={this.state.results}/> : mapElement;
+        
         // params for pager control
         var pagerData = this.getPagerData();
         var pagerLabel = this.state.count > 0 ? (this.state.skip + 1)+"-"+(this.state.skip+this.state.top) + " of " + this.state.count + " results" : "";
-        var mapElement = this.state.results.length > 0 ? <Map results={this.state.results}/> : <div></div>;
+        
+        var gridButtonStyle = this.state.view === SearchConstants.GRID_VIEW ? "btn btn-default active" : "btn btn-default";
+        var mapButtonStyle = this.state.view === SearchConstants.MAP_VIEW ? "btn btn-default active" : "btn btn-default";
+        
     	return (
                 <div className="container">
                     <div className="row form-group">
@@ -108,6 +125,16 @@ var SearchUI = React.createClass({
                         <div className="col-md-2">
                             <Sorter ref="sortBy" value={this.state.sortBy} options={this.state.options} onSelectionChange={this.sort}/>
                         </div>      
+                        <div className="col-md-2">
+                            <div className="btn-group" role="group" >
+                                <button type="button" className={gridButtonStyle} onClick={this.setGridView}>
+                                    <span className="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" className={mapButtonStyle} onClick={this.setMapView}>
+                                    <span className="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div className="row">
                         <div  className="col-md-2">
@@ -122,8 +149,7 @@ var SearchUI = React.createClass({
                             })}
                         </div>
                         <div className="col-md-10">
-                            <SearchResults results={this.state.results}/>
-                            {mapElement}
+                            {resultsView}
                         </div>
                         <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
                         <div>{pagerLabel}</div>

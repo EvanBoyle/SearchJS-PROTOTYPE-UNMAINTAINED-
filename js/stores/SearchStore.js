@@ -30,6 +30,7 @@ var _options = [
 	];
 var _sortBy = "";
 var _scoringProfile = "titleBoost";
+var _view = SearchConstants.GRID_VIEW;
 
 function set(results, facets, count, skip, sortBy) {
 	_results = results;
@@ -37,6 +38,10 @@ function set(results, facets, count, skip, sortBy) {
 	_count = count;
 	_skip = skip;
 	_sortBy = sortBy
+}
+
+function setView(view) {
+	_view = view;
 }
 
 var SearchStore = assign({}, EventEmitter.prototype, {
@@ -50,7 +55,8 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 			skip: _skip,
 			options: _options,
 			sortBy: _sortBy,
-			scoringProfile: _scoringProfile
+			scoringProfile: _scoringProfile,
+			view: _view
 		};
 	},
 
@@ -72,6 +78,11 @@ AppDispatcher.register(function(action) {
 		case SearchConstants.SET_ALL:
 			set(action.results, action.facets, action.count, action.skip, action.sortBy);
 			SearchStore.emitChange();
+			break;
+		case SearchConstants.SET_VIEW:
+			setView(action.view);
+			SearchStore.emitChange();
+			break;
 	}
 });
 

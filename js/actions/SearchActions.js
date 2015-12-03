@@ -82,6 +82,13 @@ var SearchActions = {
 				});
 			});
 	},
+	
+	setView: function(viewType) {
+		AppDispatcher.dispatch({
+			actionType: SearchConstants.SET_VIEW,
+			view: viewType
+		});
+	}
 }
 
 module.exports = SearchActions;
