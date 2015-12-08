@@ -2,7 +2,9 @@ var SearchResults = require("./SearchResults.jsx");
 var Pager = require("./Pager.jsx");
 var Sorter = require("./Sorter.jsx");
 var Map = require("./Map.jsx");
+var OptionTemplate = require('./OptionTemplate.jsx');
 var React = require("react");
+var Typeahead = require('react-typeahead-component');
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
 var SearchConstants = require("../constants/SearchConstants");
@@ -24,9 +26,14 @@ var SearchUI = React.createClass({
                 latitude: 0
             },
             suggestions: [],
-            suggester: ""
+            suggester: "",
+            input: "" //this one isn't in the store
 		});
 	},
+    
+    setInput: function(input) {
+        this.setState({input: input});  
+    },
 
     componentDidMount: function() {
         navigator.geolocation.getCurrentPosition(function(location) {
@@ -41,7 +48,7 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.refs.searchText.value, [], 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
+    	SearchActions.search(this.state.input, [], 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     selectFacet: function(facetName) {
@@ -51,16 +58,22 @@ var SearchUI = React.createClass({
             return facet;
         });
         
-        SearchActions.search(this.refs.searchText.value, newFacets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
+        SearchActions.search(this.state.input, newFacets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     page: function(page) {
-        SearchActions.search(this.refs.searchText.value, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
+        SearchActions.search(this.state.input, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     handleKeyDown: function(evt) {
+        
         if (evt.keyCode == 13 ) {
             return this.search();
+        }
+        else {
+            var input = evt.target.value
+            this.setInput(input);
+            SearchActions.suggest(input, this.state.suggester);
         }
     },
     
@@ -78,7 +91,7 @@ var SearchUI = React.createClass({
     
     sort: function(event) {
         // search maintaining facets, reset to first page, event.target.value is the sort order
-        SearchActions.search(this.refs.searchText.value, this.state.facets, 0, this.state.top, event.target.value, this.state.scoringProfile, this.state.location);
+        SearchActions.search(this.state.input, this.state.facets, 0, this.state.top, event.target.value, this.state.scoringProfile, this.state.location);
     },
     
     setGridView: function() {
@@ -127,7 +140,14 @@ var SearchUI = React.createClass({
                         <label for="searchBox" className="col-md-1 control-label">Wikiversity</label>
                         <div className="col-md-7">
                             <div className="input-group">
-                                <input id="searchBox" type="text" className="form-control" ref="searchText" onKeyDown={this.handleKeyDown}/>  
+                                <Typeahead
+                                    inputValue={this.state.input}
+                                    options={this.state.suggestions}
+                                    onChange={this.handleKeyDown}
+                                    optionTemplate={OptionTemplate}
+                                    onDropdownClose={this.search}
+                                />
+                                
                                 <span className="input-group-btn">
                                     <button className="btn btn-default" type="button" onClick={this.search}>Search</button>
                                 </span>

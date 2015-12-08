@@ -102,9 +102,12 @@ var SearchActions = {
 			.query(queryParams)
 			.end(function(err, res) {
 				// do some stuff, parse some suggestions.
+				var suggestions = res.body.value.map(function(suggestion) {
+					return suggestion['@search.text'];
+				});
 				AppDispatcher.dispatch({
 					actionType: SearchConstants.SET_SUGGESTIONS,
-					suggestions: []
+					suggestions: suggestions
 				});
 			});
 	},
