@@ -35,3 +35,100 @@
   background-color: transparent;
 }
 
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	vertical-align: baseline;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.mainContainer {
+	width: 70%;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	background: rgb(223, 222, 223);
+}
+
+.greenBanner {
+	width: 100%;
+	height: 20%;
+	background: rgb(127, 186, 33);
+}
+
+.searchContainer {
+	height: 95%;
+	width: 95%;
+	margin-top: -14%;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+.searchNav {
+	width: 100%;
+	height: 10%;
+	margin-right: auto;
+	margin-left: auto;
+	background: rgb(92, 73, 152);
+}
+
+.searchPane {
+	width: 98%;
+	height: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	background: white;
+}
+
+.searchControls {
+	width: 100%;
+	height: 5%
+}
+
+.facets {
+	float: left;
+	width: 20%;
+	height: 90%;
+	border-right: 2px solid rgb(92, 73, 152);
+}
+
+.resultsPane {
+	width: 79%;
+	height: 90%;
+	float: left;
+}
+
+.navFooter {
+	width: 100%;
+	height: 4%;
+}
+.navFooter li {
+	display: inline;
+}
+
+.searchResult {
+	width: 30%;
+	height: 30%;
+	float: left;
+	margin: 1.5%;
+	position: relative;
+	text-align: center;
+}
+
+.searchResult img {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	max-width: 300px;
+	max-height: 300px;
+	width: auto;
+	height: auto;
+
+}
+

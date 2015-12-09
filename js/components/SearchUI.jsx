@@ -135,56 +135,61 @@ var SearchUI = React.createClass({
         var mapButtonStyle = this.state.view === SearchConstants.MAP_VIEW ? "btn btn-default active" : "btn btn-default";
         
     	return (
-                <div className="container">
-                    <div className="row form-group">
-                        <label for="searchBox" className="col-md-1 control-label">Wikiversity</label>
-                        <div className="col-md-7">
-                            <div className="input-group">
-                                <Typeahead
+                <div className="mainContainer">
+                
+                    <div className="greenBanner">
+                    </div>
+                    
+                    <div className="searchContainer">
+                    
+                        <div className="searchNav">
+                            <Typeahead
                                     inputValue={this.state.input}
                                     options={this.state.suggestions}
                                     onChange={this.handleKeyDown}
                                     optionTemplate={OptionTemplate}
                                     onDropdownClose={this.search}
                                 />
+                                <button type="button" onClick={this.search}>Search</button>
+                        </div>
+                        
+                        <div className="searchPane">
+                        
+                            <div className="searchControls">
+                                <Sorter ref="sortBy" value={this.state.sortBy} options={this.state.options} onSelectionChange={this.sort}/>
+                                <div className="btn-group" role="group" >
+                                    <button type="button" className={gridButtonStyle} onClick={this.setGridView}>
+                                        <span className="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" className={mapButtonStyle} onClick={this.setMapView}>
+                                        <span className="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div className="facets">
+                                {this.state.facets.map(function(facet, index){
+                                    return (
+                                        <div key={index + 1} className="checkbox">
+                                            <label>
+                                                <input type="checkbox" onChange={self.selectFacet.bind(self, facet.value)} checked={facet.selected}/> {facet.value}({facet.count})
+                                            </label>
+                                        </div>
+                                        )
+                                })}
+                            </div>
+                            
+                            <div className="resultsPane">
+                                {resultsView}
                                 
-                                <span className="input-group-btn">
-                                    <button className="btn btn-default" type="button" onClick={this.search}>Search</button>
-                                </span>
                             </div>
-                        </div>  
-                        <label for="sortBy" className="col-md-1 control-label">Sort by</label>
-                        <div className="col-md-2">
-                            <Sorter ref="sortBy" value={this.state.sortBy} options={this.state.options} onSelectionChange={this.sort}/>
-                        </div>      
-                        <div className="col-md-2">
-                            <div className="btn-group" role="group" >
-                                <button type="button" className={gridButtonStyle} onClick={this.setGridView}>
-                                    <span className="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" className={mapButtonStyle} onClick={this.setMapView}>
-                                    <span className="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                                </button>
+                            <div className="navFooter">
+                                <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
+                                {pagerLabel}
                             </div>
+                            
                         </div>
-                    </div>
-                    <div className="row">
-                        <div  className="col-md-2">
-                            {this.state.facets.map(function(facet, index){
-                                return (
-                                    <div key={index + 1} className="checkbox">
-                                        <label>
-                                            <input type="checkbox" onChange={self.selectFacet.bind(self, facet.value)} checked={facet.selected}/> {facet.value}({facet.count})
-                                        </label>
-                                    </div>
-                                    )
-                            })}
-                        </div>
-                        <div className="col-md-10">
-                            {resultsView}
-                        </div>
-                        <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
-                        <div>{pagerLabel}</div>
+                        
                     </div>
                     
                 </div>

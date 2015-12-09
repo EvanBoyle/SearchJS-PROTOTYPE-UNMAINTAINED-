@@ -16,20 +16,6 @@ var SearchResult = React.createClass({
 	closeModal: function() {
 		this.setState({modalIsOpen: false});
 	},
-	dummyStyle: {
-		"width": "150px",
-		"height": "200px"
-	},
-	imageStyle: {
-		"max-height": "150px",
-		"align": "middle",
-		"verticalAlign": "middle",
-
-	},
-	textStyle: {
-		position: "absolute",
-		bottom: "0"
-	},
 	modalStyle: {
 		content: {
 			padding: "0px",
@@ -82,13 +68,11 @@ var SearchResult = React.createClass({
 			);
 		}
 		return (
-			<div>
-					<div onClick={this.openModal} className="col-md-4">
-						<div style={this.dummyStyle}>
-							<img style={this.imageStyle}className="img-rounded img-responsive" src={this.props.result.image_url}/>
-							<span style={this.textStyle}>{this.props.result.title}</span>
-						</div>
-					</div>  
+			<div className="searchResult" onClick={this.openModal}>
+					
+						<img src={this.props.result.image_url}/>
+						<div>{this.props.result.title}</div>
+					
 					<Modal style={this.modalStyle} className="Modal__Bootstrap modal-dialog" isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
 						<div className="modal-content">
 				            <div className="modal-header">
@@ -100,7 +84,7 @@ var SearchResult = React.createClass({
 				            </div>
 				            <div className="modal-body">
 							  <div className="row">
-							  	<img style={this.imageStyle}className="img-rounded img-responsive" src={this.props.result.image_url}/>
+							  	<img className="img-rounded img-responsive" src={this.props.result.image_url}/>
 								<div className="table-responsive">
 									<table className="table table-striped">
 										<tbody>

@@ -8,7 +8,7 @@ var CHANGE_EVENT = 'change';
 var _results = [];
 var _facets = [];
 var _count = 0;
-var _top = 12;
+var _top = 9;
 var _skip = 0;
 var _options = [
 		{
