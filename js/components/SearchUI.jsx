@@ -143,14 +143,20 @@ var SearchUI = React.createClass({
                     <div className="searchContainer">
                     
                         <div className="searchNav">
-                            <Typeahead
+                            <div className="controlContainer">
+                                <span className="title">
+                                    <img className="logo" src={"../../img/wikiversityLogo.png"}/> <b>FIND</b> SCHOOLS
+                                </span>
+                                <Typeahead
                                     inputValue={this.state.input}
                                     options={this.state.suggestions}
                                     onChange={this.handleKeyDown}
                                     optionTemplate={OptionTemplate}
                                     onDropdownClose={this.search}
                                 />
-                                <button type="button" onClick={this.search}>Search</button>
+                                <button className="searchButton" type="button" onClick={this.search}><img src={"../../img/searchButton.png"}/></button>
+                            </div>
+                            
                         </div>
                         
                         <div className="searchPane">
