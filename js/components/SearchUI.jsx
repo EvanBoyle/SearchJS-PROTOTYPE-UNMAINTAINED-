@@ -77,6 +77,15 @@ var SearchUI = React.createClass({
         }
     },
     
+    handleOptionChange: function(evt, option){
+        this.setInput(option);
+    },
+    
+    handleOptionClick: function(event, option) {
+        this.setInput(option);
+        this.search();
+    },
+    
     getPagerData: function() {
         var maxPages = Math.ceil(this.state.count/this.state.top);
 		var currentPage = (this.state.skip + this.state.top)/this.state.top;
@@ -153,6 +162,9 @@ var SearchUI = React.createClass({
                                     onChange={this.handleKeyDown}
                                     optionTemplate={OptionTemplate}
                                     onDropdownClose={this.search}
+                                    onOptionChange={this.handleOptionChange}
+                                    onOptionClick={this.handleOptionClick}
+                                    placeholder="Start your search here..."
                                 />
                                 <button className="searchButton" type="button" onClick={this.search}><img src={"../../img/searchButton.png"}/></button>
                             </div>

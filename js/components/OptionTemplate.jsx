@@ -2,8 +2,10 @@ var React = require('react');
 
 
 var OptionTemplate = React.createClass({
+	
 	render: function() {
-		return <div>{this.props.data}</div>
+		var cssClass = this.props.isSelected ? "selectedOption" : "";
+		return <div className={cssClass}>{this.props.data}</div>
 	}
 });
 
