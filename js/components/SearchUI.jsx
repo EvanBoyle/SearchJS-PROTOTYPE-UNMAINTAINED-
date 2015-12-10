@@ -103,12 +103,8 @@ var SearchUI = React.createClass({
         SearchActions.search(this.state.input, this.state.facets, 0, this.state.top, event.target.value, this.state.scoringProfile, this.state.location);
     },
     
-    setGridView: function() {
-        SearchActions.setView(SearchConstants.GRID_VIEW);
-    },
-    
-    setMapView: function() {
-        SearchActions.setView(SearchConstants.MAP_VIEW);
+    setView: function(event) {
+        SearchActions.setView(event.target.value);
     },
 
     _onChange: function() {
@@ -139,9 +135,6 @@ var SearchUI = React.createClass({
         // params for pager control
         var pagerData = this.getPagerData();
         var pagerLabel = this.state.count > 0 ? (this.state.skip + 1)+"-"+(this.state.skip+this.state.top) + " of " + this.state.count + " results" : "";
-        
-        var gridButtonStyle = this.state.view === SearchConstants.GRID_VIEW ? "btn btn-default active" : "btn btn-default";
-        var mapButtonStyle = this.state.view === SearchConstants.MAP_VIEW ? "btn btn-default active" : "btn btn-default";
         
     	return (
                 <div className="mainContainer">
@@ -174,15 +167,19 @@ var SearchUI = React.createClass({
                         <div className="searchPane">
                         
                             <div className="searchControls">
-                                <Sorter ref="sortBy" value={this.state.sortBy} options={this.state.options} onSelectionChange={this.sort}/>
-                                <div className="btn-group" role="group" >
-                                    <button type="button" className={gridButtonStyle} onClick={this.setGridView}>
-                                        <span className="glyphicon glyphicon-th-large" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" className={mapButtonStyle} onClick={this.setMapView}>
-                                        <span className="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-                                    </button>
-                                </div>
+                                <span className="refineLabel">Refine your search:</span>
+                                <span className="sortContainer">
+                                    <Sorter ref="sortBy" value={this.state.sortBy} options={this.state.options} onSelectionChange={this.sort}/>
+                                    <span className="dropdownLabel">Sort by:</span>
+                                </span>
+
+                                <span className="viewControlContainer">
+                                    <select className="dropdown" value={this.state.view} onChange={this.setView}>
+                                        <option value={SearchConstants.GRID_VIEW}>grid</option>
+                                        <option value={SearchConstants.MAP_VIEW}>map</option>
+                                    </select>
+                                    <span className="dropdownLabel">View as:</span>
+                                </span>
                             </div>
                             
                             <div className="facets">

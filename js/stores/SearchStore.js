@@ -12,23 +12,23 @@ var _top = 9;
 var _skip = 0;
 var _options = [
 		{
-			text: "Relevance",
+			text: "relevance",
 			value: ""
 		},
 		{
-			text: "Endowment",
+			text: "endowment",
 			value: "endowmentAmount"
 		},
 		{
-			text: "Sports Teams",
+			text: "sports Teams",
 			value: "sportsTeamCount"
 		},
 		{
-			text: "Enrollment",
+			text: "enrollment",
 			value: "studentsCount"
 		},
 		{
-			text: "Nearby",
+			text: "nearby",
 			value: "location"
 		}
 	];

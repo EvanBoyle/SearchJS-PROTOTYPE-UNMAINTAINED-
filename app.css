@@ -196,8 +196,39 @@
 	vertical-align: middle;
 }
 
-.sorter {
+.dropdown {
 	float: right;
+	color: #6753A2;
+	margin-right: 1%;
+	vertical-align: middle;
+	padding-left: 1%;
+	font-size: 1em;
+	font-weight: 500;
+	margin-top: -1px;
+}
+
+.sortContainer {
+	vertical-align: middle;
+	float: right;
+	margin-top: 1%;
+	color: #6753A2;
+	width: 25%;
+	font-size: 1.3em;
+}
+
+.viewControlContainer {
+	vertical-align: middle;
+	float: right;
+	margin-top: 1%;
+	color: #6753A2;
+	width: 25%;
+	font-size: 1.3em;
+}
+
+.dropdownLabel{
+	font-weight: 350;
+	float: right;
+	vertical-align: baseline;
 }
 
 .react-typeahead-options {
@@ -221,4 +252,13 @@
 .selectedOption {
 	color: #6753A2;
 	font-weight: 400;
+}
+
+.refineLabel {
+	float: left;
+	font-size: 1.3em;
+	font-weight: 300;
+	color: #6753A2;
+	margin-left: 3%;
+	margin-top: 1%
 }
