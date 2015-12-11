@@ -5,7 +5,7 @@ var config = require('../config');
 var Map = React.createClass({
 	componentDidMount: function() {
 
-			var map = new Microsoft.Maps.Map(ReactDOM.findDOMNode(this), {credentials: config.bingAPIKey, width: 800, height: 800});
+			var map = new Microsoft.Maps.Map(ReactDOM.findDOMNode(this), {credentials: config.bingAPIKey, width: 750, height: 750});
 			this.setState({map: map});
 			this.setMapView(map, this.props.results);
 
@@ -46,9 +46,12 @@ var Map = React.createClass({
 	render: function() {
 		this.props.results;
 		var style = {
-			width: "100%",
-			height: "100%",
-			'margin-top': "3%"
+			width: "750px",
+			height: "750px",
+			'margin-top': "3%",
+			'margin-left': "auto",
+			'margin-right': "auto"
+			
 		};
 
 		return <div style={style} ref="map"></div>
