@@ -46,8 +46,9 @@ var Map = React.createClass({
 	render: function() {
 		this.props.results;
 		var style = {
-			width: "800px",
-			height: "800px"
+			width: "100%",
+			height: "100%",
+			'margin-top': "3%"
 		};
 
 		return <div style={style} ref="map"></div>
