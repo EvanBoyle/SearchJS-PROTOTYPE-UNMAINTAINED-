@@ -5,7 +5,7 @@ var OptionTemplate = React.createClass({
 	
 	render: function() {
 		var cssClass = this.props.isSelected ? "selectedOption" : "";
-		return <div className={cssClass}>{this.props.data}</div>
+		return <div dangerouslySetInnerHTML={{__html: this.props.data}} className={cssClass}></div>
 	}
 });
 

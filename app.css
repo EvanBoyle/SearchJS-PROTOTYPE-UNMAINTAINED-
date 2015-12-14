@@ -44,6 +44,10 @@
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+b {
+	font-weight: 500;
+}
+
 ::-webkit-scrollbar {
     width: 5px;
 	height: 5px;

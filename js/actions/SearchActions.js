@@ -93,7 +93,9 @@ var SearchActions = {
 			'fuzzy': 'true',
 			'suggesterName': suggester,
 			'search': term,
-			'$top' : 10
+			'$top' : 10,
+			'highlightPreTag': '<b>',
+			'highlightPostTag': '</b>'
 		};
 		
 		request

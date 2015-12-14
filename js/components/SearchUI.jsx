@@ -32,7 +32,9 @@ var SearchUI = React.createClass({
 	},
     
     setInput: function(input) {
-        this.setState({input: input});  
+        // must strip out HTML tags used to style suggestion highlights
+        // in this case <b> </b>
+        this.setState({input: input.replace("<b>","").replace("</b>", "")});  
     },
 
     componentDidMount: function() {
