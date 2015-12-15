@@ -103,6 +103,10 @@ AppDispatcher.register(function(action) {
 			set(action.results, action.facets, action.count, action.skip, action.sortBy);
 			SearchStore.emitChange();
 			break;
+		case SearchConstants.APPEND:
+			set(_results.concat(action.results), action.facets, action.count, action.skip, action.sortBy);
+			SearchStore.emitChange();
+			break;
 		case SearchConstants.SET_VIEW:
 			setView(action.view);
 			SearchStore.emitChange();

@@ -12,7 +12,8 @@
     "keymirror": "~0.1.0",
     "object-assign": "^1.0.0",
     "superagent": "~1.4",
-    "react-typeahead-component": "^0.9.0"
+    "react-typeahead-component": "^0.9.0",
+    "react-infinite-scroll": "~0.1.5"
   },
   "devDependencies": {
     "browserify": "~6.2.0",

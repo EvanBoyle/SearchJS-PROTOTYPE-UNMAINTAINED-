@@ -31,8 +31,9 @@ var buildFilter = function(facets) {
 	return filter;
 };
 
+// loadMore is false by default, if set to true, we will append results rather than set new ones
 var SearchActions = {
-	search: function(term, facets, skip, top, sortBy, scoringProfile, location){
+	search: function(term, facets, skip, top, sortBy, scoringProfile, location, loadMore){
 		var queryParams = {
 			'api-version': '2015-02-28',
 			'searchMode': 'any',
@@ -77,7 +78,7 @@ var SearchActions = {
         			});
 				
 				AppDispatcher.dispatch({
-					actionType: SearchConstants.SET_ALL,
+					actionType: loadMore ? SearchConstants.APPEND : SearchConstants.SET_ALL,
 					results: searchResults,
 					facets: searchFacets,
 					count: res.body['@odata.count'],

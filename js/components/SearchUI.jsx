@@ -8,6 +8,7 @@ var Typeahead = require('react-typeahead-component');
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
 var SearchConstants = require("../constants/SearchConstants");
+var InfiniteScroll = require('react-infinite-scroll')(React);
 
 var SearchUI = React.createClass({
 	getInitialState: function() {
@@ -108,6 +109,18 @@ var SearchUI = React.createClass({
     setView: function(event) {
         SearchActions.setView(event.target.value);
     },
+    
+    loadMore: function(event) {
+        var top = event.target.scrollTop;
+        var max = event.target.scrollHeight
+        console.info(event.target.scrollTop);
+        console.info(event.target.scrollHeight);
+        if(max/top < 1.7) {
+            console.info("get more results");
+            SearchActions.search(this.state.input, this.state.facets, this.state.skip + this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location, true);
+        }
+        
+    },
 
     _onChange: function() {
         var data = SearchStore.getAll();
@@ -195,11 +208,15 @@ var SearchUI = React.createClass({
                                         )
                                 })}
                             </div>
-                            
-                            <div className="resultsPane">
-                                {resultsView}
+ 
                                 
-                            </div>
+                                <div className="resultsPane" onScroll={this.loadMore}>
+                                
+                                        {resultsView}
+                                
+                                    
+                                </div>
+
                             <div className="navFooter">
                                 <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
                                 {pagerLabel}

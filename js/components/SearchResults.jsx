@@ -1,6 +1,7 @@
 var React = require('react');
 var SearchResult = require('./SearchResult.jsx');
 
+
 var SearchResults = React.createClass({
 	render: function(){
 		if(this.props.results.length === 0){
@@ -8,6 +9,9 @@ var SearchResults = React.createClass({
 		}
 		return (
 				<div >
+					
+
+                                
 						{this.props.results.map(function(result, index){
 								return <SearchResult result={result} key={index} index={index + 1}/>
 							})}
