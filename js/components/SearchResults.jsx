@@ -1,5 +1,6 @@
 var React = require('react');
 var SearchResult = require('./SearchResult.jsx');
+var Infinite = require('react-infinite');
 
 
 var SearchResults = React.createClass({
@@ -7,16 +8,16 @@ var SearchResults = React.createClass({
 		if(this.props.results.length === 0){
 			return <div></div>
 		}
+		
+		// todo: don't hard code the numbers below
+		// elementHeight is divided by 9 because we display 3 rows of 3 results
+		
 		return (
-				<div >
-					
-
-                                
-						{this.props.results.map(function(result, index){
-								return <SearchResult result={result} key={index} index={index + 1}/>
-							})}
-
-				</div>
+				<Infinite containerHeight={793} elementHeight={793/9} onInfiniteLoad={this.props.loader} isInfiniteLoading={false} infiniteLoadBeginEdgeOffset={600}>
+					{this.props.results.map(function(result, index){
+							return <SearchResult result={result} key={index} index={index + 1}/>
+					})}
+				</Infinite>
 			)
 	}
 });

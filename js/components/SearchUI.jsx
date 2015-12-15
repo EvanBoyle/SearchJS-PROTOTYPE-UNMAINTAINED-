@@ -111,15 +111,10 @@ var SearchUI = React.createClass({
     },
     
     loadMore: function(event) {
-        var top = event.target.scrollTop;
-        var max = event.target.scrollHeight
-        console.info(event.target.scrollTop);
-        console.info(event.target.scrollHeight);
-        if(max/top < 1.7) {
-            console.info("get more results");
-            SearchActions.search(this.state.input, this.state.facets, this.state.skip + this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location, true);
+        if(this.state.results.length >= this.state.count) {
+            return;
         }
-        
+        SearchActions.search(this.state.input, this.state.facets, this.state.skip + this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location, true);
     },
 
     _onChange: function() {
@@ -145,7 +140,7 @@ var SearchUI = React.createClass({
         var self = this;
         
         var mapElement = this.state.results.length > 0 ? <Map results={this.state.results}/> : <div></div>;
-        var resultsView = this.state.view === SearchConstants.GRID_VIEW ? <SearchResults results={this.state.results}/> : mapElement;
+        var resultsView = this.state.view === SearchConstants.GRID_VIEW ? <SearchResults loader={this.loadMore} results={this.state.results}/> : mapElement;
         
         // params for pager control
         var pagerData = this.getPagerData();
@@ -209,13 +204,9 @@ var SearchUI = React.createClass({
                                 })}
                             </div>
  
-                                
-                                <div className="resultsPane" onScroll={this.loadMore}>
-                                
-                                        {resultsView}
-                                
-                                    
-                                </div>
+                            <div className="resultsPane">                           
+                                {resultsView}
+                            </div>
 
                             <div className="navFooter">
                                 <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
