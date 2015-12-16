@@ -1,5 +1,4 @@
 var SearchResults = require("./SearchResults.jsx");
-var Pager = require("./Pager.jsx");
 var Sorter = require("./Sorter.jsx");
 var Map = require("./Map.jsx");
 var OptionTemplate = require('./OptionTemplate.jsx');
@@ -64,10 +63,6 @@ var SearchUI = React.createClass({
         SearchActions.search(this.state.input, newFacets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
-    page: function(page) {
-        SearchActions.search(this.state.input, this.state.facets, (page - 1)*this.state.top, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
-    },
-    
     handleKeyDown: function(evt) {
         
         if (evt.keyCode == 13 ) {
@@ -87,18 +82,6 @@ var SearchUI = React.createClass({
     handleOptionClick: function(event, option) {
         this.setInput(option);
         this.search();
-    },
-    
-    getPagerData: function() {
-        var maxPages = Math.ceil(this.state.count/this.state.top);
-		var currentPage = (this.state.skip + this.state.top)/this.state.top;
-        var startPage = currentPage - 2 > 0 ? currentPage - 2 : 1;
-        return {
-            maxPages: maxPages,
-            currentPage: currentPage,
-            startPage: startPage,
-            lastPage: startPage + 4 < maxPages ? startPage + 4 : maxPages
-        };
     },
     
     sort: function(event) {
@@ -142,9 +125,7 @@ var SearchUI = React.createClass({
         var mapElement = this.state.results.length > 0 ? <Map results={this.state.results}/> : <div></div>;
         var resultsView = this.state.view === SearchConstants.GRID_VIEW ? <SearchResults loader={this.loadMore} results={this.state.results}/> : mapElement;
         
-        // params for pager control
-        var pagerData = this.getPagerData();
-        var pagerLabel = this.state.count > 0 ? (this.state.skip + 1)+"-"+(this.state.skip+this.state.top) + " of " + this.state.count + " results" : "";
+        var pagerLabel = (this.state.skip+this.state.top) + " of " + this.state.count + " results";
         
     	return (
                 <div className="mainContainer">
@@ -209,7 +190,6 @@ var SearchUI = React.createClass({
                             </div>
 
                             <div className="navFooter">
-                                <Pager self={self} maxPages={pagerData.maxPages} currentPage={pagerData.currentPage} startPage={pagerData.startPage} lastPage={pagerData.lastPage} callback={this.page}/>
                                 {pagerLabel}
                             </div>
                             
