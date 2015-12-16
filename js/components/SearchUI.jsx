@@ -125,7 +125,7 @@ var SearchUI = React.createClass({
         var mapElement = this.state.results.length > 0 ? <Map results={this.state.results}/> : <div></div>;
         var resultsView = this.state.view === SearchConstants.GRID_VIEW ? <SearchResults loader={this.loadMore} results={this.state.results}/> : mapElement;
         
-        var pagerLabel = (this.state.skip+this.state.top) + " of " + this.state.count + " results";
+        var pagerLabel = this.state.results.length + " of " + this.state.count + " results";
         
     	return (
                 <div className="mainContainer">
