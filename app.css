@@ -125,7 +125,7 @@ b {
 	width: 74%;
 	height: 90%;
 	float: left;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .navFooter {

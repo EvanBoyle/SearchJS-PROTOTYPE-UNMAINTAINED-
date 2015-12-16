@@ -1,9 +1,16 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var SearchResult = require('./SearchResult.jsx');
 var Infinite = require('react-infinite');
 
 
 var SearchResults = React.createClass({
+	componentDidUpdate: function() {
+  		if (this.props.results.length <= this.props.top) {
+    		var node = ReactDOM.findDOMNode(this);
+    		node.scrollTop = 0;
+  		}
+},
 	render: function(){
 		if(this.props.results.length === 0){
 			return <div></div>

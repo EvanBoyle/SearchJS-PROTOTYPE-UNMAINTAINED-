@@ -7,7 +7,6 @@ var Typeahead = require('react-typeahead-component');
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
 var SearchConstants = require("../constants/SearchConstants");
-var InfiniteScroll = require('react-infinite-scroll')(React);
 
 var SearchUI = React.createClass({
 	getInitialState: function() {
@@ -123,7 +122,7 @@ var SearchUI = React.createClass({
         var self = this;
         
         var mapElement = this.state.results.length > 0 ? <Map results={this.state.results}/> : <div></div>;
-        var resultsView = this.state.view === SearchConstants.GRID_VIEW ? <SearchResults loader={this.loadMore} results={this.state.results}/> : mapElement;
+        var resultsView = this.state.view === SearchConstants.GRID_VIEW ? <SearchResults top={this.state.top} loader={this.loadMore} results={this.state.results}/> : mapElement;
         
         var pagerLabel = this.state.results.length + " of " + this.state.count + " results";
         
