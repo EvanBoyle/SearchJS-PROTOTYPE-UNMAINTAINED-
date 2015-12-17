@@ -1,4 +1,5 @@
 var SearchResults = require("./SearchResults.jsx");
+var CheckboxFacets = require("./CheckboxFacets.jsx");
 var Sorter = require("./Sorter.jsx");
 var Map = require("./Map.jsx");
 var OptionTemplate = require('./OptionTemplate.jsx');
@@ -173,17 +174,9 @@ var SearchUI = React.createClass({
                             </div>
                             
                             <div className="facets">
-                                {this.state.facets.map(function(facet, index){
-                                    return (
-                                        <div key={index + 1} className="checkbox">
-                                            <label>
-                                                <input type="checkbox" onChange={self.selectFacet.bind(self, facet.value)} checked={facet.selected}/> {facet.value}({facet.count})
-                                            </label>
-                                        </div>
-                                        )
-                                })}
+                                <CheckboxFacets facets={this.state.facets} onFacetSelection={this.selectFacet}/>
                             </div>
- 
+
                             <div className="resultsPane">                           
                                 {resultsView}
                             </div>
