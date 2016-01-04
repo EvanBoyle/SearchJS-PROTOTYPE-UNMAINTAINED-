@@ -9,26 +9,16 @@ var urlPrefix = Config.serviceURL +
 				"/docs";
 				
 var buildFilter = function(facets) {
-	var filter = "";
-	var prefix = " campusType eq "
-	
-	var filteredElements = facets.filter(function(facet){
-            return facet.selected;
-        });
-		
-	if(filteredElements.length === 0){
-		return "";
-	}
-	 
-	for(var i = 0; i<filteredElements.length; i++){
-		var result = "";
-		if(i > 0){
-			result += " or ";
-		}
-		result += prefix + "'" + filteredElements[i].value + "'";
-		filter += result;
-	}
-	return filter;
+	var keys = Object.keys(facets);
+    var filters = [];
+    keys.forEach(function(key) {
+        var filter = facets[key].getFilter();
+        if(filter) {
+            filters.push(filter);
+        }
+    });
+    
+    return filters.length > 0 ? filters.join(" and ") : null;
 };
 
 // loadMore is false by default, if set to true, we will append results rather than set new ones
@@ -38,7 +28,6 @@ var SearchActions = {
 			'api-version': '2015-02-28',
 			'searchMode': 'any',
 			'$count': 'true',
-			'facet': 'campusType',
 			'search': term,
 			'$skip': skip,
 			'$top' : top
@@ -57,36 +46,81 @@ var SearchActions = {
 			}
 		}
 		
-		if(facets && facets.length > 0){
-			var filter = buildFilter(facets);
-			if(filter) {
-				queryParams['$filter'] = filter;
-			}
-		}
-		
+		queryParams['$filter'] = buildFilter(facets);
+        
+        // we request the facets without filters and set them here, facets with filters must be done in a separate request
+        var filterlessFacets = Object.keys(facets).filter(function(key) {
+           return facets[key].getFilter() === null;
+        });
+        
+        var facetClauses = filterlessFacets.map(function(key) {
+            return facets[key].getFacetClause();
+        });
+		var facetClause = facetClauses.length > 0 ? "facet=" + facetClauses.join("&facet=") : null;
+        
+        // update the facets that have filters applied
+        this.getFacets(facets, term);
+        
+        // get search results and facets with out filters
 		request
 			.get(urlPrefix)
 			.set('api-key', Config.queryKey)
 			.query(queryParams)
+            // facet clause must be specified seperately because it reuses the query param 'facet=&facet=..'
+            .query(facetClause)
 			.end(function(err, res) {
 				var searchResults = res.body.value;
-				var searchFacets = facets && facets.length > 0 ? 
-					facets : 
-					res.body['@search.facets'].campusType.map(function(facet, index) {
-            			facet.selected = false;
-           	 			return facet;
-        			});
-				
 				AppDispatcher.dispatch({
 					actionType: loadMore ? SearchConstants.APPEND : SearchConstants.SET_ALL,
 					results: searchResults,
-					facets: searchFacets,
 					count: res.body['@odata.count'],
 					skip: skip,
 					sortBy: sortBy
 				});
+                if(res.body['@search.facets']) {
+                    AppDispatcher.dispatch({
+                        actionType: SearchConstants.SET_FACETS,
+                        facets: res.body['@search.facets'],
+                    });
+                }
 			});
 	},
+    
+    getFacets: function(facets, term) {
+        var filteredFacets = Object.keys(facets).filter(function(key) {
+           return facets[key].getFilter() !== null;
+        });
+        if(filteredFacets.length < 1) {
+            return;
+        }
+        filteredFacets.forEach(function(facet) {
+            var queryParams = {
+                'api-version': '2015-02-28',
+                'searchMode': 'any',
+                'search': term,
+                '$top' : 0
+            };
+            var currentFacets = filteredFacets.filter(function(targetFacet) {
+                return targetFacet !== facet;
+            });
+            var filters = currentFacets.map(function(currentFacet) {
+                return facets[currentFacet].getFilter();
+            });
+            
+            queryParams['$filter'] = filters.length > 0 ? filters.join(" and ") : null;
+            queryParams['facet'] = facet;
+            request
+                .get(urlPrefix)
+                .set('api-key', Config.queryKey)
+                .query(queryParams)
+                .end(function(err, res) {
+                    AppDispatcher.dispatch({
+                        actionType: SearchConstants.UPDATE_FACETS,
+                        facets: res.body['@search.facets'],
+                    });
+                });
+        });
+    },
 	
 	suggest: function(term, suggester) {
 		var queryParams = {
@@ -104,7 +138,6 @@ var SearchActions = {
 			.set('api-key', Config.queryKey)
 			.query(queryParams)
 			.end(function(err, res) {
-				// do some stuff, parse some suggestions.
 				var suggestions = res.body.value.map(function(suggestion) {
 					return suggestion['@search.text'];
 				});

@@ -1,12 +1,16 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var SearchConstants = require('../constants/SearchConstants');
+var CheckboxFacets = require('../models/CheckboxFacets');
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
 var _results = [];
-var _facets = [];
+var _facets = {
+	campusType: new CheckboxFacets('campusType', false),
+    sportsTeamCount: new CheckboxFacets('sportsTeamCount', true),
+};
 var _count = 0;
 var _top = 24;
 var _skip = 0;
@@ -42,12 +46,28 @@ var _location = {
 var _suggestions = [];
 var _suggester = 'titleSuggester';
 
-function set(results, facets, count, skip, sortBy) {
+function set(results, count, skip, sortBy) {
 	_results = results;
-	_facets = facets;
 	_count = count;
 	_skip = skip;
 	_sortBy = sortBy
+}
+
+function setFacets(facets) {
+    
+    Object.keys(facets).forEach(function(key) {
+        if(key.indexOf('@odata.type') < 0) {
+            _facets[key].setValues(facets[key]);
+        }
+    });
+}
+
+function updateFacets(facets) {
+    Object.keys(facets).forEach(function(key) {
+        if(key.indexOf('@odata.type') < 0) {
+            _facets[key].updateValues(facets[key]);
+        }
+    });
 }
 
 function setSuggestions(suggestions) {
@@ -100,13 +120,21 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function(action) {
 	switch(action.actionType) {
 		case SearchConstants.SET_ALL:
-			set(action.results, action.facets, action.count, action.skip, action.sortBy);
+			set(action.results, action.count, action.skip, action.sortBy);
 			SearchStore.emitChange();
 			break;
 		case SearchConstants.APPEND:
-			set(_results.concat(action.results), action.facets, action.count, action.skip, action.sortBy);
+			set(_results.concat(action.results), action.count, action.skip, action.sortBy);
 			SearchStore.emitChange();
 			break;
+        case SearchConstants.SET_FACETS:
+            setFacets(action.facets)
+            SearchStore.emitChange();
+            break;
+        case SearchConstants.UPDATE_FACETS:
+            updateFacets(action.facets)
+            SearchStore.emitChange();
+            break;
 		case SearchConstants.SET_VIEW:
 			setView(action.view);
 			SearchStore.emitChange();
@@ -118,6 +146,7 @@ AppDispatcher.register(function(action) {
 		case SearchConstants.SET_SUGGESTIONS:
 			setSuggestions(action.suggestions);
 			SearchStore.emitChange();
+            break;
 	}
 });
 

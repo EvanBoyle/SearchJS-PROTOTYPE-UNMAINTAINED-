@@ -7,5 +7,7 @@ module.exports = keyMirror({
 	MAP_VIEW: null,
 	GRID_VIEW: null,
 	SET_LOCATION: null,
-	SET_SUGGESTIONS: null
+	SET_SUGGESTIONS: null,
+    SET_FACETS: null,
+    UPDATE_FACETS: null
 });

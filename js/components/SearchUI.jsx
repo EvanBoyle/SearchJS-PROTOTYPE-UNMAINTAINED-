@@ -1,5 +1,5 @@
 var SearchResults = require("./SearchResults.jsx");
-var CheckboxFacets = require("./CheckboxFacets.jsx");
+var CheckboxFacetControl = require("./CheckboxFacetControl.jsx");
 var Sorter = require("./Sorter.jsx");
 var Map = require("./Map.jsx");
 var OptionTemplate = require('./OptionTemplate.jsx');
@@ -13,7 +13,7 @@ var SearchUI = React.createClass({
 	getInitialState: function() {
 		return({
 			results: [],
-            facets: [],
+            facets: {},
             skip: 0,
             top: 0,
             count: 0,
@@ -50,17 +50,17 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.state.input, [], 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
+    	SearchActions.search(this.state.input, this.state.facets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
-    selectFacet: function(facetName) {
-        var newFacets = this.state.facets.map(function(facet) {
+    selectFacet: function(fieldName, facetName) {
+        var facets = this.state.facets;
+        facets[fieldName].values.forEach(function(facet, index) {
             var isSelection = facet.value === facetName;
-            facet.selected = isSelection ? !facet.selected : facet.selected;
-            return facet;
+            facets[fieldName].values[index].selected = isSelection ? !facet.selected : facet.selected;
         });
         
-        SearchActions.search(this.state.input, newFacets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
+        SearchActions.search(this.state.input, facets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     handleKeyDown: function(evt) {
@@ -174,7 +174,8 @@ var SearchUI = React.createClass({
                             </div>
                             
                             <div className="facets">
-                                <CheckboxFacets facets={this.state.facets} onFacetSelection={this.selectFacet}/>
+                                <CheckboxFacetControl facets={this.state.facets['campusType']} onFacetSelection={this.selectFacet} displayName={"CAMPUS TYPE"}/>
+                                 <CheckboxFacetControl facets={this.state.facets['sportsTeamCount']} onFacetSelection={this.selectFacet} displayName={"SPORTS TEAMS"}/>
                             </div>
 
                             <div className="resultsPane">                           

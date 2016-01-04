@@ -121,6 +121,17 @@ b {
 	border-right: 1px solid #6753A2;
 }
 
+.facetLabel {
+    text-transform: uppercase;
+    color: #6753A2;
+    font-weight: 600;
+}
+
+.checkboxFacet {
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
 .resultsPane {
 	width: 74%;
 	height: 90%;
