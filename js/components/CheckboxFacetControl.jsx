@@ -3,7 +3,7 @@ var React = require("react");
 var CheckboxFacetControl = React.createClass({
 	render: function() {
 		var self = this;
-        if(!this.props.facets) {
+        if(!this.props.facets || this.props.facets.values.length < 1) {
             return <div></div>
         }
 		return (
