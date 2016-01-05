@@ -1,4 +1,5 @@
 var React = require("react");
+var CheckControl = require("./CheckControl.jsx");
 
 var CheckboxFacetControl = React.createClass({
 	render: function() {
@@ -6,6 +7,7 @@ var CheckboxFacetControl = React.createClass({
         if(!this.props.facets || this.props.facets.values.length < 1) {
             return <div></div>
         }
+        
 		return (
 			<div className="checkboxFacet">
                 <div className="facetLabel">
@@ -14,9 +16,7 @@ var CheckboxFacetControl = React.createClass({
 				{this.props.facets.values.map(function(facet, index){
 					return (
 						<div key={index + 1} className="checkbox">
-							<label>
-								<input type="checkbox" onChange={self.props.onFacetSelection.bind(null, self.props.facets.key, facet.value)} checked={facet.selected}/> {facet.value}({facet.count})
-							</label>
+                            <CheckControl onFacetSelection={self.props.onFacetSelection.bind(null, self.props.facets.key, facet.value)} selected={facet.selected} value={facet.value} count={facet.count} />
 						</div>
 						)
 				})}

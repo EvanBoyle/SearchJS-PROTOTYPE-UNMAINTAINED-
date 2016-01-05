@@ -131,6 +131,30 @@ b {
     padding-left: 5%;
     padding-top: 5%;
 }
+.checkboxFacet input[type="checkbox"] {
+    display:none;
+}
+
+.checkElement {
+    float: left;
+    width: 1em;
+}
+
+.checked {
+    color: black;
+}
+
+.checked-hover {
+    color: red;
+}
+
+.unchecked {
+    color: darkgrey;
+}
+
+.unchecked-hover {
+    color: #8AC224;
+}
 
 .resultsPane {
 	width: 74%;
