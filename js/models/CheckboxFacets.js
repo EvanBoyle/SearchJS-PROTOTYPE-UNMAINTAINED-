@@ -35,6 +35,12 @@ CheckboxFacets.prototype.getFilter = function() {
     return "(" + filter + ")";
 }
 
+CheckboxFacets.prototype.clearSelections = function() {
+    this.values.forEach(function(value) {
+       value.selected = false; 
+    });
+}
+
 CheckboxFacets.prototype.setValues = function(newValues) {
     var values = newValues.map(function(facet, index) {
         facet.selected = false;

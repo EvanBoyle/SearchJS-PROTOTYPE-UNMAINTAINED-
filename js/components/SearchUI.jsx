@@ -50,7 +50,11 @@ var SearchUI = React.createClass({
     },
 
     search: function() {
-    	SearchActions.search(this.state.input, this.state.facets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
+        var facets = this.state.facets;
+        Object.keys(facets).forEach(function(key) {
+            facets[key].clearSelections();
+        });
+    	SearchActions.search(this.state.input, facets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
     selectFacet: function(fieldName, facetName) {
