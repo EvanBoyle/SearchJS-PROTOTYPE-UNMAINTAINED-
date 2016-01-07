@@ -71,7 +71,7 @@ var SearchResult = React.createClass({
 			<div className="searchResult" onClick={this.openModal}>
 					
 						<img src={this.props.result.image_url}/>
-						<div>{this.props.result.title}</div>
+						<div className="imgTitle">{this.props.result.title}</div>
 					
 					<Modal style={this.modalStyle} className="Modal__Bootstrap modal-dialog" isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
 						<div className="modal-content">

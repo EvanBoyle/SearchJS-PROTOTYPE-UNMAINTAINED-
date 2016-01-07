@@ -243,6 +243,15 @@ b {
 	height: auto;
 }
 
+.imgTitle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .controlContainer {
 	display: inline-block;
 	width: 100%;

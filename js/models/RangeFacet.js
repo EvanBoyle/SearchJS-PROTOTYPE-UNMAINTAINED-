@@ -37,5 +37,10 @@ RangeFacet.prototype.getFacetClause = function() {
     return this.key + ',values:' + this.lowerBound + '|' + this.upperBound;    
 }
 
+RangeFacet.prototype.clearSelections = function() {
+    this.lowerBound = this.min;
+    this.upperBound = this.max;
+}
+
 
 module.exports = RangeFacet;
