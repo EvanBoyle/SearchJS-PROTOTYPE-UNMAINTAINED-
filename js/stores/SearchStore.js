@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var SearchConstants = require('../constants/SearchConstants');
 var CheckboxFacets = require('../models/CheckboxFacets');
+var RangeFacet = require('../models/RangeFacet');
 var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
@@ -10,6 +11,7 @@ var _results = [];
 var _facets = {
 	campusType: new CheckboxFacets('campusType', false),
     sportsTeamCount: new CheckboxFacets('sportsTeamCount', true),
+    studentsCount: new RangeFacet('studentsCount', 0, 1000000)
 };
 var _count = 0;
 var _top = 24;

@@ -1,7 +1,6 @@
 function CheckboxFacets(key, isNumeric) {
     this.values = [];
     this.key = key;
-    this.filter = ""
     this.isNumeric =  isNumeric;
 }
 

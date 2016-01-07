@@ -140,6 +140,53 @@ b {
     width: 1em;
 }
 
+.rangeFacet {
+    padding-left: 5%;
+    padding-top: 5%;
+}
+
+.slider {
+        
+            margin-top: 15%;
+            margin-left: 4%;
+            width: 80%;
+            height: 3px;
+            background-color: #6753A2;
+        }
+
+.bar-1 {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #6753A2;
+            margin-top: -9px;
+            box-shadow: 2px 2px 4px grey;
+}
+
+.bar-2 {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #6753A2;
+            margin-top: -9px;
+            box-shadow: 2px 2px 4px grey
+}
+
+.minMaxLabels {
+    width: 90%;
+    color: #6753A2;
+    margin-left: 4%;
+    margin-bottom: 5%
+}
+
+.minLabel {
+    float: left;
+}
+
+.maxLabel {
+    float: right;
+}
+
 .checked {
     color: black;
 }
