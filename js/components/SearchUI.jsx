@@ -5,6 +5,7 @@ var Map = require("./Map.jsx");
 var OptionTemplate = require('./OptionTemplate.jsx');
 var React = require("react");
 var Typeahead = require('react-typeahead-component');
+var RangeFacetControl = require("./RangeFacetControl.jsx");
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
 var SearchConstants = require("../constants/SearchConstants");
@@ -178,8 +179,9 @@ var SearchUI = React.createClass({
                             </div>
                             
                             <div className="facets">
-                                <CheckboxFacetControl facets={this.state.facets['campusType']} onFacetSelection={this.selectFacet} displayName={"CAMPUS TYPE"}/>
-                                 <CheckboxFacetControl facets={this.state.facets['sportsTeamCount']} onFacetSelection={this.selectFacet} displayName={"SPORTS TEAMS"}/>
+                                <CheckboxFacetControl facets={this.state.facets['campusType']} onFacetSelection={this.selectFacet} displayName={"Campus type"}/>
+                                 <CheckboxFacetControl facets={this.state.facets['sportsTeamCount']} onFacetSelection={this.selectFacet} displayName={"Sports teams"}/>
+                                 <RangeFacetControl facet={this.state.facets['studentsCount']} displayName={"Students"}/>
                             </div>
 
                             <div className="resultsPane">                           
