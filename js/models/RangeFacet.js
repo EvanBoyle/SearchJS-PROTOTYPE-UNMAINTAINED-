@@ -15,8 +15,14 @@ RangeFacet.prototype.getFilter = function() {
     if(this.min === this.lowerBound && this.max === this.upperBound) {
         return null;
     }
+    if(this.min === this.lowerBound) {
+        return this.key + " le " + this.upperBound;
+    }
+    if(this.max === this.upperBound) {
+        return this.key + " ge " + this.lowerBound;
+    }
     
-    return "";
+    return this.key + " ge " + this.lowerBound + " and " + this.key + " le " + this.upperBound;
 }
 
 RangeFacet.prototype.setValues = function(newValues) {

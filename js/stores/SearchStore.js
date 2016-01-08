@@ -11,7 +11,7 @@ var _results = [];
 var _facets = {
 	campusType: new CheckboxFacets('campusType', false),
     sportsTeamCount: new CheckboxFacets('sportsTeamCount', true),
-    studentsCount: new RangeFacet('studentsCount', 0, 1000000)
+    studentsCount: new RangeFacet('studentsCount', 0, 100000)
 };
 var _count = 0;
 var _top = 24;

@@ -68,6 +68,15 @@ var SearchUI = React.createClass({
         SearchActions.search(this.state.input, facets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
     },
     
+    onRangeChange: function(fieldName, lowerBound, upperBound) {
+        var facets = this.state.facets;
+        var facet = facets[fieldName];
+        facet.upperBound = upperBound;
+        facet.lowerBound = lowerBound;
+        
+        SearchActions.search(this.state.input, facets, 0, this.state.top, this.state.sortBy, this.state.scoringProfile, this.state.location);
+    },
+    
     handleKeyDown: function(evt) {
         
         if (evt.keyCode == 13 ) {
@@ -181,7 +190,7 @@ var SearchUI = React.createClass({
                             <div className="facets">
                                 <CheckboxFacetControl facets={this.state.facets['campusType']} onFacetSelection={this.selectFacet} displayName={"Campus type"}/>
                                  <CheckboxFacetControl facets={this.state.facets['sportsTeamCount']} onFacetSelection={this.selectFacet} displayName={"Sports teams"}/>
-                                 <RangeFacetControl facet={this.state.facets['studentsCount']} displayName={"Students"}/>
+                                 <RangeFacetControl facet={this.state.facets['studentsCount']} displayName={"Students"} resultsCount={this.state.results.length} onRangeChange={this.onRangeChange}/>
                             </div>
 
                             <div className="resultsPane">                           

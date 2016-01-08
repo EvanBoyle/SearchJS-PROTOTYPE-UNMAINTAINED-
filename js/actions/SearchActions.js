@@ -108,7 +108,7 @@ var SearchActions = {
             });
             
             queryParams['$filter'] = filters.length > 0 ? filters.join(" and ") : null;
-            queryParams['facet'] = facet;
+            queryParams['facet'] = facets[facet].getFacetClause();
             request
                 .get(urlPrefix)
                 .set('api-key', Config.queryKey)
