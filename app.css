@@ -116,8 +116,9 @@ b {
 
 .facets {
 	float: left;
+    padding-top: 1%;
 	width: 25%;
-	height: 90%;
+	height: 89%;
 	border-right: 1px solid #6753A2;
 }
 
@@ -125,12 +126,10 @@ b {
     text-transform: uppercase;
     color: #6753A2;
     font-weight: 600;
-    padding-bottom: 3%
 }
 
 .checkboxFacet {
     padding-left: 10%;
-    padding-top: 5%;
 }
 .checkboxFacet input[type="checkbox"] {
     display:none;
@@ -143,11 +142,9 @@ b {
 
 .rangeFacet {
     padding-left: 10%;
-    padding-top: 5%;
 }
 
 .slider {
-        
             margin-top: 15%;
             margin-left: 3%;
             width: 75%;
@@ -395,5 +392,15 @@ b {
 	font-weight: 300;
 	color: #6753A2;
 	margin-left: 2%;
-	margin-top: 1%
+	margin-top: 1%;
+}
+
+.collapsed {
+    display: none;
+}
+
+.collapsedContainer {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin-bottom: 4%;
 }

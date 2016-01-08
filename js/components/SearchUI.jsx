@@ -191,6 +191,7 @@ var SearchUI = React.createClass({
                                 <CheckboxFacetControl facets={this.state.facets['campusType']} onFacetSelection={this.selectFacet} displayName={"Campus type"}/>
                                  <CheckboxFacetControl facets={this.state.facets['sportsTeamCount']} onFacetSelection={this.selectFacet} displayName={"Sports teams"}/>
                                  <RangeFacetControl facet={this.state.facets['studentsCount']} displayName={"Students"} resultsCount={this.state.results.length} onRangeChange={this.onRangeChange}/>
+                                 <RangeFacetControl facet={this.state.facets['endowmentAmount']} displayName={"Endowment"} resultsCount={this.state.results.length} onRangeChange={this.onRangeChange}/>
                             </div>
 
                             <div className="resultsPane">                           
