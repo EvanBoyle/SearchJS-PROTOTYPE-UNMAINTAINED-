@@ -161,7 +161,16 @@ var SearchActions = {
 			latitude: latitude,
 			longitude: longitude
 		});
-	}
+	},
+    
+    setUp: function(serviceName, queryKey, index) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.SETUP,
+            serviceName: serviceName,
+            queryKey: queryKey,
+            index: index
+        })
+    }
 }
 
 module.exports = SearchActions;
