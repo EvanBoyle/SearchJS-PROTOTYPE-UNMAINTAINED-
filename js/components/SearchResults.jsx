@@ -1,18 +1,39 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var SearchResult = require('./SearchResult.jsx');
+var SearchStore = require('../stores/SearchStore');
 var Infinite = require('react-infinite');
 
 
 var SearchResults = React.createClass({
+    getInitialState: function() {
+        return {
+            top: 0,
+            results: []
+        }
+    },
+    componentDidMount: function() {
+        SearchStore.addChangeListener(this.onChange);  
+        this.onChange();
+    },
+    onChange: function() {
+        var data = SearchStore.getDataForResultsView();
+        this.setState({
+            results: data.results,
+            top: data.top
+        });       
+    },
 	componentDidUpdate: function() {
-  		if (this.props.results.length <= this.props.top) {
+  		if (this.state.results.length <= this.state.top) {
     		var node = ReactDOM.findDOMNode(this);
     		node.scrollTop = 0;
   		}
-},
+    },
+    loadMore: function() {
+        // should execute call to load more here
+    },
 	render: function(){
-		if(this.props.results.length === 0){
+		if(this.state.results.length === 0){
 			return <div></div>
 		}
 		
@@ -20,8 +41,8 @@ var SearchResults = React.createClass({
 		// elementHeight is divided by 9 because we display 3 rows of 3 results
 		
 		return (
-				<Infinite containerHeight={793} elementHeight={793/9} onInfiniteLoad={this.props.loader} isInfiniteLoading={false} infiniteLoadBeginEdgeOffset={600}>
-					{this.props.results.map(function(result, index){
+				<Infinite containerHeight={793} elementHeight={793/9} onInfiniteLoad={this.loadMore} isInfiniteLoading={false} infiniteLoadBeginEdgeOffset={600}>
+					{this.state.results.map(function(result, index){
 							return <SearchResult result={result} key={index} index={index + 1}/>
 					})}
 				</Infinite>

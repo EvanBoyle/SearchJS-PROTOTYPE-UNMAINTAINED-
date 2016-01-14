@@ -1,6 +1,8 @@
-var SearchActions = require("actions/SearchActions");
-var SearchResults = require("components/SearchResults");
+var SearchActions = require("./actions/SearchActions");
+var SearchResults = require("./components/SearchResults.jsx");
+var SearchBox = require("./components/SearchBox.jsx");
 var ReactDOM = require("react-dom");
+var React = require("react");
 
 /**
  * @function AzSearch
@@ -14,7 +16,13 @@ function AzSearch(serviceName, queryKey, index) {
 }
 
 AzSearch.prototype.addResultsView = function(elementSelector) {
+    console.info("rendering results on id: " + elementSelector)
     ReactDOM.render(<SearchResults/>, document.getElementById(elementSelector));
+}
+
+AzSearch.prototype.addSearchBox = function(elementSelector, suggester, optionTemplate) {
+    console.info("rendering typeahead on id: " + elementSelector)
+    ReactDOM.render(<SearchBox suggester={suggester} OptionTemplate={optionTemplate}/>, document.getElementById(elementSelector));
 }
 
 module.exports = AzSearch;

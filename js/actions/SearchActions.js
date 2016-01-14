@@ -132,7 +132,9 @@ var SearchActions = {
 			'highlightPreTag': '<b>',
 			'highlightPostTag': '</b>'
 		};
-		
+		if(term.length < 3) {
+            return;
+        }
 		request
 			.get(urlPrefix + '/suggest')
 			.set('api-key', Config.queryKey)
@@ -170,6 +172,13 @@ var SearchActions = {
             queryKey: queryKey,
             index: index
         })
+    },
+    
+    setInput: function(input) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.SET_INPUT,
+            input: input
+        });
     }
 }
 

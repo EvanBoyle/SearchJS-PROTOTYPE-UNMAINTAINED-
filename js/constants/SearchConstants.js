@@ -10,5 +10,6 @@ module.exports = keyMirror({
 	SET_SUGGESTIONS: null,
     SET_FACETS: null,
     SETUP: null,
+    SET_INPUT: null,
     UPDATE_FACETS: null
 });

@@ -14,6 +14,7 @@ var _facets = {
     studentsCount: new RangeFacet('studentsCount', 0, 100000),
     endowmentAmount: new RangeFacet('endowmentAmount', 0, 40000000000)
 };
+var _input = "";
 var _count = 0;
 var _top = 24;
 var _skip = 0;
@@ -73,6 +74,10 @@ function updateFacets(facets) {
     });
 }
 
+function setInput(input) {
+    _input = input;
+}
+
 function setSuggestions(suggestions) {
 	_suggestions = suggestions;
 }
@@ -106,6 +111,20 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 			suggester: _suggester
 		};
 	},
+    
+    getDataForResultsView: function() {
+        return {
+            results: _results,
+            top: _top
+        };
+    },
+    
+    getDataForSuggestions: function() {
+        return {
+            input: _input,
+            suggestions: _suggestions
+        };    
+    },
 
 	emitChange: function() {
 		this.emit(CHANGE_EVENT)
@@ -150,6 +169,9 @@ AppDispatcher.register(function(action) {
 			setSuggestions(action.suggestions);
 			SearchStore.emitChange();
             break;
+        case SearchConstants.SET_INPUT: 
+            setInput(action.input);
+            SearchStore.emitChange();
 	}
 });
 
