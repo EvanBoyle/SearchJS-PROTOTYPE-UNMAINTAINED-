@@ -9,10 +9,10 @@ var CHANGE_EVENT = 'change';
 
 var _results = [];
 var _facets = {
-	campusType: new CheckboxFacets('campusType', false),
-    sportsTeamCount: new CheckboxFacets('sportsTeamCount', true),
-    studentsCount: new RangeFacet('studentsCount', 0, 100000),
-    endowmentAmount: new RangeFacet('endowmentAmount', 0, 40000000000)
+	// campusType: new CheckboxFacets('campusType', false),
+    // sportsTeamCount: new CheckboxFacets('sportsTeamCount', true),
+    // studentsCount: new RangeFacet('studentsCount', 0, 100000),
+    // endowmentAmount: new RangeFacet('endowmentAmount', 0, 40000000000)
 };
 var _input = "";
 var _count = 0;
@@ -93,6 +93,23 @@ function setLocation(latitude, longitude) {
 	};
 }
 
+function addFacet(facet) {
+    _facets[facet.key] = facet;
+}
+
+function selectFacet(field, value) {
+    _facets[field].values.forEach(function(facet, index) {
+        var isSelection = facet.value === value;
+        _facets[field].values[index].selected = isSelection ? !facet.selected : facet.selected;
+    });
+}
+
+function clearFacets() {
+    Object.keys(_facets).forEach(function(key) {
+        _facets[key].clearSelections();
+    });
+}
+
 var SearchStore = assign({}, EventEmitter.prototype, {
 
 	getAll: function() {
@@ -112,6 +129,18 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 		};
 	},
     
+    getDataForSearchQuery() {
+        return {
+            input: _input,
+            facets: _facets,
+            skip: _skip,
+            top: _top,
+            sortBy: _sortBy,
+            scoringProfile: _scoringProfile,
+            location: _location,  
+        };
+    },
+    
     getDataForResultsView: function() {
         return {
             results: _results,
@@ -125,7 +154,11 @@ var SearchStore = assign({}, EventEmitter.prototype, {
             suggestions: _suggestions
         };    
     },
-
+    
+    getFacet: function(field) {
+        return _facets[field];
+    },
+    
 	emitChange: function() {
 		this.emit(CHANGE_EVENT)
 	},
@@ -171,6 +204,18 @@ AppDispatcher.register(function(action) {
             break;
         case SearchConstants.SET_INPUT: 
             setInput(action.input);
+            SearchStore.emitChange();
+            break;
+        case SearchConstants.ADD_FACET:
+            addFacet(action.facet);
+            SearchStore.emitChange();
+            break;
+        case SearchConstants.SELECT_FACET:
+            selectFacet(action.field, action.value);
+            SearchStore.emitChange();
+            break;
+        case SearchConstants.CLEAR_FACETS:
+            clearFacets();
             SearchStore.emitChange();
 	}
 });

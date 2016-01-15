@@ -1,6 +1,9 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var Config = require("../config");
 var SearchConstants = require('../constants/SearchConstants');
+var SearchStore = require('../stores/SearchStore');
+var CheckboxFacet = require('../models/CheckboxFacets.js');
+var RangeFacet = require('../models/RangeFacet.js');
 var request = require("superagent");
 
 var urlPrefix = Config.serviceURL +
@@ -178,6 +181,48 @@ var SearchActions = {
         AppDispatcher.dispatch({
             actionType: SearchConstants.SET_INPUT,
             input: input
+        });
+    },
+    
+    termSearch() {
+        var data = SearchStore.getDataForSearchQuery();
+
+        this.search(data.input, data.facets, 0, data.top, data.sortBy, data.scoringProfile, data.location, false);
+    },
+    
+    loadMore() {
+        var data = SearchStore.getDataForSearchQuery();
+        
+        this.search(data.input, data.facets, data.skip, data.top, data.sortBy, data.scoringProfile, data.location, true);
+    },
+    
+    registerCheckboxFacet(fieldName, isNumeric) {
+        var facet = new CheckboxFacet(fieldName, isNumeric);
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.ADD_FACET,
+            facet: facet
+        });
+    },
+    
+    registerRangeFacet(fieldName, min, max) {
+        var facet = new RangeFacet(fieldName, min, max);
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.ADD_FACET,
+            facet: facet
+        });
+    },
+    
+    selectFacet(field, value) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.SELECT_FACET,
+            field: field,
+            value: value
+        });
+    },
+    
+    clearFacetSelections() {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.CLEAR_FACETS,
         });
     }
 }

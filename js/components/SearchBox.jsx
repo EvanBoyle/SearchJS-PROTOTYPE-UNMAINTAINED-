@@ -28,14 +28,28 @@ var SearchBox = React.createClass({
         }
         else {
             var input = evt.target.value
-            SearchActions.setInput(input);
+            this.setInput(input)
             SearchActions.suggest(input, this.props.suggester);
         }
+    },
+    handleOptionChange: function(evt, option) {
+        this.setInput(option);
+    },
+    handleOptionClick: function(evt, option) {
+        this.setInput(option);
+        this.search();
+    },
+    setInput: function(input) {
+        SearchActions.setInput(input.replace("<b>","").replace("</b>", ""));
+    },
+    search: function() {
+        SearchActions.clearFacetSelections();
+        SearchActions.termSearch();
     },
 	render: function(){
 		
 		return (
-			<div>
+			<span>
                 <Typeahead
                     inputValue={this.state.input}
                     options={this.state.suggestions}
@@ -47,7 +61,7 @@ var SearchBox = React.createClass({
                     placeholder="Start your search here..."
                 />
                 <button className="searchButton" type="button" onClick={this.search}><img src={"../../img/searchButton.png"}/></button>
-            </div>
+            </span>
 			)
 	}
 });

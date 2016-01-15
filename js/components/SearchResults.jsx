@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 var SearchResult = require('./SearchResult.jsx');
+var SearchActions = require('../actions/SearchActions');
 var SearchStore = require('../stores/SearchStore');
 var Infinite = require('react-infinite');
 
@@ -30,7 +31,7 @@ var SearchResults = React.createClass({
   		}
     },
     loadMore: function() {
-        // should execute call to load more here
+        SearchActions.loadMore();
     },
 	render: function(){
 		if(this.state.results.length === 0){

@@ -1,18 +1,33 @@
 var React = require("react");
 var CheckControl = require("./CheckControl.jsx");
+var SearchStore = require("../stores/SearchStore.js");
+var SearchActions = require("../actions/SearchActions");
 
 var CheckboxFacetControl = React.createClass({
     getInitialState: function() {
-        return {collapsed: false};
+        return {
+                collapsed: false,
+                facets: null
+            };
     },
-    
+    componentDidMount: function() {
+        SearchStore.addChangeListener(this.onChange);
+        this.onChange();
+    },
+    onChange: function() {
+        facets = SearchStore.getFacet(this.props.field);
+        this.setState({facets: facets});
+    },
     toggleCollapse: function() {
         this.setState({collapsed: !this.state.collapsed});
     },
-    
+    onFacetSelection: function(field, value) {
+        SearchActions.selectFacet(field, value);
+        SearchActions.termSearch();
+    },
 	render: function() {
 		var self = this;
-        if(!this.props.facets || this.props.facets.values.length < 1) {
+        if(!this.state.facets || this.state.facets.values.length < 1) {
             return <div></div>
         }
         var chevron = this.state.collapsed ? "<" : ">";
@@ -23,10 +38,10 @@ var CheckboxFacetControl = React.createClass({
                     {this.props.displayName} {chevron}
                 </div>
                 <div className={collapsedClass}>
-                    {this.props.facets.values.map(function(facet, index){
+                    {this.state.facets.values.map(function(facet, index){
                         return (
                             <div key={index + 1} className="checkbox">
-                                <CheckControl onFacetSelection={self.props.onFacetSelection.bind(null, self.props.facets.key, facet.value)} selected={facet.selected} value={facet.value} count={facet.count} />
+                                <CheckControl onFacetSelection={self.onFacetSelection.bind(null, self.props.field, facet.value)} selected={facet.selected} value={facet.value} count={facet.count} />
                             </div>
                             )
                     })}
