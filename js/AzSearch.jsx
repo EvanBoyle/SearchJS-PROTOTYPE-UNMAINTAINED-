@@ -30,8 +30,9 @@ AzSearch.prototype.addCheckboxFacet = function(elementSelector, fieldName, displ
     ReactDOM.render(<CheckboxFacet field={fieldName} displayName={displayName} />, document.getElementById(elementSelector));
 },
 
-AzSearch.prototype.addRangeFacet = function(elementSelector, fieldName, min, max) {
+AzSearch.prototype.addRangeFacet = function(elementSelector, fieldName, displayName, min, max) {
     SearchActions.registerRangeFacet(fieldName, min, max);
+    ReactDOM.render(<RangeFacet field={fieldName} displayName={displayName} />, document.getElementById(elementSelector));
 }
 
 module.exports = AzSearch;

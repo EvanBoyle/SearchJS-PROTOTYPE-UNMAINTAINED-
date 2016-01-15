@@ -14,5 +14,6 @@ module.exports = keyMirror({
     ADD_FACET: null,
     UPDATE_FACETS: null,
     SELECT_FACET: null,
+    SET_FACET_RANGE: null,
     CLEAR_FACETS: null
 });

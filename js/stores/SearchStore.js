@@ -104,6 +104,11 @@ function selectFacet(field, value) {
     });
 }
 
+function setFacetRange(field, lowerBound, upperBound) {
+    _facets[field].lowerBound = lowerBound;
+    _facets[field].upperBound = upperBound;
+}
+
 function clearFacets() {
     Object.keys(_facets).forEach(function(key) {
         _facets[key].clearSelections();
@@ -157,6 +162,10 @@ var SearchStore = assign({}, EventEmitter.prototype, {
     
     getFacet: function(field) {
         return _facets[field];
+    },
+    
+    getResultsCount: function() {
+        return _count;
     },
     
 	emitChange: function() {
@@ -217,6 +226,11 @@ AppDispatcher.register(function(action) {
         case SearchConstants.CLEAR_FACETS:
             clearFacets();
             SearchStore.emitChange();
+            break;
+        case SearchConstants.SET_FACET_RANGE:
+            setFacetRange(action.field, action.lowerBound, action.upperBound);
+            SearchStore.emitChange();
+            break;
 	}
 });
 

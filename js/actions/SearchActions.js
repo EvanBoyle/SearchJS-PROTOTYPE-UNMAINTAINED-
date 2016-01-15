@@ -220,6 +220,15 @@ var SearchActions = {
         });
     },
     
+    setFacetRange(field, lowerBound, upperBound) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.SET_FACET_RANGE,
+            field: field,
+            lowerBound: lowerBound,
+            upperBound: upperBound
+        });
+    },
+    
     clearFacetSelections() {
         AppDispatcher.dispatch({
             actionType: SearchConstants.CLEAR_FACETS,
