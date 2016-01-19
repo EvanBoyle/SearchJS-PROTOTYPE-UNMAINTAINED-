@@ -29,7 +29,7 @@ var SearchBox = React.createClass({
         else {
             var input = evt.target.value
             this.setInput(input)
-            SearchActions.suggest(input, this.props.suggester);
+            SearchActions.suggest(input, this.props.suggester, this.props.searchFields, this.props.preTag, this.props.postTag);
         }
     },
     handleOptionChange: function(evt, option) {
@@ -40,7 +40,8 @@ var SearchBox = React.createClass({
         this.search();
     },
     setInput: function(input) {
-        SearchActions.setInput(input.replace("<b>","").replace("</b>", ""));
+        // remove highlight tags for the stored input
+        SearchActions.setInput(input.replace(this.props.preTag,"").replace(this.props.postTag, ""));
     },
     search: function() {
         SearchActions.clearFacetSelections();

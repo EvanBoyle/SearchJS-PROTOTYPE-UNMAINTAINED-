@@ -125,15 +125,16 @@ var SearchActions = {
         });
     },
 	
-	suggest: function(term, suggester) {
+	suggest: function(term, suggester, searchFields, preTag, postTag) {
 		var queryParams = {
 			'api-version': '2015-02-28',
 			'fuzzy': 'true',
 			'suggesterName': suggester,
 			'search': term,
 			'$top' : 10,
-			'highlightPreTag': '<b>',
-			'highlightPostTag': '</b>'
+			'highlightPreTag': preTag,
+			'highlightPostTag': postTag,
+            'searchFields': searchFields.join(",")
 		};
 		if(term.length < 3) {
             return;

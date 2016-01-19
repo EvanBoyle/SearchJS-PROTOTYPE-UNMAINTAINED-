@@ -1,4 +1,5 @@
 var React = require('react');
+var Handlebars = require('handlebars');
 
 
 var OptionTemplate = React.createClass({
