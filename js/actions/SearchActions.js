@@ -145,7 +145,9 @@ var SearchActions = {
 			.query(queryParams)
 			.end(function(err, res) {
 				var suggestions = res.body.value.map(function(suggestion) {
-					return suggestion['@search.text'];
+                    suggestion['searchText'] = suggestion['@search.text'];
+					delete suggestion['@search.text'];
+                    return suggestion
 				});
 				AppDispatcher.dispatch({
 					actionType: SearchConstants.SET_SUGGESTIONS,
