@@ -1,15 +1,20 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var Config = require("../config");
 var SearchConstants = require('../constants/SearchConstants');
 var SearchStore = require('../stores/SearchStore');
 var CheckboxFacet = require('../models/CheckboxFacets.js');
 var RangeFacet = require('../models/RangeFacet.js');
 var request = require("superagent");
 
-var urlPrefix = Config.serviceURL +
-				"/indexes/" +
-				Config.indexName + 
-				"/docs";
+var urlPrefix = "";
+var queryKey = "";
+
+var onChange = function() {
+    var config = SearchStore.getConfig();
+    urlPrefix = "https://" + config.serviceName + ".search.windows.net/indexes/" + config.index + "/docs";
+    queryKey = config.queryKey;
+};
+
+SearchStore.addChangeListener(onChange);
 				
 var buildFilter = function(facets) {
 	var keys = Object.keys(facets);
@@ -67,7 +72,7 @@ var SearchActions = {
         // get search results and facets with out filters
 		request
 			.get(urlPrefix)
-			.set('api-key', Config.queryKey)
+			.set('api-key', queryKey)
 			.query(queryParams)
             // facet clause must be specified seperately because it reuses the query param 'facet=&facet=..'
             .query(facetClause)
@@ -114,7 +119,7 @@ var SearchActions = {
             queryParams['facet'] = facets[facet].getFacetClause();
             request
                 .get(urlPrefix)
-                .set('api-key', Config.queryKey)
+                .set('api-key', queryKey)
                 .query(queryParams)
                 .end(function(err, res) {
                     AppDispatcher.dispatch({
@@ -141,7 +146,7 @@ var SearchActions = {
         }
 		request
 			.get(urlPrefix + '/suggest')
-			.set('api-key', Config.queryKey)
+			.set('api-key', queryKey)
 			.query(queryParams)
 			.end(function(err, res) {
 				var suggestions = res.body.value.map(function(suggestion) {

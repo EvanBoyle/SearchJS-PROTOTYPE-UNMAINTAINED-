@@ -7,13 +7,11 @@ var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
+var _serviceName = "";
+var _index = "";
+var _queryKey = "";
 var _results = [];
-var _facets = {
-	// campusType: new CheckboxFacets('campusType', false),
-    // sportsTeamCount: new CheckboxFacets('sportsTeamCount', true),
-    // studentsCount: new RangeFacet('studentsCount', 0, 100000),
-    // endowmentAmount: new RangeFacet('endowmentAmount', 0, 40000000000)
-};
+var _facets = {};
 var _input = "";
 var _count = 0;
 var _top = 24;
@@ -115,6 +113,12 @@ function clearFacets() {
     });
 }
 
+function setup(serviceName, queryKey, index) {
+    _serviceName = serviceName;
+    _queryKey = queryKey;
+    _index = index;
+}
+
 var SearchStore = assign({}, EventEmitter.prototype, {
 
 	getAll: function() {
@@ -168,8 +172,16 @@ var SearchStore = assign({}, EventEmitter.prototype, {
         return _count;
     },
     
+    getConfig: function() {
+        return {
+            serviceName: _serviceName,
+            queryKey: _queryKey,
+            index: _index  
+        };
+    },
+    
 	emitChange: function() {
-		this.emit(CHANGE_EVENT)
+		this.emit(CHANGE_EVENT);
 	},
 
 	addChangeListener: function(callback) {
@@ -231,6 +243,9 @@ AppDispatcher.register(function(action) {
             setFacetRange(action.field, action.lowerBound, action.upperBound);
             SearchStore.emitChange();
             break;
+        case SearchConstants.SETUP:
+            setup(action.serviceName, action.queryKey, action.index);
+            SearchStore.emitChange();
 	}
 });
 
