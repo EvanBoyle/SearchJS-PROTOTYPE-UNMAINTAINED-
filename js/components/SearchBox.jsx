@@ -1,7 +1,9 @@
 var React = require('react');
+var OptionTemplateGenerator = require('./OptionTemplateGenerator.jsx');
 var SearchStore = require('../stores/SearchStore');
 var SearchActions = require('../actions/SearchActions');
 var Typeahead = require('react-typeahead-component');
+var Handlebars = require('handlebars');
 
 
 var SearchBox = React.createClass({
@@ -48,14 +50,14 @@ var SearchBox = React.createClass({
         SearchActions.termSearch();
     },
 	render: function(){
-		
+		var optionTemplate = OptionTemplateGenerator(Handlebars.compile(this.props.suggestionTemplate));
 		return (
 			<span>
                 <Typeahead
                     inputValue={this.state.input}
                     options={this.state.suggestions}
                     onChange={this.handleKeyDown}
-                    optionTemplate={this.props.OptionTemplate}
+                    optionTemplate={optionTemplate}
                     onDropdownClose={this.search}
                     onOptionChange={this.handleOptionChange}
                     onOptionClick={this.handleOptionClick}

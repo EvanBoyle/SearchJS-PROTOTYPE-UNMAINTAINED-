@@ -21,8 +21,8 @@ AzSearch.prototype.addResultsView = function(elementSelector) {
     ReactDOM.render(<SearchResults/>, document.getElementById(elementSelector));
 }
 
-AzSearch.prototype.addSearchBox = function(elementSelector, suggester, searchFields, optionTemplate, hightlightPreTag, highlightPostTag) {
-    ReactDOM.render(<SearchBox suggester={suggester} OptionTemplate={optionTemplate} preTag={hightlightPreTag} postTag={highlightPostTag} searchFields={searchFields}/>, document.getElementById(elementSelector));
+AzSearch.prototype.addSearchBox = function(elementSelector, suggester, searchFields, suggestionTemplate, hightlightPreTag, highlightPostTag) {
+    ReactDOM.render(<SearchBox suggester={suggester} suggestionTemplate={suggestionTemplate} preTag={hightlightPreTag} postTag={highlightPostTag} searchFields={searchFields}/>, document.getElementById(elementSelector));
 }
 
 AzSearch.prototype.addCheckboxFacet = function(elementSelector, fieldName, displayName, isNumeric) {
