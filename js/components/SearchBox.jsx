@@ -35,10 +35,11 @@ var SearchBox = React.createClass({
         }
     },
     handleOptionChange: function(evt, option) {
-        this.setInput(option);
+        var input = option.searchText ? option.searchText : option;
+        this.setInput(input);
     },
     handleOptionClick: function(evt, option) {
-        this.setInput(option);
+        this.setInput(option.searchText);
         this.search();
     },
     setInput: function(input) {
