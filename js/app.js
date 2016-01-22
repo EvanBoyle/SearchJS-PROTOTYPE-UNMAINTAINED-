@@ -6,7 +6,7 @@ var search = new AzSearch("azsdoofgod","4412747C72BF48B6C761ED7E00D9964D", "wiki
 
 var resultTemplate = 
     '<img src="{{image_url}}"/>' +
-    '<div class="imgTitle">{{title}}></div>';
+    '<div class="imgTitle">{{title}}</div>';
 
 search.addResultsView("results", resultTemplate);
 search.addSearchBox("searchBox", "titleSuggester", ["title"], "{{{searchText}}}", "<b>", "</b>");

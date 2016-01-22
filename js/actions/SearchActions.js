@@ -201,7 +201,7 @@ var SearchActions = {
     loadMore() {
         var data = SearchStore.getDataForSearchQuery();
         
-        this.search(data.input, data.facets, data.skip, data.top, data.sortBy, data.scoringProfile, data.location, true);
+        this.search(data.input, data.facets, data.skip + data.top, data.top, data.sortBy, data.scoringProfile, data.location, true);
     },
     
     registerCheckboxFacet(fieldName, isNumeric) {

@@ -153,7 +153,8 @@ var SearchStore = assign({}, EventEmitter.prototype, {
     getDataForResultsView: function() {
         return {
             results: _results,
-            top: _top
+            top: _top,
+            count: _count
         };
     },
     
