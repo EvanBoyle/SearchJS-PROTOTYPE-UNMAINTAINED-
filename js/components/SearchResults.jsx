@@ -4,6 +4,7 @@ var SearchResult = require('./SearchResult.jsx');
 var SearchActions = require('../actions/SearchActions');
 var SearchStore = require('../stores/SearchStore');
 var Infinite = require('react-infinite');
+var Handlebars = require('handlebars');
 
 
 var SearchResults = React.createClass({
@@ -40,11 +41,22 @@ var SearchResults = React.createClass({
 		
 		// todo: don't hard code the numbers below
 		// elementHeight is divided by 9 because we display 3 rows of 3 results
-		
+      
+        // maybe limit infinite scroll to one row only, fixed element heights?
+        // fixed width/height elements, then measure width and height of container do computations to determine values below
+        var width =  document.getElementById("results").offsetWidth;
+        var height =  document.getElementById("results").offsetHeight;
+		console.info("width " + width);
+        console.info("height " + height);
+        // can use this with the following: window.addEventListener("resize", this.updateDimensions); inside of componentDidMount to trigger these calculations        
+        var element = ReactDOM.findDOMNode(this);
+        
+        var resultTemplate = Handlebars.compile(this.props.resultTemplate);
+        
 		return (
 				<Infinite containerHeight={793} elementHeight={793/9} onInfiniteLoad={this.loadMore} isInfiniteLoading={false} infiniteLoadBeginEdgeOffset={600}>
 					{this.state.results.map(function(result, index){
-							return <SearchResult result={result} key={index} index={index + 1}/>
+							return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate}/>
 					})}
 				</Infinite>
 			)

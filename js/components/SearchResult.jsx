@@ -1,5 +1,6 @@
 var React = require('react');
 var Modal = require('react-modal');
+var Handlebars = require('handlebars');
 
 var appElement = document.getElementById('app');
 Modal.setAppElement(appElement);
@@ -67,12 +68,16 @@ var SearchResult = React.createClass({
 				</tr>
 			);
 		}
+        
+        var resultHtml = this.props.resultTemplate(this.props.result);
+        
 		return (
 			<div className="searchResult" onClick={this.openModal}>
-					
-						<img src={this.props.result.image_url}/>
-						<div className="imgTitle">{this.props.result.title}</div>
-					
+                    
+					<div dangerouslySetInnerHTML={{__html: resultHtml}}>
+                        {/*html for rendered resultd */}
+					</div>
+                    
 					<Modal style={this.modalStyle} className="Modal__Bootstrap modal-dialog" isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
 						<div className="modal-content">
 				            <div className="modal-header">
