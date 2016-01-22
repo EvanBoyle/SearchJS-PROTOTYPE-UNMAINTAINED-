@@ -12,27 +12,27 @@ var React = require("react");
  * @param {string} queryKey query key for your service, can be found under settings/keys in the portal
  * @param {string} index Name of the index search requests will be made on
  */
-function AzSearch(serviceName, queryKey, index) {
-    SearchActions.setUp(serviceName, queryKey, index);
-    
+function AzSearch(config) {
+    SearchActions.setUp(config.serviceName, config.queryKey, config.index);
 }
 
-AzSearch.prototype.addResultsView = function(elementSelector, resultTemplate) {
-    ReactDOM.render(<SearchResults resultTemplate={resultTemplate}/>, document.getElementById(elementSelector));
+AzSearch.prototype.addResultsView = function(config) {
+    ReactDOM.render(<SearchResults resultTemplate={config.resultTemplate}/>, document.getElementById(config.htmlId));
 }
 
-AzSearch.prototype.addSearchBox = function(elementSelector, suggester, searchFields, suggestionTemplate, hightlightPreTag, highlightPostTag) {
-    ReactDOM.render(<SearchBox suggester={suggester} suggestionTemplate={suggestionTemplate} preTag={hightlightPreTag} postTag={highlightPostTag} searchFields={searchFields}/>, document.getElementById(elementSelector));
+AzSearch.prototype.addSearchBox = function(config) {
+    ReactDOM.render(<SearchBox suggester={config.suggesterName} suggestionTemplate={config.suggestionTemplate} preTag={config.hitHighlightPreTag} postTag={config.hitHighlightPostTag} searchFields={config.searchFields}/>, 
+    document.getElementById(config.htmlId));
 }
 
-AzSearch.prototype.addCheckboxFacet = function(elementSelector, fieldName, displayName, isNumeric) {
-    SearchActions.registerCheckboxFacet(fieldName, isNumeric);
-    ReactDOM.render(<CheckboxFacet field={fieldName} displayName={displayName} />, document.getElementById(elementSelector));
+AzSearch.prototype.addCheckboxFacet = function(config) {
+    SearchActions.registerCheckboxFacet(config.fieldName, config.isNumeric);
+    ReactDOM.render(<CheckboxFacet field={config.fieldName} displayName={config.displayName} />, document.getElementById(config.htmlId));
 },
 
-AzSearch.prototype.addRangeFacet = function(elementSelector, fieldName, displayName, min, max) {
-    SearchActions.registerRangeFacet(fieldName, min, max);
-    ReactDOM.render(<RangeFacet field={fieldName} displayName={displayName} />, document.getElementById(elementSelector));
+AzSearch.prototype.addRangeFacet = function(config) {
+    SearchActions.registerRangeFacet(config.fieldName, config.min, config.max);
+    ReactDOM.render(<RangeFacet field={config.fieldName} displayName={config.displayName} />, document.getElementById(config.htmlId));
 }
 
 module.exports = AzSearch;
