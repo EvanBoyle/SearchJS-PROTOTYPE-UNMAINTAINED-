@@ -1,7 +1,7 @@
 <html>
 <head>
 	
-	<link rel="stylesheet" href="app.css"/>
+	<link rel="stylesheet" href="./css/app.css"/>
 </head>
 
 <body>
@@ -66,9 +66,54 @@
                 </div>
 	</div>
 </body>
-
+<script src="../bundle.js"></script>
 <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
-<script src="./js/bundle.min.js"></script>
+
+<script>
+    var search = new AzSearch({
+        serviceName: "azsdoofgod",
+        index: "wikiversity",
+        queryKey: "4412747C72BF48B6C761ED7E00D9964D"
+    });
+
+    var resultTemplate = 
+        '<img src="{{image_url}}"/>' +
+        '<div class="imgTitle">{{title}}</div>';
+
+    search.addResultsView({
+        htmlId: "results",
+        resultTemplate: resultTemplate
+    });
+
+    search.addSearchBox({
+        htmlId:"searchBox",
+        suggesterName: "titleSuggester",
+        searchFields: ["title"],
+        hitHighlightPreTag: "<b>",
+        hitHighlightPostTag: "</b>",
+        suggestionTemplate: "{{{searchText}}}"
+    });
+    search.addCheckboxFacet({
+        htmlId: "campusFacet",
+        fieldName: "campusType",
+        displayName: "Campus type",
+        isNumeric: false
+    });
+    search.addRangeFacet({
+        htmlId: "studentsFacet",
+        fieldName: "studentsCount",
+        displayName: "Students",
+        min: 0,
+        max: 100000
+    });
+    search.addRangeFacet({
+        htmlId: "endowmentFacet",
+        fieldName: "endowmentAmount",
+        displayName: "Endowment",
+        min: 0,
+        max: 5000000000
+    });
+</script>
 
 <style>
 

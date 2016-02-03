@@ -138,7 +138,7 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 		};
 	},
     
-    getDataForSearchQuery() {
+    getDataForSearchQuery: function() {
         return {
             input: _input,
             facets: _facets,

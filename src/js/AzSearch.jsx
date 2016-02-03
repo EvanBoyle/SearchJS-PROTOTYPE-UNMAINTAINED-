@@ -34,5 +34,5 @@ AzSearch.prototype.addRangeFacet = function(config) {
     SearchActions.registerRangeFacet(config.fieldName, config.min, config.max);
     ReactDOM.render(<RangeFacet field={config.fieldName} displayName={config.displayName} />, document.getElementById(config.htmlId));
 }
-
+window.AzSearch = AzSearch;
 module.exports = AzSearch;

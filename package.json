@@ -1,8 +1,8 @@
 {
-  "name": "Wikiversity",
+  "name": "AzSearch.js",
   "version": "0.0.1",
-  "description": "Azure search demo for the wikipedia university dataset",
-  "main": "js/app.js",
+  "description": "Search UI and control library for Azure Search",
+  "main": "src/js/AzSearch.jsx",
   "dependencies": {
     "flux": "^2.1.1",
     "react": "^0.14.0",
@@ -19,22 +19,25 @@
     "handlebars": "^4.0.5"
   },
   "devDependencies": {
-    "browserify": "~6.2.0",
-    "reactify": "^0.15.2",
+    "browserify": "~13.0.0",
+    "minifyify": "~7.2.1",
+    "reactify": "~1.1.1",
     "watchify": "latest",
     "http-server": "latest",
-    "uglify-js": "~2.4.15"
+    "uglify-js": "~2.6.1"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.min.js -v -d js/app.js",
-    "start_server": "http-server",
-    "build": "browserify . > js/bundle.min.js"
+    "start": "watchify -o bundle.js -v -d src/js/AzSearch.jsx",
+    "build": "browserify -t reactify src/js/AzSearch.jsx > bundle.js",
+    "minify": "browserify -t reactify src/js/AzSearch.jsx | uglifyjs --mangle --compress > bundle.min.js",
+    "start_server": "http-server"
+
   },
-  "author": "Evan Boyle",
   "browserify": {
-    "transform": [
-      "reactify",
-      "envify"
-    ]
-  }
+      "transform": [
+          "reactify",
+          "envify"
+      ]
+  },
+  "author": "Evan Boyle"
 }

@@ -192,19 +192,19 @@ var SearchActions = {
         });
     },
     
-    termSearch() {
+    termSearch: function() {
         var data = SearchStore.getDataForSearchQuery();
 
         this.search(data.input, data.facets, 0, data.top, data.sortBy, data.scoringProfile, data.location, false);
     },
     
-    loadMore() {
+    loadMore: function() {
         var data = SearchStore.getDataForSearchQuery();
         
         this.search(data.input, data.facets, data.skip + data.top, data.top, data.sortBy, data.scoringProfile, data.location, true);
     },
     
-    registerCheckboxFacet(fieldName, isNumeric) {
+    registerCheckboxFacet: function(fieldName, isNumeric) {
         var facet = new CheckboxFacet(fieldName, isNumeric);
         AppDispatcher.dispatch({
             actionType: SearchConstants.ADD_FACET,
@@ -212,7 +212,7 @@ var SearchActions = {
         });
     },
     
-    registerRangeFacet(fieldName, min, max) {
+    registerRangeFacet: function(fieldName, min, max) {
         var facet = new RangeFacet(fieldName, min, max);
         AppDispatcher.dispatch({
             actionType: SearchConstants.ADD_FACET,
@@ -220,7 +220,7 @@ var SearchActions = {
         });
     },
     
-    selectFacet(field, value) {
+    selectFacet: function(field, value) {
         AppDispatcher.dispatch({
             actionType: SearchConstants.SELECT_FACET,
             field: field,
@@ -228,7 +228,7 @@ var SearchActions = {
         });
     },
     
-    setFacetRange(field, lowerBound, upperBound) {
+    setFacetRange: function(field, lowerBound, upperBound) {
         AppDispatcher.dispatch({
             actionType: SearchConstants.SET_FACET_RANGE,
             field: field,
@@ -237,7 +237,7 @@ var SearchActions = {
         });
     },
     
-    clearFacetSelections() {
+    clearFacetSelections: function() {
         AppDispatcher.dispatch({
             actionType: SearchConstants.CLEAR_FACETS,
         });
