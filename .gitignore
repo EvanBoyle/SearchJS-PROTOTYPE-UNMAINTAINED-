@@ -2,7 +2,7 @@
 node_modules
 
 #bundles from build builds
-js/bundle.*
+bundle.*
 
 #log files
 *.log
