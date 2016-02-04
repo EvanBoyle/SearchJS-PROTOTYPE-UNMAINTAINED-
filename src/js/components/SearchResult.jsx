@@ -68,7 +68,7 @@ var SearchResult = React.createClass({
 			);
 		}
         
-        var resultHtml = this.props.resultTemplate(this.props.result);
+        var resultHtml = this.props.resultTemplate ? this.props.resultTemplate.render(this.props.result) : JSON.stringify(this.props.result, null, 4);
         
 		return (
 			<div className="searchResult" onClick={this.openModal}>

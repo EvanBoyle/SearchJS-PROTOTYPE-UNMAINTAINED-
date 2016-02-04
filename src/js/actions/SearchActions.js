@@ -139,9 +139,9 @@ var SearchActions = {
 			'$top' : 10,
 			'highlightPreTag': preTag,
 			'highlightPostTag': postTag,
-            'searchFields': searchFields.join(",")
+            'searchFields': searchFields ? searchFields.join(",") : null
 		};
-		if(term.length < 3) {
+		if(term.length < 3 || !suggester) {
             return;
         }
 		request

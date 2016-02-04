@@ -3,8 +3,6 @@ var OptionTemplateGenerator = require('./OptionTemplateGenerator.jsx');
 var SearchStore = require('../stores/SearchStore');
 var SearchActions = require('../actions/SearchActions');
 var Typeahead = require('react-typeahead-component');
-var Compile = require('hogan.js').compile;
-
 
 var SearchBox = React.createClass({
 	getInitialState: function() {
@@ -51,7 +49,7 @@ var SearchBox = React.createClass({
         SearchActions.termSearch();
     },
 	render: function(){
-		var optionTemplate = OptionTemplateGenerator(Compile(this.props.suggestionTemplate));
+		var optionTemplate = OptionTemplateGenerator(this.props.suggestionTemplate);
 		return (
 			<span>
                 <Typeahead

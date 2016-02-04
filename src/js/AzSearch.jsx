@@ -3,6 +3,9 @@ var SearchResults = require("./components/SearchResults.jsx");
 var SearchBox = require("./components/SearchBox.jsx");
 var CheckboxFacet = require("./components/CheckboxFacetControl.jsx");
 var RangeFacet = require("./components/RangeFacetControl.jsx");
+var Constants = require("./constants/SearchConstants");
+var DefaultTemplates = require("./utils/DefaultTemplates");
+var Hogan = require("hogan.js");
 var ReactDOM = require("react-dom");
 var React = require("react");
 
@@ -17,11 +20,15 @@ function AzSearch(config) {
 }
 
 AzSearch.prototype.addResultsView = function(config) {
-    ReactDOM.render(<SearchResults resultTemplate={config.resultTemplate}/>, document.getElementById(config.htmlId));
+    // if null is passed we render json.strinify(of result instead)
+    var compiled = config.resultTemplate ? Hogan.compile(config.resultTemplate) : null;
+    ReactDOM.render(<SearchResults resultTemplate={compiled}/>, document.getElementById(config.htmlId));
 }
 
 AzSearch.prototype.addSearchBox = function(config) {
-    ReactDOM.render(<SearchBox suggester={config.suggesterName} suggestionTemplate={config.suggestionTemplate} preTag={config.hitHighlightPreTag} postTag={config.hitHighlightPostTag} searchFields={config.searchFields}/>, 
+    var template = config.suggestionTemplate ? config.suggestionTemplate : DefaultTemplates[Constants.SEARCHBOX];
+    var compiled = Hogan.compile(template);
+    ReactDOM.render(<SearchBox suggester={config.suggesterName} suggestionTemplate={compiled} preTag={config.hitHighlightPreTag} postTag={config.hitHighlightPostTag} searchFields={config.searchFields}/>, 
     document.getElementById(config.htmlId));
 }
 

@@ -4,8 +4,6 @@ var SearchResult = require('./SearchResult.jsx');
 var SearchActions = require('../actions/SearchActions');
 var SearchStore = require('../stores/SearchStore');
 var Infinite = require('react-infinite');
-var Compile = require('hogan.js').compile;
-
 
 var SearchResults = React.createClass({
     getInitialState: function() {
@@ -77,7 +75,7 @@ var SearchResults = React.createClass({
 			return <div></div>
 		}
 		
-        var resultTemplate = Compile(this.props.resultTemplate);
+        var resultTemplate = this.props.resultTemplate;
         
         // calling this here raises a warning for touching the DOM
         // calling inside of componentDidUpdate results in a loop/stackoverflow

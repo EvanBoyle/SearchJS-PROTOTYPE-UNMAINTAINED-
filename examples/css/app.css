@@ -244,6 +244,7 @@ b {
 	color: #6753A2;
 	font-size: 1em;
 	font-weight: 500;
+    overflow: auto
 }
 
 .searchResult img {
