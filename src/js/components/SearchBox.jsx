@@ -3,7 +3,7 @@ var OptionTemplateGenerator = require('./OptionTemplateGenerator.jsx');
 var SearchStore = require('../stores/SearchStore');
 var SearchActions = require('../actions/SearchActions');
 var Typeahead = require('react-typeahead-component');
-var Compile = require('handlebars').compile;
+var Compile = require('hogan.js').compile;
 
 
 var SearchBox = React.createClass({

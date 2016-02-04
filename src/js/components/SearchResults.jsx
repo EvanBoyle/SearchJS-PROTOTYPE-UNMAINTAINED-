@@ -4,7 +4,7 @@ var SearchResult = require('./SearchResult.jsx');
 var SearchActions = require('../actions/SearchActions');
 var SearchStore = require('../stores/SearchStore');
 var Infinite = require('react-infinite');
-var Compile = require('handlebars').compile;
+var Compile = require('hogan.js').compile;
 
 
 var SearchResults = React.createClass({

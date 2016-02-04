@@ -1,10 +1,10 @@
 var React = require('react');
 
-var OptionTemplateGenerator = function(handlebarsTemplate) {
+var OptionTemplateGenerator = function(htmlTemplate) {
     var OptionTemplate = React.createClass({
         getInitialState: function() {
             return {
-                template: handlebarsTemplate
+                template: htmlTemplate
             };
         },
         render: function() {

@@ -15,7 +15,7 @@
     "react-infinite": "~0.7.2",
     "react-slider": "~0.6.0",
     "numeral": "^1.5.3",
-    "handlebars": "^4.0.5"
+    "hogan.js": "~3.0.2"
   },
   "devDependencies": {
     "browserify": "~13.0.0",
