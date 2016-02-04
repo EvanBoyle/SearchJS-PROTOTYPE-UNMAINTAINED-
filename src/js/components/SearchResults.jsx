@@ -4,7 +4,7 @@ var SearchResult = require('./SearchResult.jsx');
 var SearchActions = require('../actions/SearchActions');
 var SearchStore = require('../stores/SearchStore');
 var Infinite = require('react-infinite');
-var Handlebars = require('handlebars');
+var Compile = require('handlebars').compile;
 
 
 var SearchResults = React.createClass({
@@ -77,7 +77,7 @@ var SearchResults = React.createClass({
 			return <div></div>
 		}
 		
-        var resultTemplate = Handlebars.compile(this.props.resultTemplate);
+        var resultTemplate = Compile(this.props.resultTemplate);
         
         // calling this here raises a warning for touching the DOM
         // calling inside of componentDidUpdate results in a loop/stackoverflow

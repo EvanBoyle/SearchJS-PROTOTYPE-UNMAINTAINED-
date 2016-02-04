@@ -1,6 +1,5 @@
 var React = require('react');
 var Modal = require('react-modal');
-var Handlebars = require('handlebars');
 
 var appElement = document.getElementById('app');
 Modal.setAppElement(appElement);
