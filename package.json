@@ -8,7 +8,6 @@
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-modal": "0.6.1",
-    "envify": "~3.0.0",
     "keymirror": "~0.1.0",
     "object-assign": "^1.0.0",
     "superagent": "~1.4",
@@ -24,6 +23,7 @@
     "reactify": "~1.1.1",
     "watchify": "latest",
     "http-server": "latest",
+    "envify": "~3.0.0",
     "uglify-js": "~2.6.1"
   },
   "scripts": {
