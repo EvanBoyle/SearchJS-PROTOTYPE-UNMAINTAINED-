@@ -31,7 +31,7 @@ var buildFilter = function(facets) {
 
 // loadMore is false by default, if set to true, we will append results rather than set new ones
 var SearchActions = {
-	search: function(term, facets, skip, top, sortBy, scoringProfile, location, loadMore){
+	search: function(term, facets, skip, top, sortBy, scoringProfile, location, loadMore, select, searchFields){
 		var queryParams = {
 			'api-version': '2015-02-28',
 			'searchMode': 'any',
@@ -41,9 +41,9 @@ var SearchActions = {
 			'$top' : top
 		};
 		
-		if(scoringProfile) {
-			queryParams['scoringProfile'] = scoringProfile;
-		}
+        queryParams['scoringProfile'] = scoringProfile ? scoringProfile : null;
+        queryParams['$select'] = select ? select.join(",") : null;
+        queryParams['searchFields'] = searchFields ? searchFields.join(",") : null;
 		
 		if(sortBy) {
 			if(sortBy === "location"){
@@ -185,6 +185,13 @@ var SearchActions = {
         })
     },
     
+    setSearchParameters: function(parameters) {
+        AppDispatcher.dispatch({
+            actionType: SearchConstants.SET_SEARCH_PARAMETERS,
+            parameters: parameters,
+        })
+    },
+    
     setInput: function(input) {
         AppDispatcher.dispatch({
             actionType: SearchConstants.SET_INPUT,
@@ -195,13 +202,13 @@ var SearchActions = {
     termSearch: function() {
         var data = SearchStore.getDataForSearchQuery();
 
-        this.search(data.input, data.facets, 0, data.top, data.sortBy, data.scoringProfile, data.location, false);
+        this.search(data.input, data.facets, 0, data.top, data.sortBy, data.scoringProfile, data.location, false, data.select, data.searchFields);
     },
     
     loadMore: function() {
         var data = SearchStore.getDataForSearchQuery();
         
-        this.search(data.input, data.facets, data.skip + data.top, data.top, data.sortBy, data.scoringProfile, data.location, true);
+        this.search(data.input, data.facets, data.skip + data.top, data.top, data.sortBy, data.scoringProfile, data.location, true, data.select, data.searchFields);
     },
     
     registerCheckboxFacet: function(fieldName, isNumeric) {

@@ -17,5 +17,6 @@ module.exports = keyMirror({
     SET_FACET_RANGE: null,
     CLEAR_FACETS: null,
     SEARCHBOX: null,
-    RESULT: null
+    RESULT: null,
+    SET_SEARCH_PARAMETERS: null
 });

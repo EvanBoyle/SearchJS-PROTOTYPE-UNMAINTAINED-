@@ -26,6 +26,9 @@ AzSearch.prototype.addResultsView = function(config) {
 }
 
 AzSearch.prototype.addSearchBox = function(config) {
+    if(config.searchParameters) {
+        SearchActions.setSearchParameters(config.searchParameters);
+    }
     var template = config.suggestionTemplate ? config.suggestionTemplate : DefaultTemplates[Constants.SEARCHBOX];
     var compiled = Hogan.compile(template);
     ReactDOM.render(<SearchBox suggester={config.suggesterName} suggestionTemplate={compiled} preTag={config.hitHighlightPreTag} postTag={config.hitHighlightPostTag} searchFields={config.searchFields}/>, 
@@ -34,12 +37,14 @@ AzSearch.prototype.addSearchBox = function(config) {
 
 AzSearch.prototype.addCheckboxFacet = function(config) {
     SearchActions.registerCheckboxFacet(config.fieldName, config.isNumeric);
-    ReactDOM.render(<CheckboxFacet field={config.fieldName} displayName={config.displayName} />, document.getElementById(config.htmlId));
+    var displayName = config.displayName ? config.displayName : config.fieldName;
+    ReactDOM.render(<CheckboxFacet field={config.fieldName} displayName={displayName} />, document.getElementById(config.htmlId));
 },
 
 AzSearch.prototype.addRangeFacet = function(config) {
     SearchActions.registerRangeFacet(config.fieldName, config.min, config.max);
-    ReactDOM.render(<RangeFacet field={config.fieldName} displayName={config.displayName} />, document.getElementById(config.htmlId));
+    var displayName = config.displayName ? config.displayName : config.fieldName;
+    ReactDOM.render(<RangeFacet field={config.fieldName} displayName={displayName} />, document.getElementById(config.htmlId));
 }
 window.AzSearch = AzSearch;
 module.exports = AzSearch;

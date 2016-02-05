@@ -82,16 +82,20 @@
 
     search.addResultsView({
         htmlId: "results",
-        //resultTemplate: resultTemplate
+        resultTemplate: resultTemplate,
     });
 
     search.addSearchBox({
         htmlId:"searchBox",
         suggesterName: "titleSuggester",
-        searchFields: ["title"],
         hitHighlightPreTag: "<b>",
         hitHighlightPostTag: "</b>",
-        //suggestionTemplate: "{{{searchText}}}"
+        suggestionTemplate: "{{{searchText}}}",
+        searchParameters: {
+            //select: ["image_url", "title"],
+            scoringProfile: "titleBoost",
+            //searchFields: ["title"]
+        }
     });
     search.addCheckboxFacet({
         htmlId: "campusFacet",

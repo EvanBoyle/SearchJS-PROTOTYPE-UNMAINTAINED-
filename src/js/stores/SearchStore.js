@@ -39,7 +39,9 @@ var _options = [
 		}
 	];
 var _sortBy = "";
-var _scoringProfile = "titleBoost";
+var _scoringProfile = null;
+var _select = null;
+var _searchFields = null;
 var _view = SearchConstants.GRID_VIEW;
 var _location = {
 	latitude: 0,
@@ -113,6 +115,12 @@ function clearFacets() {
     });
 }
 
+function setSearchParameters(parameters) {
+    _scoringProfile = parameters.scoringProfile;
+    _select = parameters.select
+    _searchFields = parameters.searchFields
+}
+
 function setup(serviceName, queryKey, index) {
     _serviceName = serviceName;
     _queryKey = queryKey;
@@ -146,6 +154,8 @@ var SearchStore = assign({}, EventEmitter.prototype, {
             top: _top,
             sortBy: _sortBy,
             scoringProfile: _scoringProfile,
+            select: _select,
+            searchFields: _searchFields,
             location: _location,  
         };
     },
@@ -247,6 +257,9 @@ AppDispatcher.register(function(action) {
         case SearchConstants.SETUP:
             setup(action.serviceName, action.queryKey, action.index);
             SearchStore.emitChange();
+            break;
+        case SearchConstants.SET_SEARCH_PARAMETERS:
+            setSearchParameters(action.parameters);
 	}
 });
 
