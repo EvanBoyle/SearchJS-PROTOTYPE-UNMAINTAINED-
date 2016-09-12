@@ -62,7 +62,7 @@ var SearchBox = React.createClass({
                     onOptionClick={this.handleOptionClick}
                     placeholder="Start your search here..."
                 />
-                <button className="searchButton" type="button" onClick={this.search}><img src={"../../img/searchButton.png"}/></button>
+                <button className="searchButton" type="button" onClick={this.search}><img src={"img/searchButton.png"}/></button>
             </span>
 			)
 	}
