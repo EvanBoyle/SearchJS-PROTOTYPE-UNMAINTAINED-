@@ -49,6 +49,8 @@ var _location = {
 };
 var _suggestions = [];
 var _suggester = 'titleSuggester';
+var _keyField = '';
+var _loggingURL = '';
 
 function set(results, count, skip, sortBy) {
 	_results = results;
@@ -121,10 +123,12 @@ function setSearchParameters(parameters) {
     _searchFields = parameters.searchFields
 }
 
-function setup(serviceName, queryKey, index) {
+function setup(serviceName, queryKey, index, keyField, loggingURL) {
     _serviceName = serviceName;
     _queryKey = queryKey;
     _index = index;
+    _keyField = keyField;
+    _loggingURL = loggingURL;
 }
 
 var SearchStore = assign({}, EventEmitter.prototype, {
@@ -189,6 +193,14 @@ var SearchStore = assign({}, EventEmitter.prototype, {
             queryKey: _queryKey,
             index: _index  
         };
+    },
+
+    getKeyField: function() {
+        return _keyField;
+    },
+
+    getLoggingURL: function() {
+        return _loggingURL;
     },
     
 	emitChange: function() {
@@ -255,7 +267,7 @@ AppDispatcher.register(function(action) {
             SearchStore.emitChange();
             break;
         case SearchConstants.SETUP:
-            setup(action.serviceName, action.queryKey, action.index);
+            setup(action.serviceName, action.queryKey, action.index, action.keyField, action.loggingURL);
             SearchStore.emitChange();
             break;
         case SearchConstants.SET_SEARCH_PARAMETERS:

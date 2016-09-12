@@ -16,7 +16,7 @@ var React = require("react");
  * @param {string} index Name of the index search requests will be made on
  */
 function AzSearch(config) {
-    SearchActions.setUp(config.serviceName, config.queryKey, config.index);
+    SearchActions.setUp(config.serviceName, config.queryKey, config.index, config.keyField, config.loggingURL);
 }
 
 AzSearch.prototype.addResultsView = function(config) {

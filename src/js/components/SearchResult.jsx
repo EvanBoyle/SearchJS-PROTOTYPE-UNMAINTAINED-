@@ -1,16 +1,24 @@
 var React = require('react');
 var Modal = require('react-modal');
+var SearchStore = require('../stores/SearchStore');
+var SearchActions = require('../actions/SearchActions');
 
 var appElement = document.getElementById('app');
 Modal.setAppElement(appElement);
 
 var SearchResult = React.createClass({
 	getInitialState: function() {
-		return { modalIsOpen: false };
+		var keyField = SearchStore.getKeyField();
+		var result = { 
+			modalIsOpen: false,
+			keyField: keyField
+		};
+		return result;
 	},
 
 	openModal: function() {
 		this.setState({modalIsOpen: true});
+		SearchActions.logClick(this.props.result[this.state.keyField], this.props.result['request-id']);
 	},
 
 	closeModal: function() {

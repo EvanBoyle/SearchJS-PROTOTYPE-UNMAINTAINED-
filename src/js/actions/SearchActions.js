@@ -77,7 +77,11 @@ var SearchActions = {
             // facet clause must be specified seperately because it reuses the query param 'facet=&facet=..'
             .query(facetClause)
 			.end(function(err, res) {
-				var searchResults = res.body.value;
+				var searchResults = res.body.value.map(function(result){
+                    result['request-id'] = res.headers['request-id'];
+                    return result;
+
+                });
 				AppDispatcher.dispatch({
 					actionType: loadMore ? SearchConstants.APPEND : SearchConstants.SET_ALL,
 					results: searchResults,
@@ -176,12 +180,14 @@ var SearchActions = {
 		});
 	},
     
-    setUp: function(serviceName, queryKey, index) {
+    setUp: function(serviceName, queryKey, index, keyField, loggingURL) {
         AppDispatcher.dispatch({
             actionType: SearchConstants.SETUP,
             serviceName: serviceName,
             queryKey: queryKey,
-            index: index
+            index: index,
+            keyField: keyField,
+            loggingURL: loggingURL
         })
     },
     
@@ -248,6 +254,23 @@ var SearchActions = {
         AppDispatcher.dispatch({
             actionType: SearchConstants.CLEAR_FACETS,
         });
+    },
+
+    logClick: function(docId, requestId) {
+        var loggingURL = SearchStore.getLoggingURL();
+        if(loggingURL) {
+            rows = [];
+            var payload = {
+                ts: new Date().getTime().toString(),
+                docId: docId,
+                requestId: requestId
+            };
+            rows.push(payload);
+            data = {rows: rows};
+            request.post(SearchStore.getLoggingURL()).send(data).end(function(err, res){
+                // Calling the end function will send the request
+            });
+        }
     }
 }
 
