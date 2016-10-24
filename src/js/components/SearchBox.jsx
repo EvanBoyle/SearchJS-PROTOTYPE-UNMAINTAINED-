@@ -2,7 +2,7 @@ var React = require('react');
 var OptionTemplateGenerator = require('./OptionTemplateGenerator.jsx');
 var SearchStore = require('../stores/SearchStore');
 var SearchActions = require('../actions/SearchActions');
-var Typeahead = require('react-typeahead-component');
+//var Typeahead = require('react-typeahead-component');
 
 var SearchBox = React.createClass({
 	getInitialState: function() {
@@ -52,16 +52,7 @@ var SearchBox = React.createClass({
 		var optionTemplate = OptionTemplateGenerator(this.props.suggestionTemplate);
 		return (
 			<span>
-                <Typeahead
-                    inputValue={this.state.input}
-                    options={this.state.suggestions}
-                    onChange={this.handleKeyDown}
-                    optionTemplate={optionTemplate}
-                    onDropdownClose={this.search}
-                    onOptionChange={this.handleOptionChange}
-                    onOptionClick={this.handleOptionClick}
-                    placeholder="Start your search here..."
-                />
+                
                 <button className="searchButton" type="button" onClick={this.search}><img src={"img/searchButton.png"}/></button>
             </span>
 			)

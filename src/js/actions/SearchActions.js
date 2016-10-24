@@ -41,10 +41,18 @@ var SearchActions = {
 			'$top' : top
 		};
 		
-        queryParams['scoringProfile'] = scoringProfile ? scoringProfile : null;
-        queryParams['$select'] = select ? select.join(",") : null;
-        queryParams['searchFields'] = searchFields ? searchFields.join(",") : null;
-		
+        if(scoringProfile){
+            queryParams['scoringProfile'] = scoringProfile;
+        }
+
+        if(select) {
+            queryParams['$select'] = select.join(",");
+        }
+        
+        if(searchFields){
+            queryParams['searchFields'] = searchFields.join(",");    
+        }
+        
 		if(sortBy) {
 			if(sortBy === "location"){
 				queryParams['$orderby'] = 'geo.distance(location, geography\'POINT(' + location.longitude + ' ' + location.latitude + ')\')'
@@ -54,7 +62,11 @@ var SearchActions = {
 			}
 		}
 		
-		queryParams['$filter'] = buildFilter(facets);
+        var facetParameter = buildFilter(facets);
+        if(facetParameter) {
+            queryParams['$filter'] = facetParameter;
+        }
+		
         
         // we request the facets without filters and set them here, facets with filters must be done in a separate request
         var filterlessFacets = Object.keys(facets).filter(function(key) {
