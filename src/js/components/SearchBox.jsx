@@ -2,7 +2,7 @@ var React = require('react');
 var OptionTemplateGenerator = require('./OptionTemplateGenerator.jsx');
 var SearchStore = require('../stores/SearchStore');
 var SearchActions = require('../actions/SearchActions');
-//var Typeahead = require('react-typeahead-component');
+var Augosuggest = require('react-autosuggest');
 
 var SearchBox = React.createClass({
 	getInitialState: function() {
@@ -23,25 +23,42 @@ var SearchBox = React.createClass({
         });
     },
     handleKeyDown: function(evt) {
-        if (evt.keyCode == 13 ) {
+        if (evt.key === "Enter" ) {
             return this.search();
         }
-        else {
-            var input = evt.target.value
-            this.setInput(input)
-            SearchActions.suggest(input, this.props.suggester, this.props.searchFields, this.props.preTag, this.props.postTag);
-        }
     },
-    handleOptionChange: function(evt, option) {
-        var input = option.searchText ? option.searchText : option;
-        this.setInput(input);
+    onSuggestionsFetchRequested: function(value) {
+        var input = value.value;
+        this.setInput(input)
+        SearchActions.suggest(input, this.props.suggester, this.props.searchFields, this.props.preTag, this.props.postTag);
     },
-    handleOptionClick: function(evt, option) {
-        this.setInput(option.searchText);
+    onSuggestionsClearRequested: function() {
+        this.setState({
+            suggestions: []
+        });   
+    },
+    onSuggestionSelected: function(event, parameters) {
         this.search();
     },
-    setInput: function(input) {
+    getSuggestionValue: function(suggestion) {
+        return suggestion.searchText.replace(this.props.preTag,"").replace(this.props.postTag, "");
+    },
+    renderSuggestion: function(suggestion) {
+        var html = this.props.suggestionTemplate.render(suggestion);
+        return <div dangerouslySetInnerHTML={{__html: html}} ></div>
+    },
+    onInputChange: function(event, newValue) {
+        if(newValue.method === "up" || newValue.method === "down"){
+            return;
+        }
+        input = newValue.newValue;
         // remove highlight tags for the stored input
+        this.setInput(input);
+        if(newValue.method === "click" || newValue.method === "enter") {
+            this.search();
+        }
+    },
+    setInput: function(input) {
         SearchActions.setInput(input.replace(this.props.preTag,"").replace(this.props.postTag, ""));
     },
     search: function() {
@@ -49,10 +66,25 @@ var SearchBox = React.createClass({
         SearchActions.termSearch();
     },
 	render: function(){
-		var optionTemplate = OptionTemplateGenerator(this.props.suggestionTemplate);
+        var inputProps = {
+            placeholder: 'Start your search here...',
+            value: this.state.input,
+            onChange: this.onInputChange,
+            type: 'search',
+            onKeyPress: this.handleKeyDown
+        };
 		return (
 			<span>
-                
+                <Augosuggest
+                    suggestions={this.state.suggestions}
+                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                    onSuggestionSelected={this.onSuggestionSelected}
+                    getSuggestionValue={this.getSuggestionValue}
+                    renderSuggestion={this.renderSuggestion}
+                    inputProps={inputProps}
+                />
+                    
                 <button className="searchButton" type="button" onClick={this.search}><img src={"img/searchButton.png"}/></button>
             </span>
 			)
