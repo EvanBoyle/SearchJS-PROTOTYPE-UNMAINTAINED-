@@ -7,11 +7,52 @@ body {
   padding-top: 50px;
 }
 
+.searchResult {
+	height: 30%;
+	float: left;
+	text-align: center;
+    overflow: auto;
+    word-wrap: break-word;
+    vertical-align: bottom;
+    border:0;
+}
+
+.resultLabel {
+  vertical-align: bottom;
+}
+
+
+.searchResult img {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	max-width: 70%;
+	max-height: 70%;
+	width: auto;
+	height: auto;
+  vertical-align: bottom;
+}
+
+.react-autosuggest__container {
+  float: left;
+}
+
 .react-autosuggest__suggestions-list {
   padding-top: -10 px;
 	box-sizing: border-box;
 	padding-left: 0px;
   margin-right: 1px;
+}
+
+#searchBox {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.azsearchbox {
+  margin-top: .5em;
 }
 
 .react-autosuggest__suggestion--focused {
@@ -28,7 +69,7 @@ body {
     box-shadow: inset 0 0 0 1px #66afe9;
     border-radius: 3px;
 }
-  
+
 .input-group-btn {
     width:1% !important;
 }
@@ -36,8 +77,6 @@ body {
 .navbar {
     max-height: 50px;
 }
-
-
 /*
  * Global add-ons
  */
@@ -96,6 +135,9 @@ body {
   background-color: #428bca;
 }
 
+.navbar-header {
+  display: inline-block;
+}
 
 /*
  * Main content

@@ -71,7 +71,7 @@ var SearchResult = React.createClass({
         var resultHtml = this.props.resultTemplate ? this.props.resultTemplate.render(this.props.result) : JSON.stringify(this.props.result, null, 4);
         
 		return (
-			<div className="searchResult" onClick={this.openModal}>
+			<div className="searchResult col-xs-6 col-sm-3 placeholder" onClick={this.openModal}>
                     
 					<div dangerouslySetInnerHTML={{__html: resultHtml}}>
                         {/*html for rendered resultd */}

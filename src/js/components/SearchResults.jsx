@@ -84,10 +84,15 @@ var SearchResults = React.createClass({
         var heights = this.calculateHeightsForInfiniteScroll();
         
 		return (
-				<Infinite containerHeight={heights.containerHeight} elementHeight={heights.elementHeight} onInfiniteLoad={this.loadMore} isInfiniteLoading={false} infiniteLoadBeginEdgeOffset={600}>
-					{this.state.results.map(function(result, index){
-							return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate}/>
-					})}
+				<Infinite 
+                    useWindowAsScrollContainer
+                    elementHeight={heights.elementHeight} 
+                    onInfiniteLoad={this.loadMore} 
+                    isInfiniteLoading={false} 
+                    infiniteLoadBeginEdgeOffset={600}>
+                        {this.state.results.map(function(result, index){
+                                return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate}/>
+                        })}
 				</Infinite>
 			)
 	}

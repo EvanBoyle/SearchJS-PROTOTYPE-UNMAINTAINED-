@@ -68,10 +68,10 @@ var SearchBox = React.createClass({
     renderInputComponent: function(inputProps) {
         return (
 
-                <div className="input-group col-md-12 azsearchbox">
+                <div className="input-group azsearchbox">
                     <input {...inputProps} type="text"></input>
                     <span className="input-group-btn">
-                        <button className="btn btn-default" type="button" onClick={this.search}>Search</button>
+                        <button className="btn btn-default" type="button" onClick={this.search}><span className="glyphicon glyphicon-search"></span>&nbsp;</button>
                     </span>
                 </div>
 
@@ -79,14 +79,14 @@ var SearchBox = React.createClass({
     },
 	render: function(){
         var inputProps = {
-            placeholder: 'Start your search here...',
+            placeholder: 'Search...',
             value: this.state.input,
             onChange: this.onInputChange,
             type: 'search',
             onKeyPress: this.handleKeyDown
         };
         var theme = {
-            container:            'react-autosuggest__container col-md-6 col-md-offset-3',
+            container:            'react-autosuggest__container',
             containerOpen:        'react-autosuggest__container--open',
             input:                'react-autosuggest__input form-control',
             suggestionsContainer: 'react-autosuggest__suggestions-container',
