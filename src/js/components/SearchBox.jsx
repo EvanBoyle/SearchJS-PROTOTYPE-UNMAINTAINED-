@@ -65,6 +65,18 @@ var SearchBox = React.createClass({
         SearchActions.clearFacetSelections();
         SearchActions.termSearch();
     },
+    renderInputComponent: function(inputProps) {
+        return (
+
+                <div className="input-group col-md-12 azsearchbox">
+                    <input {...inputProps} type="text"></input>
+                    <span className="input-group-btn">
+                        <button className="btn btn-default" type="button" onClick={this.search}>Search</button>
+                    </span>
+                </div>
+
+        );  
+    },
 	render: function(){
         var inputProps = {
             placeholder: 'Start your search here...',
@@ -72,6 +84,17 @@ var SearchBox = React.createClass({
             onChange: this.onInputChange,
             type: 'search',
             onKeyPress: this.handleKeyDown
+        };
+        var theme = {
+            container:            'react-autosuggest__container col-md-6 col-md-offset-3',
+            containerOpen:        'react-autosuggest__container--open',
+            input:                'react-autosuggest__input form-control',
+            suggestionsContainer: 'react-autosuggest__suggestions-container',
+            suggestionsList:      'react-autosuggest__suggestions-list',
+            suggestion:           'react-autosuggest__suggestion',
+            suggestionFocused:    'react-autosuggest__suggestion--focused',
+            sectionContainer:     'react-autosuggest__section-container',
+            sectionTitle:         'react-autosuggest__section-title'            
         };
 		return (
 			<span>
@@ -83,9 +106,9 @@ var SearchBox = React.createClass({
                     getSuggestionValue={this.getSuggestionValue}
                     renderSuggestion={this.renderSuggestion}
                     inputProps={inputProps}
+                    theme={theme}
+                    renderInputComponent={this.renderInputComponent}
                 />
-                    
-                <button className="searchButton" type="button" onClick={this.search}><img src={"img/searchButton.png"}/></button>
             </span>
 			)
 	}
