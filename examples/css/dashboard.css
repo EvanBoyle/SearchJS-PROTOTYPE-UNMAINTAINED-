@@ -7,31 +7,28 @@ body {
   padding-top: 50px;
 }
 
-
-
 .react-autosuggest__suggestions-list {
-    padding-top: -5 px;
-	
-	background: white;
-	
+  padding-top: -10 px;
 	box-sizing: border-box;
 	padding-left: 0px;
-	
+  margin-right: 1px;
+}
 
-    margin-right: 1px;
-	outline: 1px solid #66afe9;
+.react-autosuggest__suggestion--focused {
+	background: #66afe9 !important;
+	color: white;
 }
 
 .react-autosuggest__suggestions-list li {
 	list-style: none;
     padding-left: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    background: white;
+    box-shadow: inset 0 0 0 1px #66afe9;
+    border-radius: 3px;
 }
-
-.react-autosuggest__suggestion--focused {
-	background: #66afe9;
-	color: white;
-}
-
+  
 .input-group-btn {
     width:1% !important;
 }
