@@ -53,8 +53,9 @@ var SearchResults = React.createClass({
         var elementWidth = resultElements.length > 0 ? resultElements[resultElements.length - 1].offsetWidth : 100;
         var elementHeight = resultElements.length > 0 ? resultElements[resultElements.length - 1].offsetHeight : 100;
         
-        var rows = Math.floor(containerHeight / elementHeight);
-        var cols = Math.floor(containerWidth / elementWidth);
+        //add .01 when computing due to rounding in dom size computation
+        var rows = Math.floor((containerHeight / elementHeight)+.01);
+        var cols = Math.floor((containerWidth / elementWidth)+.01);
         
         // element height for scrolling purposes must take number of elements per row into account
         var height = elementHeight / cols;

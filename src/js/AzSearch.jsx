@@ -17,6 +17,7 @@ var React = require("react");
  */
 function AzSearch(config) {
     SearchActions.setUp(config.serviceName, config.queryKey, config.index);
+    this.facetCount = 0;
 }
 
 AzSearch.prototype.addResultsView = function(config) {
@@ -38,13 +39,15 @@ AzSearch.prototype.addSearchBox = function(config) {
 AzSearch.prototype.addCheckboxFacet = function(config) {
     SearchActions.registerCheckboxFacet(config.fieldName, config.isNumeric);
     var displayName = config.displayName ? config.displayName : config.fieldName;
-    ReactDOM.render(<CheckboxFacet field={config.fieldName} displayName={displayName} />, document.getElementById(config.htmlId));
+    ReactDOM.render(<CheckboxFacet field={config.fieldName} displayName={displayName} facetId={this.facetCount}/>, document.getElementById(config.htmlId));
+    this.facetCount++;
 },
 
 AzSearch.prototype.addRangeFacet = function(config) {
     SearchActions.registerRangeFacet(config.fieldName, config.min, config.max);
     var displayName = config.displayName ? config.displayName : config.fieldName;
-    ReactDOM.render(<RangeFacet field={config.fieldName} displayName={displayName} />, document.getElementById(config.htmlId));
+    ReactDOM.render(<RangeFacet field={config.fieldName} displayName={displayName} facetId={this.facetCount} />, document.getElementById(config.htmlId));
+    this.facetCount++;
 }
 window.AzSearch = AzSearch;
 module.exports = AzSearch;

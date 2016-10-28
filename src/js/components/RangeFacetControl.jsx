@@ -56,34 +56,35 @@ var RangeFacetControl = React.createClass({
         }
         var upperBoundLabel = this.props.upperBound === this.state.facet.max ? "<" : "";
         var chevron = this.state.collapsed ? "<" : ">";
-        var collapsedClass = this.state.collapsed ? "collapsed" : "collapsedContainer";
-        
+        var collapsedClass = this.state.collapsed ? "indicator glyphicon glyphicon glyphicon-triangle-right" : "indicator glyphicon glyphicon glyphicon-triangle-bottom";
+        var collapseID = "collapse" + this.props.facetId;
+        var collapseHref = "#" + collapseID;
 		return (
-			<div className="rangeFacet">
-                <div className="facetLabel" onClick={this.toggleCollapse}>
-                    {this.props.displayName} {chevron}
+            <div className="rangeFacet panel-body">
+                <div className="facetLabel panel-heading">
+                    <h4 className="panel-title">
+                        <a data-toggle="collapse" href={collapseHref} className="colapseHeader" onClick={this.toggleCollapse}>
+                                <span className={collapsedClass} aria-hidden="true"></span>  {this.props.displayName}
+                        </a>
+                    </h4>
                 </div>
-                <div className={collapsedClass}>
-                    <div className="minMaxLabels">
-                        <span className="minLabel">
-                            {Numeral(this.state.facet.min).format("0.0a")}
-                        </span>
-                        <span className="maxLabel">
-                            {Numeral(this.state.facet.max).format("0.0a") + "+"}
-                        </span>
-                    </div>
-                    <RangeSlider defaultValue={[this.state.facet.lowerBound, this.state.facet.upperBound ]} onChange={this.onValuesChange} onAfterChange={this.onAfterChange} min={this.state.facet.min} max={this.state.facet.max} withBars pearling />
-                    <div className="valueLabels">
-                        <span className="minLabel">
-                            {Numeral(this.state.lowerBound).format("0.0a")}
-                        </span>
-                        <span className="rangeCounts"> {this.state.facet.lowerBucketCount + " < "} <b> {this.state.facet.middleBucketCount} </b> {" < " + this.state.facet.upperBucketCount} </span>
-                        <span className="maxLabel">
-                            {Numeral(this.state.upperBound).format("0.0a") + upperBoundLabel}
-                        </span>
-                    </div>
+                <div id={collapseID} className="panel-collapse collapse in" >
+                    <ul className="list-group">
+                        <li className="list-group-item">
+                            <RangeSlider value={[this.state.facet.lowerBound, this.state.facet.upperBound ]} onChange={this.onValuesChange} onAfterChange={this.onAfterChange} min={this.state.facet.min} max={this.state.facet.max} withBars pearling />
+                        </li>
+                        <li className="list-group-item center-block text-center">
+                            <span className="minLabel">
+                                {Numeral(this.state.lowerBound).format("0.0a")}
+                            </span>
+                            <span className="rangeCounts">  <b> {"<" + this.state.facet.middleBucketCount + "<"} </b> </span>
+                            <span className="maxLabel">
+                                {Numeral(this.state.upperBound).format("0.0a") + upperBoundLabel}
+                            </span>
+                        </li>
+                    </ul>
                 </div>
-			</div>
+            </div>
 		)
 	}
 });

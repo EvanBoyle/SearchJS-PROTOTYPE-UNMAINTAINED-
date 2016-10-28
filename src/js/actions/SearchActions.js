@@ -127,8 +127,15 @@ var SearchActions = {
                 return facets[currentFacet].getFilter();
             });
             
-            queryParams['$filter'] = filters.length > 0 ? filters.join(" and ") : null;
-            queryParams['facet'] = facets[facet].getFacetClause();
+            if(filters.length > 0) {
+                queryParams['$filter'] = filters.join(" and ");
+            }
+            
+            var facetClause = facets[facet].getFacetClause();
+            if(facetClause) {
+                queryParams['facet'] = facetClause;
+            }
+
             request
                 .get(urlPrefix)
                 .set('api-key', queryKey)

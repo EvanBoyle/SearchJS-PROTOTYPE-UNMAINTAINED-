@@ -31,23 +31,32 @@ var CheckboxFacetControl = React.createClass({
             return <div></div>
         }
         var chevron = this.state.collapsed ? "<" : ">";
-        var collapsedClass = this.state.collapsed ? "collapsed" : "collapsedContainer";
+        var collapsedClass = this.state.collapsed ? "indicator glyphicon glyphicon glyphicon-triangle-right" : "indicator glyphicon glyphicon glyphicon-triangle-bottom";
+        var collapseID = "collapse" + this.props.facetId;
+        var collapseHref = "#" + collapseID;
 		return (
-			<div className="checkboxFacet">
-                <div className="facetLabel" onClick={this.toggleCollapse}>
-                    {this.props.displayName} {chevron}
+            <div className="checkboxFacet panel-body">
+                <div className="facetLabel panel-heading">
+                    <h4 className="panel-title">
+                        <a data-toggle="collapse" href={collapseHref} className="colapseHeader" onClick={this.toggleCollapse}>
+                                <span className={collapsedClass} aria-hidden="true"></span> {this.props.displayName}
+                        </a>
+                    </h4>
                 </div>
-                <div className={collapsedClass}>
-                    {this.state.facets.values.map(function(facet, index){
-                        return (
-                            <div key={index + 1} className="checkbox">
-                                <CheckControl onFacetSelection={self.onFacetSelection.bind(null, self.props.field, facet.value)} selected={facet.selected} value={facet.value} count={facet.count} />
-                            </div>
-                            )
-                    })}
+                <div id={collapseID} className="panel-collapse collapse in" >
+                    <ul className="list-group">
+                        {this.state.facets.values.map(function(facet, index){
+                            return (
+                                <li key={index + 1} className="list-group-item">
+                                    <div className="checkbox">
+                                        <CheckControl onFacetSelection={self.onFacetSelection.bind(null, self.props.field, facet.value)} selected={facet.selected} value={facet.value} count={facet.count} />
+                                    </div>
+                                </li>
+                                )
+                        })}
+                    </ul>
                 </div>
-				
-			</div>
+            </div>
 		)
 	}
 });
