@@ -49,6 +49,7 @@ var SearchResults = React.createClass({
         var containerHeight = container.offsetHeight;
         var containerWidth  = container.offsetWidth;
         
+        //TODO(evanboyle): outline this requirement explicitly in docs. result element container must be searchResult for classname
         var resultElements = node.getElementsByClassName("searchResult");
         var elementWidth = resultElements.length > 0 ? resultElements[resultElements.length - 1].offsetWidth : 100;
         var elementHeight = resultElements.length > 0 ? resultElements[resultElements.length - 1].offsetHeight : 100;
@@ -77,6 +78,9 @@ var SearchResults = React.createClass({
 		}
 		
         var resultTemplate = this.props.resultTemplate;
+        var modalTemplate = this.props.modalTemplate;
+        var modalTitleTemplate = this.props.modalTitleTemplate;
+        var rootElementId = this.props.rootElementId;
         
         // calling this here raises a warning for touching the DOM
         // calling inside of componentDidUpdate results in a loop/stackoverflow
@@ -92,7 +96,7 @@ var SearchResults = React.createClass({
                     isInfiniteLoading={false} 
                     infiniteLoadBeginEdgeOffset={600}>
                         {this.state.results.map(function(result, index){
-                                return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate}/>
+                                return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate} modalTemplate={modalTemplate} modalTitleTemplate={modalTitleTemplate} rootElementId={rootElementId}/>
                         })}
 				</Infinite>
 			)

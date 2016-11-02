@@ -16,6 +16,8 @@ var _input = "";
 var _count = 0;
 var _top = 50;
 var _skip = 0;
+// currently unused
+// TODO(evanboyle): make these configurable when we enable sorting
 var _options = [
 		{
 			text: "relevance",

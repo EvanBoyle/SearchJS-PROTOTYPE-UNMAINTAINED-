@@ -91,10 +91,55 @@
         '<img style="max-width: 200px; max-height: 200px" class="img-responsive" src="{{image_url}}">' +
         '<h4 class="resultLabel">{{title}}</h4>' +
         '</img>';
+        
+    var modalTemplate = `<div class="modal-body">
+							  <div class="row">
+							  	<img class="img-rounded img-responsive" src={{image_url}} />
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tbody>
+                                            {{#campusType}}
+                                                <tr>
+                                                    <th class="row-header">Campus Type</th>
+                                                    <td>{{campusType}}</td>
+                                                </tr>
+                                            {{/campusType}}
+                                            {{#studentsCount}}
+                                                <tr>
+                                                    <th class="row-header">Students</th>
+                                                    <td>{{studentsCount}}</td>
+                                                </tr>
+                                            {{/studentsCount}}
+                                            {{#facultyCount}}
+                                                <tr>
+                                                    <th class="row-header">Faculty</th>
+                                                    <td>{{facultyCount}}</td>
+                                                </tr>
+                                            {{/facultyCount}}
+                                            {{#endowmentAmount}}
+                                                <tr>
+                                                    <th class="row-header">Endowment</th>
+                                                    <td>{{endowmentAmount}}</td>
+                                                </tr>
+                                            {{/endowmentAmount}}
+                                            {{#sportsTeamsCount}}
+                                                <tr>
+                                                    <th class="row-header">Sports Teams</th>
+                                                    <td>{{sportsTeamsCount}}</td>
+                                                </tr>
+                                            {{/sportsTeamsCount}}
+										</tbody>
+									</table>
+								</div>
+							  </div>
+				            </div>`;
+    modalTitleTemplate = '<h4 className="modal-title">{{title}}</h4>';
 
     search.addResultsView({
         htmlId: "results",
         resultTemplate: resultTemplate,
+        modalTemplate: modalTemplate,
+        modalTitleTemplate: modalTitleTemplate
     });
 
     search.addSearchBox({

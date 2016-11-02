@@ -79,10 +79,29 @@
     var resultTemplate = 
         '<img src="{{image_url}}"/>' +
         '<div class="imgTitle">{{title}}</div>';
+        
+    var modalTemplate = `<div class="modal-body">
+							  <div class="row">
+							  	<img class="img-rounded img-responsive" src={{image_url}}/>
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<tbody>
+                                            {{#campusType}}
+                                                <tr>
+                                                    <th class="row-header">Campus Type</th>
+                                                    <td>{{campusType}}</td>
+                                                </tr>
+                                            {{/campusType}}
+										</tbody>
+									</table>
+								</div>
+							  </div>
+				            </div>`;
 
     search.addResultsView({
         htmlId: "results",
         resultTemplate: resultTemplate,
+        modalTemplate: modalTemplate
     });
 
     search.addSearchBox({

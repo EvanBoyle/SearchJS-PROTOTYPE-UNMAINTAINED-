@@ -18,12 +18,16 @@ var React = require("react");
 function AzSearch(config) {
     SearchActions.setUp(config.serviceName, config.queryKey, config.index);
     this.facetCount = 0;
+    this.rootElementId = null;
 }
 
 AzSearch.prototype.addResultsView = function(config) {
     // if null is passed we render json.strinify(of result instead)
-    var compiled = config.resultTemplate ? Hogan.compile(config.resultTemplate) : null;
-    ReactDOM.render(<SearchResults resultTemplate={compiled}/>, document.getElementById(config.htmlId));
+    var compiledResult = config.resultTemplate ? Hogan.compile(config.resultTemplate) : null;
+    var compiledModal = config.modalTemplate ? Hogan.compile(config.modalTemplate) : null;
+    var compiledModalTitle = config.modalTitleTemplate ? Hogan.compile(config.modalTitleTemplate) : null;
+    this.rootElementId = config.htmlId;
+    ReactDOM.render(<SearchResults resultTemplate={compiledResult} modalTemplate={compiledModal} modalTitleTemplate={compiledModalTitle} rootElementId={config.htmlId}/>, document.getElementById(config.htmlId));
 }
 
 AzSearch.prototype.addSearchBox = function(config) {
