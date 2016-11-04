@@ -16,8 +16,7 @@ var _input = "";
 var _count = 0;
 var _top = 50;
 var _skip = 0;
-// currently unused
-// TODO(evanboyle): make these configurable when we enable sorting
+// TODO(evanboyle): make these configurable when we enable sorting, currently these aren't exposed through any public config
 var _options = [
 		{
 			text: "relevance",
@@ -50,7 +49,6 @@ var _location = {
 	longitude: 0
 };
 var _suggestions = [];
-var _suggester = 'titleSuggester';
 
 function set(results, count, skip, sortBy) {
 	_results = results;
@@ -119,8 +117,9 @@ function clearFacets() {
 
 function setSearchParameters(parameters) {
     _scoringProfile = parameters.scoringProfile;
-    _select = parameters.select
-    _searchFields = parameters.searchFields
+    _select = parameters.select;
+    _searchFields = parameters.searchFields;
+    _top = parameters.top;
 }
 
 function setup(serviceName, queryKey, index) {
@@ -144,7 +143,6 @@ var SearchStore = assign({}, EventEmitter.prototype, {
 			view: _view,
 			location: _location,
 			suggestions: _suggestions,
-			suggester: _suggester
 		};
 	},
     
