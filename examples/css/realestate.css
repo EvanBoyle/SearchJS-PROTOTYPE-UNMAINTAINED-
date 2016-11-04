@@ -1,0 +1,27 @@
+.searchResult {
+	height: 30%;
+	float: left;
+	text-align: center;
+    overflow: auto;
+    word-wrap: break-word;
+    vertical-align: bottom;
+    border:0;
+}
+
+.resultLabel {
+  vertical-align: bottom;
+}
+
+
+.searchResult img {
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	max-width: 70%;
+	max-height: 70%;
+	width: auto;
+	height: auto;
+  vertical-align: bottom;
+}

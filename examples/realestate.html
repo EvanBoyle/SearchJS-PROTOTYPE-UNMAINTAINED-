@@ -12,7 +12,7 @@
     <!-- Latest compiled and minified JavaScript -->
 
     <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/wikiversity.css">
+    <link rel="stylesheet" href="./css/realestate.css">
 
 </head>
 
@@ -47,15 +47,15 @@
                     <ul class="nav nav-sidebar">
                         <div className="panel panel-primary behclick-panel">
                             <li>
-                                <div id="campusFacet">
+                                <div id="sqftFacet">
                                 </div>
                             </li>
                             <li>
-                                <div id="studentsFacet">
+                                <div id="bedsFacet">
                                 </div>
                             </li>
                             <li>
-                                <div id="endowmentFacet">
+                                <div id="bathsFacet">
                                 </div>
                             </li>
                     </ul>
@@ -80,51 +80,63 @@
 <script>
     var search = new AzSearch({
         serviceName: "azsdoofgod",
-        index: "wikiversity",
+        index: "realestate-us-sample",
         queryKey: "4412747C72BF48B6C761ED7E00D9964D"
     });
 
     var resultTemplate = 
-        '<img style="max-width: 200px; max-height: 200px" class="img-responsive" src="{{image_url}}">' +
-        '<h4 class="resultLabel">{{title}}</h4>' +
+        '<img style="max-width: 200px; max-height: 200px" class="img-responsive" src="{{thumbnail}}">' +
+        '<h4 class="resultLabel">{{number}} {{street}} {{city}}, {{region}} {{countryCode}}</h4>' +
         '</img>';
         
     var modalTemplate = `<div class="modal-body">
 							  <div class="row">
-							  	<img class="img-rounded img-responsive" src={{image_url}} />
+							  	<img class="img-rounded img-responsive" src={{thumbnail}} />
 								<div class="table-responsive">
 									<table class="table table-striped">
 										<tbody>
-                                            {{#campusType}}
+                                            {{#description}}
                                                 <tr>
-                                                    <th class="row-header">Campus Type</th>
-                                                    <td>{{campusType}}</td>
+                                                    <th class="row-header">description</th>
+                                                    <td>{{description}}</td>
                                                 </tr>
-                                            {{/campusType}}
-                                            {{#studentsCount}}
+                                            {{/description}}
+                                            {{#sqft}}
                                                 <tr>
-                                                    <th class="row-header">Students</th>
-                                                    <td>{{studentsCount}}</td>
+                                                    <th class="row-header">sqft</th>
+                                                    <td>{{sqft}}</td>
                                                 </tr>
-                                            {{/studentsCount}}
-                                            {{#facultyCount}}
+                                            {{/sqft}}
+                                            {{#status}}
                                                 <tr>
-                                                    <th class="row-header">Faculty</th>
-                                                    <td>{{facultyCount}}</td>
+                                                    <th class="row-header">status</th>
+                                                    <td>{{status}}</td>
                                                 </tr>
-                                            {{/facultyCount}}
-                                            {{#endowmentAmount}}
+                                            {{/status}}
+                                            {{#price}}
                                                 <tr>
-                                                    <th class="row-header">Endowment</th>
-                                                    <td>{{endowmentAmount}}</td>
+                                                    <th class="row-header">price</th>
+                                                    <td>{{price}}</td>
                                                 </tr>
-                                            {{/endowmentAmount}}
-                                            {{#sportsTeamsCount}}
+                                            {{/price}}
+                                            {{#beds}}
                                                 <tr>
-                                                    <th class="row-header">Sports Teams</th>
-                                                    <td>{{sportsTeamsCount}}</td>
+                                                    <th class="row-header">beds</th>
+                                                    <td>{{beds}}</td>
                                                 </tr>
-                                            {{/sportsTeamsCount}}
+                                            {{/beds}}
+                                            {{#baths}}
+                                                <tr>
+                                                    <th class="row-header">baths</th>
+                                                    <td>{{baths}}</td>
+                                                </tr>
+                                            {{/baths}}
+                                            {{#daysOnMarket}}
+                                                <tr>
+                                                    <th class="row-header">days on market</th>
+                                                    <td>{{daysOnMarket}}</td>
+                                                </tr>
+                                            {{/daysOnMarket}}
 										</tbody>
 									</table>
 								</div>
@@ -141,37 +153,35 @@
 
     search.addSearchBox({
         htmlId:"searchBox",
-        suggesterName: "titleSuggester",
+        //suggesterName: "sg",
         hitHighlightPreTag: "<b>",
         hitHighlightPostTag: "</b>",
         suggestionTemplate: "{{{searchText}}}",
         searchParameters: {
-            //select: ["image_url", "title"],
-            scoringProfile: "titleBoost",
             top: 50
-            //searchFields: ["title"]
         }
     });
+    
+    search.addRangeFacet({
+        htmlId: "sqftFacet",
+        fieldName: "sqft",
+        displayName: "Square feet",
+        min: 0,
+        max: 20000
+    });
     search.addCheckboxFacet({
-        htmlId: "campusFacet",
-        fieldName: "campusType",
-        displayName: "Campus type",
-        isNumeric: false
+        htmlId: "bedsFacet",
+        fieldName: "beds",
+        displayName: "Beds",
+        isNumeric: true
     });
-    search.addRangeFacet({
-        htmlId: "studentsFacet",
-        fieldName: "studentsCount",
-        displayName: "Students",
-        min: 0,
-        max: 100000
+    search.addCheckboxFacet({
+        htmlId: "bathsFacet",
+        fieldName: "baths",
+        displayName: "baths",
+        isNumeric: true
     });
-    search.addRangeFacet({
-        htmlId: "endowmentFacet",
-        fieldName: "endowmentAmount",
-        displayName: "Endowment",
-        min: 0,
-        max: 5000000000
-    });
+    
 
 </script>
 
