@@ -36,7 +36,7 @@ AzSearch.prototype.addSearchBox = function(config) {
     }
     var template = config.suggestionTemplate ? config.suggestionTemplate : DefaultTemplates[Constants.SEARCHBOX];
     var compiled = Hogan.compile(template);
-    ReactDOM.render(<SearchBox suggester={config.suggesterName} suggestionTemplate={compiled} preTag={config.hitHighlightPreTag} postTag={config.hitHighlightPostTag} searchFields={config.searchFields}/>, 
+    ReactDOM.render(<SearchBox suggester={config.suggesterName} suggestionTemplate={compiled} preTag={config.hitHighlightPreTag} postTag={config.hitHighlightPostTag} searchFields={config.searchFields} cssClasses={config.cssClasses}/>, 
     document.getElementById(config.htmlId));
 }
 

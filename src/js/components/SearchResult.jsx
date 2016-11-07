@@ -33,7 +33,7 @@ var SearchResult = React.createClass({
 					<div dangerouslySetInnerHTML={{__html: resultHtml}}>
                         {/*html for rendered result */}
 					</div>
-					<Modal style={this.modalStyle} className="Modal__Bootstrap modal-dialog" isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
+					<Modal style={this.modalStyle} className="modal-dialog" isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
 						<div className="modal-content">
 				            <div className="modal-header">
 				              <button type="button" className="close" onClick={this.closeModal}>

@@ -138,6 +138,14 @@
         modalTemplate: modalTemplate,
         modalTitleTemplate: modalTitleTemplate
     });
+    
+    var searchBoxCssClasses = {
+        searchBox__input: 'searchBox__input form-control',
+        searchBox__inputContainer: 'searchBox__input-container input-group',
+        searchBox__buttonContainer: 'input-group-btn',
+        searchBox__button: 'btn btn-default',
+        searchBox__buttonIcon: 'glyphicon glyphicon-search'
+    };
 
     search.addSearchBox({
         htmlId:"searchBox",
@@ -145,6 +153,7 @@
         hitHighlightPreTag: "<b>",
         hitHighlightPostTag: "</b>",
         suggestionTemplate: "{{{searchText}}}",
+        cssClasses: searchBoxCssClasses,
         searchParameters: {
             //select: ["image_url", "title"],
             scoringProfile: "titleBoost",

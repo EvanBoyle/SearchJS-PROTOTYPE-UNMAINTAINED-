@@ -3,6 +3,9 @@ var OptionTemplateGenerator = require('./OptionTemplateGenerator.jsx');
 var SearchStore = require('../stores/SearchStore');
 var SearchActions = require('../actions/SearchActions');
 var Augosuggest = require('react-autosuggest');
+var DefaultCssClasses = require('../utils/DefaultCssClasses');
+var Constants = require('../constants/SearchConstants');
+var assign = require('object-assign');
 
 var SearchBox = React.createClass({
 	getInitialState: function() {
@@ -66,12 +69,13 @@ var SearchBox = React.createClass({
         SearchActions.termSearch();
     },
     renderInputComponent: function(inputProps) {
+        var cssClasses = assign(DefaultCssClasses[Constants.SEARCHBOX], this.props.cssClasses);
+        
         return (
-
-                <div className="input-group azsearchbox">
+                <div className={cssClasses.searchBox__inputContainer}>
                     <input {...inputProps} type="text"></input>
-                    <span className="input-group-btn">
-                        <button className="btn btn-default" type="button" onClick={this.search}><span className="glyphicon glyphicon-search"></span>&nbsp;</button>
+                    <span className={cssClasses.searchBox__buttonContainer}>
+                        <button className={cssClasses.searchBox__button} type="button" onClick={this.search}><span className={cssClasses.searchBox__buttonIcon}></span>&nbsp;</button>
                     </span>
                 </div>
 
@@ -85,19 +89,21 @@ var SearchBox = React.createClass({
             type: 'search',
             onKeyPress: this.handleKeyDown
         };
+        
+        var cssClasses = assign(DefaultCssClasses[Constants.SEARCHBOX], this.props.cssClasses);
+        
         var theme = {
-            container:            'react-autosuggest__container',
-            containerOpen:        'react-autosuggest__container--open',
-            input:                'react-autosuggest__input form-control',
-            suggestionsContainer: 'react-autosuggest__suggestions-container',
-            suggestionsList:      'react-autosuggest__suggestions-list',
-            suggestion:           'react-autosuggest__suggestion',
-            suggestionFocused:    'react-autosuggest__suggestion--focused',
-            sectionContainer:     'react-autosuggest__section-container',
-            sectionTitle:         'react-autosuggest__section-title'            
+            container:            cssClasses.searchBox__container,
+            containerOpen:        cssClasses.searchBox__containerOpen,
+            input:                cssClasses.searchBox__input,
+            suggestionsContainer: cssClasses.searchBox__suggestionsContainer,
+            suggestionsList:      cssClasses.searchBox__suggestionsList,
+            suggestion:           cssClasses.searchBox__suggestion,
+            suggestionFocused:    cssClasses.searchBox__suggestionFocused,
+            sectionContainer:     cssClasses.searchBox__sectionContainer,
+            sectionTitle:         cssClasses.searchBox__sectionTitle            
         };
 		return (
-			<span>
                 <Augosuggest
                     suggestions={this.state.suggestions}
                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -109,7 +115,6 @@ var SearchBox = React.createClass({
                     theme={theme}
                     renderInputComponent={this.renderInputComponent}
                 />
-            </span>
 			)
 	}
 });

@@ -7,11 +7,11 @@ body {
   padding-top: 50px;
 }
 
-.react-autosuggest__container {
+.searchBox__container {
   float: left;
 }
 
-.react-autosuggest__suggestions-list {
+.searchBox__suggestions-list {
   padding-top: -10 px;
 	box-sizing: border-box;
 	padding-left: 0px;
@@ -23,16 +23,16 @@ body {
   padding-right: 0px;
 }
 
-.azsearchbox {
+.searchBox__input-container {
   margin-top: .5em;
 }
 
-.react-autosuggest__suggestion--focused {
+.searchBox__suggestion--focused {
 	background: #66afe9 !important;
 	color: white;
 }
 
-.react-autosuggest__suggestions-list li {
+.searchBox__suggestions-list li {
 	list-style: none;
     padding-left: 1em;
     padding-top: .5em;
