@@ -197,7 +197,7 @@ body {
     padding: 0px;
 }
     /* unvisited link */
-a.colapseHeader {
+a.searchResults__facetHeader-link {
     text-decoration:none;
 }   
 

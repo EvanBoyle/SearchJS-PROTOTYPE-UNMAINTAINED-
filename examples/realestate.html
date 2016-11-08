@@ -182,24 +182,41 @@
         }
     });
     
+    var facetCssClasses = {
+        searchFacets__checkboxFacet: "panel-body",
+        searchFacets__rangeFacet: "panel-body",
+        searchFacets__facetHeaderContainer: "panel-heading",
+        searchFacets__facetHeader: "panel-title",
+        searchFacets__facetHeaderIconCollapsed: "indicator glyphicon glyphicon glyphicon-triangle-right",
+        searchFacets__facetHeaderIconOpen: "indicator glyphicon glyphicon glyphicon-triangle-bottom",
+        searchFacets__facetControlContainer: "panel-collapse collapse in",
+        searchFacets__facetControlList: "list-group",
+        searchFacets__facetControl: "list-group-item",
+        searchFacets__facetControlCheckboxWrapper: "checkbox",
+        searchFacets__facetControlRangeLabel: "list-group-item center-block text-center",
+    };
+    
     search.addRangeFacet({
         htmlId: "sqftFacet",
         fieldName: "sqft",
         displayName: "Square feet",
         min: 0,
-        max: 20000
+        max: 20000,
+        cssClasses: facetCssClasses
     });
     search.addCheckboxFacet({
         htmlId: "bedsFacet",
         fieldName: "beds",
         displayName: "Beds",
-        isNumeric: true
+        isNumeric: true,
+        cssClasses: facetCssClasses
     });
     search.addCheckboxFacet({
         htmlId: "bathsFacet",
         fieldName: "baths",
         displayName: "baths",
-        isNumeric: true
+        isNumeric: true,
+        cssClasses: facetCssClasses
     });
     
 

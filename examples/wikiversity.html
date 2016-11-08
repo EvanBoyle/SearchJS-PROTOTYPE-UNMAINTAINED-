@@ -172,25 +172,43 @@
             //searchFields: ["title"]
         }
     });
+    
+    var facetCssClasses = {
+        searchFacets__checkboxFacet: "panel-body",
+        searchFacets__rangeFacet: "panel-body",
+        searchFacets__facetHeaderContainer: "panel-heading",
+        searchFacets__facetHeader: "panel-title",
+        searchFacets__facetHeaderIconCollapsed: "indicator glyphicon glyphicon glyphicon-triangle-right",
+        searchFacets__facetHeaderIconOpen: "indicator glyphicon glyphicon glyphicon-triangle-bottom",
+        searchFacets__facetControlContainer: "panel-collapse collapse in",
+        searchFacets__facetControlList: "list-group",
+        searchFacets__facetControl: "list-group-item",
+        searchFacets__facetControlCheckboxWrapper: "checkbox",
+        searchFacets__facetControlRangeLabel: "list-group-item center-block text-center",
+    };
+    
     search.addCheckboxFacet({
         htmlId: "campusFacet",
         fieldName: "campusType",
         displayName: "Campus type",
-        isNumeric: false
+        isNumeric: false,
+        cssClasses: facetCssClasses
     });
     search.addRangeFacet({
         htmlId: "studentsFacet",
         fieldName: "studentsCount",
         displayName: "Students",
         min: 0,
-        max: 100000
+        max: 100000,
+        cssClasses: facetCssClasses
     });
     search.addRangeFacet({
         htmlId: "endowmentFacet",
         fieldName: "endowmentAmount",
         displayName: "Endowment",
         min: 0,
-        max: 5000000000
+        max: 5000000000,
+        cssClasses: facetCssClasses
     });
 
 </script>

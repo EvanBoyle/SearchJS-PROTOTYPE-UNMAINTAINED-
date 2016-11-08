@@ -4,6 +4,9 @@ var RangeSlider = require("react-slider");
 var Numeral = require("numeral");
 var SearchStore = require("../stores/SearchStore");
 var SearchActions = require("../actions/SearchActions");
+var DefaultCssClasses = require('../utils/DefaultCssClasses');
+var Constants = require('../constants/SearchConstants');
+var assign = require('object-assign');
 
 var RangeFacetControl = React.createClass({
     getInitialState: function() {
@@ -50,35 +53,36 @@ var RangeFacetControl = React.createClass({
     },
     
 	render: function() {
+        var cssClasses = assign(DefaultCssClasses[Constants.SEARCHFACETS], this.props.cssClasses);
+        
 		var self = this;
         if(this.state.resultsCount < 1) {
             return <div></div>
         }
         var upperBoundLabel = this.props.upperBound === this.state.facet.max ? "<" : "";
-        var chevron = this.state.collapsed ? "<" : ">";
-        var collapsedClass = this.state.collapsed ? "indicator glyphicon glyphicon glyphicon-triangle-right" : "indicator glyphicon glyphicon glyphicon-triangle-bottom";
+        var collapsedClass = this.state.collapsed ? cssClasses.searchFacets__facetHeaderIconCollapsed : cssClasses.searchFacets__facetHeaderIconOpen;
         var collapseID = "collapse" + this.props.facetId;
         var collapseHref = "#" + collapseID;
 		return (
-            <div className="rangeFacet panel-body">
-                <div className="facetLabel panel-heading">
-                    <h4 className="panel-title">
-                        <a data-toggle="collapse" href={collapseHref} className="colapseHeader" onClick={this.toggleCollapse}>
+            <div className={cssClasses.searchFacets__rangeFacet}>
+                <div className={cssClasses.searchFacets__facetHeaderContainer}>
+                    <h4 className={cssClasses.searchFacets__facetHeader}>
+                        <a data-toggle="collapse" href={collapseHref} className={cssClasses.searchFacets__facetHeaderLink} onClick={this.toggleCollapse}>
                                 <span className={collapsedClass} aria-hidden="true"></span>  {this.props.displayName}
                         </a>
                     </h4>
                 </div>
-                <div id={collapseID} className="panel-collapse collapse in" >
-                    <ul className="list-group">
-                        <li className="list-group-item">
+                <div id={collapseID} className={cssClasses.searchFacets__facetControlContainer}>
+                    <ul className={cssClasses.searchFacets__facetControlList}>
+                        <li className={cssClasses.searchFacets__facetControl}>
                             <RangeSlider value={[this.state.facet.lowerBound, this.state.facet.upperBound ]} onChange={this.onValuesChange} onAfterChange={this.onAfterChange} min={this.state.facet.min} max={this.state.facet.max} withBars pearling />
                         </li>
-                        <li className="list-group-item center-block text-center">
-                            <span className="minLabel">
+                        <li className={cssClasses.searchFacets__facetControlRangeLabel}>
+                            <span className={cssClasses.searchFacets__facetControlRangeLabelMin}>
                                 {Numeral(this.state.lowerBound).format("0.0a")}
                             </span>
-                            <span className="rangeCounts">  <b> {"<" + this.state.facet.middleBucketCount + "<"} </b> </span>
-                            <span className="maxLabel">
+                            <span className={cssClasses.searchFacets__facetControlRangeLabelRange}>  <b> {"<" + this.state.facet.middleBucketCount + "<"} </b> </span>
+                            <span className={cssClasses.searchFacets__facetControlRangeLabelMax}>
                                 {Numeral(this.state.upperBound).format("0.0a") + upperBoundLabel}
                             </span>
                         </li>
