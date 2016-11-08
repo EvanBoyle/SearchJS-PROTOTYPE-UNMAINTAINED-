@@ -27,7 +27,7 @@ AzSearch.prototype.addResultsView = function(config) {
     var compiledModal = config.modalTemplate ? Hogan.compile(config.modalTemplate) : null;
     var compiledModalTitle = config.modalTitleTemplate ? Hogan.compile(config.modalTitleTemplate) : null;
     this.rootElementId = config.htmlId;
-    ReactDOM.render(<SearchResults resultTemplate={compiledResult} modalTemplate={compiledModal} modalTitleTemplate={compiledModalTitle} rootElementId={config.htmlId}/>, document.getElementById(config.htmlId));
+    ReactDOM.render(<SearchResults resultTemplate={compiledResult} modalTemplate={compiledModal} modalTitleTemplate={compiledModalTitle} rootElementId={config.htmlId} cssClasses={config.cssClasses}/>, document.getElementById(config.htmlId));
 }
 
 AzSearch.prototype.addSearchBox = function(config) {

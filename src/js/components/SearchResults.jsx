@@ -4,6 +4,9 @@ var SearchResult = require('./SearchResult.jsx');
 var SearchActions = require('../actions/SearchActions');
 var SearchStore = require('../stores/SearchStore');
 var Infinite = require('react-infinite');
+var DefaultCssClasses = require('../utils/DefaultCssClasses');
+var Constants = require('../constants/SearchConstants');
+var assign = require('object-assign');
 
 var SearchResults = React.createClass({
     getInitialState: function() {
@@ -49,8 +52,9 @@ var SearchResults = React.createClass({
         var containerHeight = container.offsetHeight;
         var containerWidth  = container.offsetWidth;
         
-        //TODO(evanboyle): outline this requirement explicitly in docs. result element container must be searchResult for classname
-        var resultElements = node.getElementsByClassName("searchResult");
+        var cssClasses = assign(DefaultCssClasses[Constants.SEARCHBOX], this.props.cssClasses);
+        var cssClass = cssClasses.searchResults__result;
+        var resultElements = node.getElementsByClassName(cssClass);
         var elementWidth = resultElements.length > 0 ? resultElements[resultElements.length - 1].offsetWidth : 100;
         var elementHeight = resultElements.length > 0 ? resultElements[resultElements.length - 1].offsetHeight : 100;
         
@@ -81,7 +85,7 @@ var SearchResults = React.createClass({
         var modalTemplate = this.props.modalTemplate;
         var modalTitleTemplate = this.props.modalTitleTemplate;
         var rootElementId = this.props.rootElementId;
-        
+        var cssClasses = this.props.cssClasses;
         // calling this here raises a warning for touching the DOM
         // calling inside of componentDidUpdate results in a loop/stackoverflow
         // TODO figure out how to get rid of this warning, or call the method in a different location
@@ -96,7 +100,7 @@ var SearchResults = React.createClass({
                     isInfiniteLoading={false} 
                     infiniteLoadBeginEdgeOffset={600}>
                         {this.state.results.map(function(result, index){
-                                return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate} modalTemplate={modalTemplate} modalTitleTemplate={modalTitleTemplate} rootElementId={rootElementId}/>
+                                return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate} modalTemplate={modalTemplate} modalTitleTemplate={modalTitleTemplate} rootElementId={rootElementId} cssClasses={cssClasses}/>
                         })}
 				</Infinite>
 			)

@@ -18,4 +18,13 @@ DefaultCssClasses[Constants.SEARCHBOX] = {
     searchBox__buttonIcon:           'searchBox__button-icon'
 };
 
+DefaultCssClasses[Constants.SEARCHRESULTS] = {
+    searchResults__result: 'searchResults__result',
+    searchResults__modalContainer: "searchResults__modal-container",
+    searchResults__modalContent: "searchResults__modal-content",
+    searchResults__modalHeader: "searchResults__modal-header",
+    searchResults__modalButton: "searchResults__modal-button",
+    searchResults__modalButtonLabel: "searchResults__modal-button-label"
+};
+
 module.exports = DefaultCssClasses;

@@ -1,5 +1,8 @@
 var React = require('react');
 var Modal = require('react-modal');
+var DefaultCssClasses = require('../utils/DefaultCssClasses');
+var Constants = require('../constants/SearchConstants');
+var assign = require('object-assign');
 
 var SearchResult = React.createClass({
     componentWillMount: function() {
@@ -28,17 +31,19 @@ var SearchResult = React.createClass({
         var resultHtml = this.props.resultTemplate ? this.props.resultTemplate.render(this.props.result) : JSON.stringify(this.props.result, null, 4);
         var modalHtml = this.props.modalTemplate ? this.props.modalTemplate.render(this.props.result) : JSON.stringify(this.props.result, null, 4);
         var modalTitleHtml = this.props.modalTitleTemplate ? this.props.modalTitleTemplate.render(this.props.result) : "";
+        var cssClasses = assign(DefaultCssClasses[Constants.SEARCHBOX], this.props.cssClasses);
+                
 		return (
-			<div className="searchResult col-xs-6 col-sm-3" onClick={this.openModal}>
+			<div className={cssClasses.searchResults__result} onClick={this.openModal}>
 					<div dangerouslySetInnerHTML={{__html: resultHtml}}>
                         {/*html for rendered result */}
 					</div>
-					<Modal style={this.modalStyle} className="modal-dialog" isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
-						<div className="modal-content">
-				            <div className="modal-header">
-				              <button type="button" className="close" onClick={this.closeModal}>
+					<Modal style={this.modalStyle} className={cssClasses.searchResults__modalContainer} isOpen={this.state.modalIsOpen} onRequestClose={this.closeModal}>
+						<div className={cssClasses.searchResults__modalContent}>
+				            <div className={cssClasses.searchResults__modalHeader}>
+				              <button type="button" className={cssClasses.searchResults__modalButton} onClick={this.closeModal}>
 				                <span aria-hidden="true">&times;</span>
-				                <span className="sr-only">Close</span>
+				                <span className={cssClasses.searchResults__modalButtonLabel}>Close</span>
 				              </button>
 				              <div dangerouslySetInnerHTML={{__html: modalTitleHtml}}>
                                   {/*html for rendered modal title */}
