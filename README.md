@@ -5,24 +5,24 @@ A library to build search UI for Azure Search. It provides ready to go controls 
 ##Getting Started
 1. Clone the repo
 2. Install dependencies 
-   ```shell 
+   ``` 
    npm install 
    ```
 3. (optional) Install a web server to run the demo. I use http-server:
-   ```shell
+   ```
    npm install -g http-server
    ```
 4. Build the project:
     * One time:
-    ```shell
+    ```
     npm run build
     ```
     * Watchify: 
-    ```shell
+    ```
     npm run start
     ```
 5. Launch http-server
-   ```shell
+   ```
    npm run start_server
    ```
 6. Navigate to 127.0.0.1:8080/examples/realestate.html
