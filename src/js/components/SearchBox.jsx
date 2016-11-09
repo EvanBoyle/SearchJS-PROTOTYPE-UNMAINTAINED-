@@ -47,7 +47,7 @@ var SearchBox = React.createClass({
         return suggestion.searchText.replace(this.props.preTag,"").replace(this.props.postTag, "");
     },
     renderSuggestion: function(suggestion) {
-        var html = this.props.suggestionTemplate.render(suggestion);
+        var html = this.props.suggestionTemplate ? this.props.suggestionTemplate.render(suggestion): JSON.stringify(suggestion, null, 4);;
         return <div dangerouslySetInnerHTML={{__html: html}} ></div>
     },
     onInputChange: function(event, newValue) {
