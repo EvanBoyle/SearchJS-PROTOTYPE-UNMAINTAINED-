@@ -31,7 +31,7 @@ var SearchResult = React.createClass({
         var resultHtml = this.props.resultTemplate ? this.props.resultTemplate.render(this.props.result) : JSON.stringify(this.props.result, null, 4);
         var modalHtml = this.props.modalTemplate ? this.props.modalTemplate.render(this.props.result) : JSON.stringify(this.props.result, null, 4);
         var modalTitleHtml = this.props.modalTitleTemplate ? this.props.modalTitleTemplate.render(this.props.result) : "";
-        var cssClasses = assign(DefaultCssClasses[Constants.SEARCHBOX], this.props.cssClasses);
+        var cssClasses = assign(DefaultCssClasses[Constants.SEARCHRESULTS], this.props.cssClasses);
                 
 		return (
 			<div className={cssClasses.searchResults__result} onClick={this.openModal}>

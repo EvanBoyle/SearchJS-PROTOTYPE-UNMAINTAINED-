@@ -110,9 +110,9 @@ Renders a results view that uses the window as a container for infinite scrollin
 <script src="../bundle.js" type="text/javascript"></script>
 <script>
     var search = ...
-search.addResultsView({
-    htmlId: "results",
-});
+    search.addResultsView({
+        htmlId: "results",
+    });
 </script>
 ```
 
@@ -258,19 +258,93 @@ Configuration:
 * `displayName`: Label you would like to display for this facet.
 * `min`: Minimum value for the specified field.
 * `max`: Maximum value for the specified field.
-* `cssClasses`: Optional. Allows you to customize the css classes used by elements such as the input and button elements. See section 'Customizing CSS' at the end for a full list of customizable classes as well as diagrams of element hierarchy. Example that uses some common bootstrap classes:
+* `cssClasses`: Optional. Allows you to customize the css classes used by elements such as the input and button elements. See section 'Customizing CSS' at the end for a full list of customizable classes as well as diagrams of element hierarchy. See CheckboxFacet for example.
+
+###Custom CSS Classes
+Custom CSS classes are intended to allow full customization of styling within the UI. Full hierarchy of each component is described below. If you have a problem with customizaiton, please file an [issue](https://github.com/EvanBoyle/AzSearch.js/issues/new).
+
+SearchBox:
+
 ```js
-cssClasses: {
-    searchFacets__checkboxFacet: "panel-body",
-    searchFacets__rangeFacet: "panel-body",
-    searchFacets__facetHeaderContainer: "panel-heading",
-    searchFacets__facetHeader: "panel-title",
-    searchFacets__facetHeaderIconCollapsed: "indicator glyphicon glyphicon glyphicon-triangle-right",
-    searchFacets__facetHeaderIconOpen: "indicator glyphicon glyphicon glyphicon-triangle-bottom",
-    searchFacets__facetControlContainer: "panel-collapse collapse in",
-    searchFacets__facetControlList: "list-group",
-    searchFacets__facetControl: "list-group-item",
-    searchFacets__facetControlCheckboxWrapper: "checkbox",
-    searchFacets__facetControlRangeLabel: "list-group-item center-block text-center",
-}
+DefaultCssClasses[Constants.SEARCHBOX] = {
+    searchBox__container:            'searchBox__container',
+    searchBox__containerOpen:        'searchBox__container--open',
+    searchBox__input:                'searchBox__input',
+    searchBox__suggestionsContainer: 'searchBox__suggestions-container',
+    searchBox__suggestionsList:      'searchBox__suggestions-list',
+    searchBox__suggestion:           'searchBox__suggestion',
+    searchBox__suggestionFocused:    'searchBox__suggestion--focused',
+    searchBox__sectionContainer:     'searchBox__section-container',
+    searchBox__sectionTitle:         'searchBox__section-title',  
+    searchBox__inputContainer:       'searchBox__input-container',
+    searchBox__buttonContainer:      'searchBox__button-container',
+    searchBox__button:               'searchBox__button',
+    searchBox__buttonIcon:           'searchBox__button-icon'
+};
 ```
+The following image shows how the keys relate to the dom structure:
+
+![SearchBox structure](searchboxstructure.png)
+
+ResultsView:
+
+```js
+DefaultCssClasses[Constants.SEARCHRESULTS] = {
+    searchResults__result: 'searchResults__result',
+    searchResults__modalContainer: "searchResults__modal-container",
+    searchResults__modalContent: "searchResults__modal-content",
+    searchResults__modalHeader: "searchResults__modal-header",
+    searchResults__modalButton: "searchResults__modal-button",
+    searchResults__modalButtonLabel: "searchResults__modal-button-label"
+};
+```
+The following images shows how the keys relate to the dom structure:
+
+result:
+
+![result structure](searchResultStructure.png)
+
+modal:
+
+![modal structure](modalStructure.png)
+
+Facets: 
+
+The following CSS classes are used for both types of facets.
+
+```js
+DefaultCssClasses[Constants.SEARCHFACETS] = {
+    searchFacets__rangeFacet: 'searchResults__rangeFacet',
+    searchFacets__checkboxFacet: 'searchResults__checkboxFacet',
+    searchFacets__facetHeaderContainer: 'searchResults__facetHeader-container',
+    searchFacets__facetHeader: 'searchResults__facetHeader',
+    searchFacets__facetHeaderLink: 'searchResults__facetHeader-link',
+    searchFacets__facetHeaderIconCollapsed: 'searchResults__facetHeader-icon--collapsed',
+    searchFacets__facetHeaderIconOpen: 'searchResults__facetHeader-icon--open',
+    searchFacets__facetControlContainer: 'searchResults__facetControl-container',
+    searchFacets__facetControlList: 'searchResults__facetControl-list',
+    searchFacets__facetControl: 'searchResults__facetControl',
+    searchFacets__facetControlCheckboxWrapper: 'searchResults__facetControl-checkbox-wrapper',
+    searchFacets__facetControlCheckboxChecked: 'searchResults__facetControl-checkbox--checked',
+    searchFacets__facetControlCheckboxCheckedHover: 'searchResults__facetControl-checkbox--checkedHover',
+    searchFacets__facetControlCheckboxUnchecked: 'searchResults__facetControl-checkbox--unchecked',
+    searchFacets__facetControlCheckboxUncheckedHover: 'searchResults__facetControl-checkbox--uncheckedHover',
+    searchFacets__facetControlCheckbox: 'searchResults__facetControl-checkbox',
+    searchFacets__facetControlRangeLabel: 'searchResults__facetControl-rangeLabel',
+    searchFacets__facetControlRangeLabelMin: 'searchResults__facetControl-rangeLabelMin',
+    searchFacets__facetControlRangeLabelMax: 'searchResults__facetControl-rangeLabelMax',
+    searchFacets__facetControlRangeLabelRange: 'searchResults__facetControl-rangeLabelRange'
+};
+```
+
+RangeFacet: 
+
+The following image shows how the keys relate to the dom structure:
+
+![RangeFacet structure](rangeFacetStructure.png)
+
+CheckboxFacet:
+
+The following image shows how the keys relate to the dom structure:
+
+![CheckboxFacet structure](checkboxFacetStructure.png)
