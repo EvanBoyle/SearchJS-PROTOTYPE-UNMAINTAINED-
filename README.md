@@ -43,7 +43,7 @@ AzSearch.js is built into a single script that can be included in an html file. 
 ```
 Configuration:
 * `serviceName`: The name of your search service. This can be found in the azure portal. Can also be found in your service URL 'serviceName'.search.windows.net
-* `index`: The name of the index that will be queried, currently AzSearch.js only supports a single index. Depending on your how you're hosting the demo you may need to adjust CORS options on your index. If you're developing against a localhost, you'll need to set CORS to '*'.
+* `index`: The name of the index that will be queried, currently AzSearch.js only supports a single index. Depending on how you're hosting the demo you may need to adjust CORS options on your index. If you're developing against a localhost, you'll need to set CORS to '*'.
 * `queryKey`: Read only query key used to authenticate the client. Query key should always be used over API key in this scenario. Can also be found through the Azure Portal.
 
 ###SearchBox
@@ -84,7 +84,7 @@ cssClasses: {
     searchBox__buttonIcon: 'glyphicon glyphicon-search'
 };
 ```
-* `searchParameters`: Optional parameters to customize search api calls see [search docs](https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx) for details on these parameters.
+* `searchParameters`: Optional parameters to customize search api calls. See [search docs](https://msdn.microsoft.com/en-us/library/azure/dn798927.aspx) for details on these parameters.
     * `select`: Same as $select within the suggestions API. A list of comma-separated fields to retrieve. Default returns all retrievable fields. 
     * `scoringProfile`: The name of a scoring profile to evaluate match scores for matching documents in order to sort the results
     * `top`: Same as $top. Specifies the number of results to retrieve in each batch.
@@ -261,7 +261,7 @@ Configuration:
 * `cssClasses`: Optional. Allows you to customize the css classes used by elements such as the input and button elements. See section 'Customizing CSS' at the end for a full list of customizable classes as well as diagrams of element hierarchy. See CheckboxFacet for example.
 
 ###Custom CSS Classes
-Custom CSS classes are intended to allow full customization of styling within the UI. Full hierarchy of each component is described below. If you have a problem with customizaiton, please file an [issue](https://github.com/EvanBoyle/AzSearch.js/issues/new).
+Custom CSS classes are intended to allow full customization of styling within the UI. Full hierarchy of each component is described below. If you have a problem with customization, please file an [issue](https://github.com/EvanBoyle/AzSearch.js/issues/new).
 
 SearchBox:
 
