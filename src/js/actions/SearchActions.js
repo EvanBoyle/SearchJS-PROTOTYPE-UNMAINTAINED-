@@ -58,7 +58,7 @@ var SearchActions = {
 				queryParams['$orderby'] = 'geo.distance(location, geography\'POINT(' + location.longitude + ' ' + location.latitude + ')\')'
 			}
 			else {
-				queryParams['$orderby'] = sortBy + " desc";
+				queryParams['$orderby'] = sortBy;
 			}
 		}
 		
