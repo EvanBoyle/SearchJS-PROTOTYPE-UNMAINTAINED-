@@ -119,6 +119,7 @@ function setSearchParameters(parameters) {
     _scoringProfile = parameters.scoringProfile;
     _select = parameters.select;
     _searchFields = parameters.searchFields;
+    _sortBy = parameters.sortBy;
     _top = parameters.top;
 }
 
