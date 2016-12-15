@@ -16,7 +16,7 @@ var React = require("react");
  * @param {string} index Name of the index search requests will be made on
  */
 function AzSearch(config) {
-    SearchActions.setUp(config.serviceName, config.queryKey, config.index);
+    SearchActions.setUp(config.serviceName, config.queryKey, config.index, config.resultProcessor);
     this.facetCount = 0;
     this.rootElementId = null;
 }
@@ -27,7 +27,8 @@ AzSearch.prototype.addResultsView = function(config) {
     var compiledModal = config.modalTemplate ? Hogan.compile(config.modalTemplate) : null;
     var compiledModalTitle = config.modalTitleTemplate ? Hogan.compile(config.modalTitleTemplate) : null;
     this.rootElementId = config.htmlId;
-    ReactDOM.render(<SearchResults resultTemplate={compiledResult} modalTemplate={compiledModal} modalTitleTemplate={compiledModalTitle} rootElementId={config.htmlId} cssClasses={config.cssClasses}/>, document.getElementById(config.htmlId));
+    ReactDOM.render(<SearchResults resultTemplate={compiledResult} modalTemplate={compiledModal} modalTitleTemplate={compiledModalTitle} rootElementId={config.htmlId} cssClasses={config.cssClasses} resultProcessor={config.resultProcessor}/>,
+            document.getElementById(config.htmlId));
 }
 
 AzSearch.prototype.addSearchBox = function(config) {

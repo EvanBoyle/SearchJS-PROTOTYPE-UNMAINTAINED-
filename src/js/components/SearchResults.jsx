@@ -86,12 +86,19 @@ var SearchResults = React.createClass({
         var modalTitleTemplate = this.props.modalTitleTemplate;
         var rootElementId = this.props.rootElementId;
         var cssClasses = this.props.cssClasses;
+        var resultProcessor = this.props.resultProcessor;
+
         // calling this here raises a warning for touching the DOM
         // calling inside of componentDidUpdate results in a loop/stackoverflow
         // TODO figure out how to get rid of this warning, or call the method in a different location
         // TODO also do this calculation when we resize
         var heights = this.calculateHeightsForInfiniteScroll();
         
+        var results = this.state.results;
+        if (typeof(resultProcessor) !== "undefined") {
+            results = resultProcessor(results);
+        }
+
 		return (
 				<Infinite 
                     useWindowAsScrollContainer
@@ -99,7 +106,7 @@ var SearchResults = React.createClass({
                     onInfiniteLoad={this.loadMore} 
                     isInfiniteLoading={false} 
                     infiniteLoadBeginEdgeOffset={600}>
-                        {this.state.results.map(function(result, index){
+                        {results.map(function(result, index){
                                 return <SearchResult result={result} key={index} index={index + 1} resultTemplate={resultTemplate} modalTemplate={modalTemplate} modalTitleTemplate={modalTitleTemplate} rootElementId={rootElementId} cssClasses={cssClasses}/>
                         })}
 				</Infinite>
