@@ -1,8 +1,10 @@
-#AzSearch.js
+# AzSearch.js
+
+NOT MAINTAINED. Available for historical purposes. See [AzSearchStore](https://github.com/EvanBoyle/AzSearchStore) for latest javascript tooling for Azure Search
 
 A library to build search UI for Azure Search. It provides ready to go controls for searching with autocomplete, rendering results, and faceting. Customizable via mustache templates and configurable CSS classes. Query logic is abstracted away, no code required, simply provide configuration.
 
-##Getting Started
+## Getting Started
 1. Clone the repo
 2. Install dependencies 
    ``` 
@@ -27,8 +29,8 @@ A library to build search UI for Azure Search. It provides ready to go controls 
    ```
 6. Navigate to 127.0.0.1:8080/examples/realestate.html
 
-##Usage
-###Basic configuration
+## Usage
+### Basic configuration
 AzSearch.js is built into a single script that can be included in an html file. First thing is to instantiate an instance of AzSearch with a few parameters that allow communication with your service.
 
 ```html
@@ -46,7 +48,7 @@ Configuration:
 * `index`: The name of the index that will be queried, currently AzSearch.js only supports a single index. Depending on how you're hosting the demo you may need to adjust CORS options on your index. If you're developing against a localhost, you'll need to set CORS to '*'.
 * `queryKey`: Read only query key used to authenticate the client. Query key should always be used over API key in this scenario. Can also be found through the Azure Portal.
 
-###SearchBox
+### SearchBox
 Search Box is the component that gives you input box to enter basic queries and optionally autocomplete/suggestions. Basic usage as follows:
 
 ```html
@@ -98,7 +100,7 @@ searchParameters: {
 };
 ```
 
-###ResultsView
+### ResultsView
 Renders a results view that uses the window as a container for infinite scrolling. As you scroll more elements will be loaded. Basic usage is as follows:
 ```html
 <html>
@@ -172,7 +174,7 @@ cssClasses: {
 };
 ```
 
-###CheckboxFacet
+### CheckboxFacet
 Creates a control that gives a simple checkbox style faceting experience over the specified field. You can render multiple of these, for multiple fields. Example usage:
 ```html
 <html>
@@ -226,7 +228,7 @@ cssClasses: {
 }
 ```
 
-###RangeFacet
+### RangeFacet
 Creates a control that gives a range style faceting experience over the specified field with a slider that allows the user to specify min and max value. You can render multiple of these, for multiple fields. Example usage:
 ```html
 <html>
